@@ -1,0 +1,36 @@
+{
+	"name" : "gossi/trixionary-client",
+	"description" : "Trixionary Client",
+	"type" : "keeko-module",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "gossi"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"gossi\\trixionary\\client\\" : "src"
+		}
+	},
+	"require" : {
+		"php" : ">=5.4",
+		"keeko/composer-installer" : "*",
+		"guzzle/guzzle" : "~3"
+	},
+	"require-dev" : {
+		"composer/composer" : "@dev",
+		"keeko/core" : "dev-master",
+		"propel/propel" : "@dev"
+	},
+	"extra" : {
+		"keeko" : {
+			"module" : {
+				"title" : "Trixionary Client",
+				"class" : "gossi\\trixionary\\client\\TrixionaryClientModule",
+				"slug" : "gossi.trixionary-client",
+				"default-action" : "none"
+			}
+		},
+		"local": "../../"
+	}
+}
