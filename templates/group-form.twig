@@ -1,0 +1,30 @@
+<h1>{{ trans('header', {'group': sport.getGroupTitle()}) }}</h1>
+
+<form class="form-horizontal" action="{{ action }}" method="post">
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="title">{{ trans('title') }}</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" id="title" name="title" value="{{ group.getTitle() }}">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="slug">{{ trans('slug') }}</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" id="slug" name="slug" value="{{ group.getSlug() }}">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="desc">{{ trans('description') }}</label>
+		<div class="col-sm-6">
+			<textarea class="form-control" id="desc" name="description">{{ group.getDescription() }}</textarea>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-6 col-sm-offset-2">
+			<input type="submit" class="btn btn-primary form-control" value="{{ trans('save') }}">
+		</div>
+	</div>
+</form>

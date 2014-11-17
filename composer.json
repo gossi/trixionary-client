@@ -15,7 +15,9 @@
 	"require" : {
 		"php" : ">=5.4",
 		"keeko/composer-installer" : "*",
-		"guzzle/guzzle" : "~3"
+		"guzzle/guzzle" : "~3",
+		"gossi/trixionary" : "dev-master",
+		"cocur/slugify" : "~0"
 	},
 	"require-dev" : {
 		"composer/composer" : "@dev",
@@ -28,9 +30,165 @@
 				"title" : "Trixionary Client",
 				"class" : "gossi\\trixionary\\client\\TrixionaryClientModule",
 				"slug" : "gossi.trixionary-client",
-				"default-action" : "none"
+				"default-action" : "none",
+				"actions" : {
+					"router" : {
+						"title" : "Trixionary Router",
+						"class" : "gossi\\trixionary\\client\\action\\RouterAction",
+						"acl" : [
+							"guest",
+							"user"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\RouterHtmlResponse"
+						}
+					},
+					"index" : {
+						"title" : "Trixionary Index",
+						"class" : "gossi\\trixionary\\client\\action\\IndexAction",
+						"acl" : [
+							"guest",
+							"user"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\IndexHtmlResponse"
+						}
+					},
+					"sport" : {
+						"title" : "Sports Listing",
+						"class" : "gossi\\trixionary\\client\\action\\SportAction",
+						"acl" : [
+							"guest",
+							"user"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\SportHtmlResponse"
+						}
+					},
+					"group" : {
+						"title" : "List skills of a group",
+						"class" : "gossi\\trixionary\\client\\action\\GroupAction",
+						"acl" : [
+							"guest",
+							"user"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\GroupHtmlResponse"
+						}
+					},
+					"skill" : {
+						"title" : "Displays a skill",
+						"class" : "gossi\\trixionary\\client\\action\\SkillAction",
+						"acl" : [
+							"guest",
+							"user"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\SkillHtmlResponse"
+						}
+					},
+					"skill-create" : {
+						"title" : "Creates a skill",
+						"class" : "gossi\\trixionary\\client\\action\\SkillCreateAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\SkillCreateHtmlResponse"
+						}
+					},
+					"skill-edit" : {
+						"title" : "Edits a skill",
+						"class" : "gossi\\trixionary\\client\\action\\SkillEditAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\SkillEditHtmlResponse"
+						}
+					},
+					"skill-delete" : {
+						"title" : "Deletes a skill",
+						"class" : "gossi\\trixionary\\client\\action\\SkillDeleteAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\SkillDeleteHtmlResponse"
+						}
+					},
+					"group-create" : {
+						"title" : "Creates a group",
+						"class" : "gossi\\trixionary\\client\\action\\GroupCreateAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\GroupCreateHtmlResponse"
+						}
+					},
+					"group-edit" : {
+						"title" : "Edits a group",
+						"class" : "gossi\\trixionary\\client\\action\\GroupEditAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\GroupEditHtmlResponse"
+						}
+					},
+					"group-delete" : {
+						"title" : "Deletes a group",
+						"class" : "gossi\\trixionary\\client\\action\\GroupDeleteAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\GroupDeleteHtmlResponse"
+						}
+					},
+					"stance-create" : {
+						"title" : "Creates a stance",
+						"class" : "gossi\\trixionary\\client\\action\\StanceCreateAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\StanceCreateHtmlResponse"
+						}
+					},
+					"stance-edit" : {
+						"title" : "Edits a stance",
+						"class" : "gossi\\trixionary\\client\\action\\StanceEditAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\StanceEditHtmlResponse"
+						}
+					},
+					"stance-delete" : {
+						"title" : "Deletes a stance",
+						"class" : "gossi\\trixionary\\client\\action\\StanceDeleteAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\StanceDeleteHtmlResponse"
+						}
+					}
+				}
 			}
 		},
-		"local": "../../"
+		"local" : "../../"
 	}
 }
