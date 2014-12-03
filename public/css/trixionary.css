@@ -1,0 +1,102 @@
+.trixionary-actions {
+  margin-top: 25px;
+}
+.control-label-checkbox {
+  font-weight: normal !important;
+}
+.control-label-top {
+  padding-top: 2px !important;
+}
+input[type=checkbox]:focus,
+input[type=radio]:focus {
+  outline: none;
+}
+.rotation-col label {
+  margin-top: 4px;
+}
+a[role=tab]:focus {
+  outline: none;
+}
+.info-box {
+  padding: 5px;
+}
+.info-box ul,
+.info-box dl {
+  margin-bottom: 0;
+}
+.info-box td {
+  vertical-align: top;
+}
+.info-box td:first-child {
+  font-weight: 600;
+  padding-right: 5px;
+}
+.details {
+  width: 100%;
+}
+.details td:first-child {
+  width: 35%;
+  vertical-align: top;
+}
+.skill-picture {
+  /*border: 1px solid #AAA;*/
+}
+.part-text {
+  vertical-align: baseline;
+  line-height: 50px;
+}
+.part-box {
+  border: 1px solid #CCC;
+  background-color: #F5F5F5;
+  padding: 5px;
+  width: 250px;
+  margin-right: 5px;
+}
+.part-box .skill-picture {
+  margin-right: 5px;
+}
+.part-box .part-text {
+  line-height: 40px;
+}
+#graph,
+#widget {
+  width: 100%;
+  height: 500px;
+}
+#info {
+  position: absolute;
+  top: 20px;
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #AAA;
+  background-color: #F0F0F0;
+  font-size: 80%;
+}
+#info p {
+  margin: 0;
+}
+#info .description {
+  margin: 5px 0;
+}
+#controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#widget {
+  position: relative;
+  background-color: #FFF;
+}
+#widget.fullscreen {
+  height: 100%;
+}
+#widget.fullscreen #graph {
+  height: 100%;
+}
+#widget.fullscreen #controls {
+  top: 20px;
+  right: 20px;
+}
+#widget.fullscreen #info {
+  left: 20px;
+}
