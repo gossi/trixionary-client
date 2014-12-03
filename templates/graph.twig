@@ -1,0 +1,78 @@
+{% extends "frame.twig" %}
+
+{% block main %}
+<h2>Graph</h2>
+
+<div id="vis">
+	<div id="graph"></div>
+	<div id="info" class="hidden">
+		<a></a>
+		<p class="description"></p>
+		<p>{{ trans('importance') }}: <span class="importance"></span></p>
+	</div>
+</div>
+
+<script>
+var nodes = {{ nodes|raw }};
+var nodesMap = {};
+for (var i = 0; i < nodes.length; i++) {
+	nodesMap[nodes[i].id] = nodes[i];
+}
+var container = document.getElementById('graph');
+var data = {
+    nodes: nodes,
+    edges: {{ edges|raw }}
+};
+
+var options = {
+	hierarchicalLayout: {
+		nodeSpacing: 50,
+		levelSeparation: 175,
+		direction: 'LR',
+		layout: 'direction'
+	},
+	nodes: {
+		borderWidthSelected: 1.1,
+		shape: 'box',
+		radius: 5,
+		color: {
+			background: '#DDD',
+			border: '#AAA',
+			highlight: {
+				background: '#EEE',
+				border: '#777'
+			}
+		}
+	},
+	edges: {
+		arrowScaleFactor: 0.7,
+		style: 'arrow',
+		widthSelectionMultiplier: 1.1
+	},
+	smoothCurves: false,
+	navigation: true
+};
+var network = new vis.Network(container, data, options);
+var info = document.getElementById('info');
+var link = document.querySelector('#info a');
+var desc = document.querySelector('#info .description');
+var importance = document.querySelector('#info .importance');
+network.on('select', function(e) {
+	if (e.nodes && e.nodes.length && e.nodes.length > 0) {
+		var id = e.nodes[0];
+		var node = nodesMap[id];
+
+		console.log(node);
+
+		info.classList.remove('hidden');
+		link.href = '{{ url_pattern }}'.replace('_skill_', node.slug);
+		link.innerHTML = node.label;
+		desc.innerHTML = node.description;
+		importance.innerHTML = node.importance;
+	} else {
+		info.classList.add('hidden');
+	}
+});
+</script>
+
+{% endblock %}

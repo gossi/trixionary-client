@@ -19,7 +19,6 @@ class SportHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$twig = $this->getTwig();
-		return new Response($twig->render('sport.twig', $this->data));
+		return $this->render('sport.twig', $this->data);
 	}
 }

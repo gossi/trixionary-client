@@ -1,16 +1,18 @@
 <?php
 namespace gossi\trixionary\client\action;
 
-use keeko\core\action\AbstractAction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use gossi\trixionary\model\GroupQuery;
 
 /**
  * Deletes a group
  * 
  * @author gossi
  */
-class GroupDeleteAction extends AbstractAction {
+class GroupDeleteAction extends AbstractSportAction {
 
 	/**
 	 * Automatically generated run method
@@ -19,8 +21,15 @@ class GroupDeleteAction extends AbstractAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		// uncomment the following to pass data to your response
-		// $this->response->setData($data);
-		return $this->response->run($request);
+		$group = GroupQuery::create()->filterBySport($this->getSport())->filterBySlug($this->params['group'])->findOne();
+		$group->delete();
+		
+		$router = $this->getModule()->getRouter();
+		$url = $router->generate('sport', $this->getSport());
+		return new RedirectResponse($url);
+	}
+	
+	protected function setDefaultParams(OptionsResolverInterface $resolver) {
+		$resolver->setRequired(['sport', 'group']);
 	}
 }

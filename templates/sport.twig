@@ -1,5 +1,20 @@
-{% extends "struct-base.twig" %}
+{% extends "group-frame.twig" %}
+
+{% block h1 %}{{ sport.getTitle() }} Trixionary{% endblock %}
 
 {% block content %}
-Buhu
+<p>{{ trans('welcome', {
+	'sport':sport.getTitle(), 
+	'skill': sport.getSkillLabel(), 
+	'skills': sport.getSkillPluralLabel(), 
+	'group': sport.getGroupLabel(), 
+	'groups': sport.getGroupPluralLabel()
+}) }}</p>
+<p>{{ trans('statistics', {
+	'sport': sport.getTitle(),
+	'skills': skillCount == 1 ? sport.getSkillLabel() : sport.getSkillPluralLabel(), 
+	'groups': groupCount == 1 ? sport.getGroupLabel() : sport.getGroupPluralLabel(),
+	'skillCount': skillCount,
+	'groupCount': groupCount
+}) }}</p>
 {% endblock %}

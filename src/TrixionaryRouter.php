@@ -1,20 +1,24 @@
 <?php
 namespace gossi\trixionary\client;
 
-use keeko\core\routing\AbstractRouter;
-use keeko\core\routing\RouterInterface;
+use keeko\core\routing\QueryStringTrait;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Cocur\Slugify\Slugify;
+use Symfony\Component\HttpFoundation\Request;
+use gossi\trixionary\model\SportQuery;
 
-class TrixionaryRouter implements RouterInterface {
+class TrixionaryRouter {
 	
+	use QueryStringTrait;
+
 	private $matcher;
 	private $generator;
 	private $module;
-	
+
 	public function __construct(TrixionaryClientModule $module, $basepath) {
 		$this->module = $module;
 
@@ -26,12 +30,28 @@ class TrixionaryRouter implements RouterInterface {
 	}
 	
 	public function match($request) {
-		return $this->matcher->match($request);
+		$data = $this->matcher->match($request);
+		
+		if (isset($data['qs'])) {
+			$qs = $this->unserializeQueryString($data['qs']);
+			unset($data['qs']);
+			
+			foreach ($qs as $k => $v) {
+				$data[$k] = $v;
+			}
+		}
+		
+		return $data;
 	}
 
-	public function generate($name, $data = []) {
+	public function generate($name, $sport, $data = []) {
+		$name = $sport->getSlug() . '-' . $name;
+		$data['sport'] = $sport->getSlug();
+		if (isset($data['qs'])) {
+			$data['qs'] = $this->serializeQueryString($data['qs'], true);
+		}
 		$app = $this->module->getServiceContainer()->getApplication();
-		return $app->getRootUrl() . $this->generator->generate($name, $data);
+		return str_replace('%3F', '?', $app->getRootUrl() .$this->generator->generate($name, $data));
 	}
 
 	/**
@@ -41,39 +61,54 @@ class TrixionaryRouter implements RouterInterface {
 	private function generateRoutes() {
 		$routes = new RouteCollection();
 		$needsIndex = true;
-	
-		$sports = $this->module->getBackend()->getSports();
+		$translator = $this->module->getServiceContainer()->getTranslator();
+		$slugifier = new Slugify();
+
+		$sports = SportQuery::create()->find();
 		foreach ($sports as $sport) {
 			if ($needsIndex && $sport->getIsDefault()) {
 				$needsIndex = false;
 			}
-			$prefix = str_replace('//', '/', '/' . $sport->getIsDefault() ? '' : '{sport}/');
+			$subRoutes = new RouteCollection();
 			$params = $sport->getIsDefault() ? ['sport' => $sport->getSlug()] : [];
-				
-			$routes->add('sport', new Route($prefix, $params));
-			$routes->add('group', new Route($prefix.$sport->getGroupSlug().'/{group}', $params));
-			$routes->add('skill', new Route($prefix.$sport->getSkillSlug().'/{skill}', $params));
-				
+
+			$subRoutes->add($sport->getSlug() . '-sport', new Route('', $params));
+			$subRoutes->add($sport->getSlug() . '-transitions', new Route($sport->getTransitionsSlug().'{qs}', array_merge($params, ['qs' => '?']), ['qs' => '.*']));
+			$subRoutes->add($sport->getSlug() . '-graph', new Route('graph', $params));
+			$subRoutes->add($sport->getSlug() . '-group', new Route($sport->getGroupSlug().'/{group}', $params));
+			$subRoutes->add($sport->getSlug() . '-skill', new Route($sport->getSkillSlug().'/{skill}', $params));
+
 			$objects = ['skill' => $sport->getSkillSlug(), 'group' => $sport->getGroupSlug()];
-				
+
 			if ($sport->getCompositional()) {
-				$objects['stance'] = 'stance';
+				$objects['position'] = $sport->getPositionSlug();
 			}
-				
+
 			foreach ($objects as $object => $label) {
 				foreach (['create', 'edit', 'delete'] as $method) {
-					$route = $prefix.$method.'/'.$label;
-					if ($method !== 'create') {
-						$route .= '/{id}';
+					if ($method === 'create') {
+						$route = $slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client')).'/'.$label;
+					} else {
+						$route = $label.'/{'.$object.'}/'.$slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client'));
 					}
-					$routes->add($object.'-'.$method, new Route($route, $params));
+					$subRoutes->add($sport->getSlug() . '-'.$object.'-'.$method, new Route($route, $params));
 				}
 			}
+			
+			// add prefix
+			if (!$sport->getIsDefault()) {
+				$subRoutes->addPrefix($sport->getSlug() .'/');
+			}
+			
+			$routes->addCollection($subRoutes);
 		}
-	
+
 		if ($needsIndex) {
 			$routes->add('index', new Route('/'));
 		}
+		
+// 		echo '<pre>';
+// 		print_r($routes);
 	
 		return $routes;
 	}

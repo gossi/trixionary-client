@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="col-md-7">
+		<h1>{% block h1 %}{{ sport.getTitle() }} Trixionary{% endblock %}</h1>
+		{% if sport %}
+		<a href="{{ locations.transitions }}">{{ sport.getTransitionPluralLabel() }}</a> |
+		<a href="{{ locations.graph }}">Graph</a>
+		{% endif %}
+	</div>
+	<div class="col-md-5">
+
+		<div class="pull-right trixionary-actions">
+				
+			<div class="btn-toolbar" role="toolbar">
+				{% if sport %}
+				<div class="btn-group" role="group">
+					{% block actions %}{% endblock %}
+		
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="{{ locations.create_skill }}">Create Trick</a></li>
+							<li><a href="{{ locations.create_group }}">Create Struct</a></li>
+							<li><a href="{{ locations.create_position }}">Create Position</a></li>
+						</ul>
+					</div>
+				</div>
+				{% endif %}
+
+				<!-- Search group here -->
+
+				<div class="btn-group" role="group">
+					<a href="" class="btn btn-default" role="button"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+					<a href="" class="btn btn-default" role="button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% block main %}{% endblock %}

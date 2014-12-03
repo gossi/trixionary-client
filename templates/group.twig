@@ -1,0 +1,13 @@
+{% extends "group-frame.twig" %}
+
+{% block actions %}
+<a href="{{ edit_url }}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+{% endblock %}
+
+{% block content %}
+<h2>{{ group.getTitle() }} {{ sport.getSkillPluralTitle() }}</h2>
+<p>{{ group.getDescription() }}</p>
+
+{% import 'skill-listing.twig' as listing %}
+{{ listing.detail(skills, url_pattern) }}
+{% endblock %}

@@ -19,6 +19,6 @@ class GroupHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		return new Response();
+		return $this->render('group.twig', $this->data);
 	}
 }

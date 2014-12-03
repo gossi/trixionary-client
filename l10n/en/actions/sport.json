@@ -1,0 +1,4 @@
+{
+	"welcome": "Welcome to the Trixionary. The Trixionary is an online catalog for {sport} {skills}. They are archived in {groups} (see on the right). Each {skill} has a lot of parameters, that are stored with them. Through relations, {skills} are connected to other {skills}. Explore {skills} now, by browsing through the {groups} on the right.",
+	"statistics": "There {sport} Trixionary contains {skillCount} {skills} in {groupCount} {groups} now."
+}

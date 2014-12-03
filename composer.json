@@ -94,6 +94,9 @@
 							"user",
 							"admin"
 						],
+						"l10n" : [
+							"skill-form"
+						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\SkillCreateHtmlResponse"
 						}
@@ -104,6 +107,9 @@
 						"acl" : [
 							"user",
 							"admin"
+						],
+						"l10n" : [
+							"skill-form"
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\SkillEditHtmlResponse"
@@ -153,37 +159,61 @@
 							"html" : "gossi\\trixionary\\client\\response\\GroupDeleteHtmlResponse"
 						}
 					},
-					"stance-create" : {
-						"title" : "Creates a stance",
-						"class" : "gossi\\trixionary\\client\\action\\StanceCreateAction",
+					"position-create" : {
+						"title" : "Creates a position",
+						"class" : "gossi\\trixionary\\client\\action\\PositionCreateAction",
 						"acl" : [
 							"user",
 							"admin"
 						],
 						"response" : {
-							"html" : "gossi\\trixionary\\client\\response\\StanceCreateHtmlResponse"
+							"html" : "gossi\\trixionary\\client\\response\\PositionCreateHtmlResponse"
 						}
 					},
-					"stance-edit" : {
-						"title" : "Edits a stance",
-						"class" : "gossi\\trixionary\\client\\action\\StanceEditAction",
+					"position-edit" : {
+						"title" : "Edits a position",
+						"class" : "gossi\\trixionary\\client\\action\\PositionEditAction",
 						"acl" : [
 							"user",
 							"admin"
 						],
 						"response" : {
-							"html" : "gossi\\trixionary\\client\\response\\StanceEditHtmlResponse"
+							"html" : "gossi\\trixionary\\client\\response\\PositionEditHtmlResponse"
 						}
 					},
-					"stance-delete" : {
-						"title" : "Deletes a stance",
-						"class" : "gossi\\trixionary\\client\\action\\StanceDeleteAction",
+					"position-delete" : {
+						"title" : "Deletes a position",
+						"class" : "gossi\\trixionary\\client\\action\\PositionDeleteAction",
 						"acl" : [
 							"user",
 							"admin"
 						],
 						"response" : {
-							"html" : "gossi\\trixionary\\client\\response\\StanceDeleteHtmlResponse"
+							"html" : "gossi\\trixionary\\client\\response\\PositionDeleteHtmlResponse"
+						}
+					},
+					"transitions" : {
+						"title" : "Transitions",
+						"class" : "gossi\\trixionary\\client\\action\\TransitionsAction",
+						"acl" : [
+							"guest"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\TransitionsHtmlResponse"
+						}
+					},
+					"graph" : {
+						"title" : "Graph",
+						"class" : "gossi\\trixionary\\client\\action\\GraphAction",
+						"acl" : [
+							"guest"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\GraphHtmlResponse"
+						},
+						"assets": {
+						    "styles": ["components/vis/dist/vis.min.css"],
+						    "scripts": ["components/vis/dist/vis.js"]
 						}
 					}
 				}

@@ -19,6 +19,6 @@ class SkillHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		return new Response();
+		return $this->render('skill.twig', $this->data);
 	}
 }

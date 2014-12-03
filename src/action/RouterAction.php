@@ -33,6 +33,7 @@ class RouterAction extends AbstractAction {
 			
 			unset($match['_route']);
 
+			$route = ($pos = strpos($route, '-')) !== false ? substr($route, $pos + 1) : $route;
 			$action = $this->getModule()->loadAction($route, 'html');
 			$action->setParams($match);
 			

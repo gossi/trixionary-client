@@ -3,14 +3,14 @@ namespace gossi\trixionary\client\response;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use keeko\core\model\Group;
+use keeko\core\action\AbstractResponse;
 
 /**
  * HtmlResponse for Creates a group
  * 
  * @author gossi
  */
-class GroupCreateHtmlResponse extends AbstractGroupResponse {
+class GroupCreateHtmlResponse extends AbstractResponse {
 
 	/**
 	 * Automatically generated method, will be overridden
@@ -19,7 +19,6 @@ class GroupCreateHtmlResponse extends AbstractGroupResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$twig = $this->getTwig();
-		return new Response($twig->render('group-form.twig', $this->data));
+		return $this->render('group-form.twig', $this->data);
 	}
 }

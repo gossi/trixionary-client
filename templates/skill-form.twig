@@ -1,0 +1,407 @@
+{% extends 'frame.twig' %}
+
+{% block actions %}
+{% if skill.getId() %}
+<a href="{{ delete_url }}" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+<a href="{{ edit_url }}" class="btn btn-default active" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+{% endif %}
+{% endblock %}
+
+{% block main %}
+<h2>{{ trans('heading', {'skill': sport.getSkillLabel()}) }}</h2>
+
+<form class="form-horizontal" action="{{ global.location.uri }}" method="post">
+
+	<fieldset>
+		<legend>{{ trans('descriptive-legend') }}</legend>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="name">{{ trans('name') }}</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="name" name="name" required value="{{ skill.getName() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="alternativeNames">{{ trans('alternative-names') }}</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="alternativeNames" name="alternative_names" value="{{ skill.getAlternativeName() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="slug">{{ trans('slug') }}</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="slug" name="slug" value="{{ skill.getSlug() }}" placeholder="{{ trans('slug-placeholder') }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="desc">{{ trans('description') }}</label>
+			<div class="col-md-6">
+				<textarea class="form-control" id="desc" name="description" required placeholder="{{ trans('description-placeholder') }}">{{ skill.getDescription() }}</textarea>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="history">{{ trans('history') }}</label>
+			<div class="col-md-6">
+				<textarea class="form-control" id="history" name="history" placeholder="{{ trans('history-placeholder', {'skill': sport.getSkillLabel()}) }}">{{ skill.getHistory() }}</textarea>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="groups">{{ sport.getGroupPluralLabel() }}</label>
+			<div class="col-md-6">
+				<select name="groups[]" id="groups" multiple required style="width: 100%" class="select2">
+					{% for g in groups %}
+						<option value="{{ g.getId() }}"{% if skill.hasGroup(g) is not empty %} selected{% endif %}>{{ g.getTitle() }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{{ trans('movement-legend') }}</legend>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="movement-description">{{ trans('movement-description') }}</label>
+			<div class="col-md-6">
+				<textarea class="form-control" id="movement-description" name="movement_description" placeholder="{{ trans('movement-description-placeholder') }}">{{ skill.getMovementDescription() }}</textarea>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="startPosition">{{ trans('start-position') }}</label>
+			<div class="col-md-2">
+				<select id="startPosition" name="start_position" class="select2" style="width: 100%;" required>
+				{% for p in positions %}
+				<option value="{{ p.getId() }}"{% if skill.getStartPositionId() == p.getId() %} selected{% endif %}>{{ p.getTitle() }}</option>
+				{% endfor %}
+				</select>
+			</div>
+			
+			<label class="col-md-2 control-label control-label-top" for="endPosition">{{ trans('end-position') }}</label>
+			<div class="col-md-2">
+				<select id="endPosition" name="end_position" class="select2" style="width: 100%;" required>
+				{% for p in positions %}
+				<option value="{{ p.getId() }}"{% if skill.getEndPositionId() == p.getId() %} selected{% endif %}>{{ p.getTitle() }}</option>
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label">{{ trans('cyclic-acyclic') }}</label>
+			<div class="col-md-10">
+				<label class="radio-inline"><input type="radio" name="cyclic" value="1" {% if skill.getIsCyclic() %} checked{% endif %}> {{ trans('cyclic')|capitalize }}</label>
+				<label class="radio-inline"><input type="radio" name="cyclic" value="0" {% if not skill.getIsCyclic() %} checked{% endif %}> {{ trans('acyclic')|capitalize }}</label>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top">{{ trans('rot-trans') }}</label>
+			<div class="col-md-10">
+				<label class="control-label-checkbox"><input type="checkbox" name="is_translation" id="translation"{% if skill.getIsTranslation() %} checked{% endif %}> {{ trans('translation')|capitalize }}</label><br>
+				<label class="control-label-checkbox"><input type="checkbox" name="is_rotation" id="rotation"{% if skill.getIsRotation() %} checked{% endif %}> {{ trans('rotation')|capitalize }}</label>
+
+				<div id="rotationParameters" style="margin-top: 10px;">
+					{% if sport.getHasMovendum() %}
+					<div class="row">
+						<div class="col-md-2"><label>{{ sport.getMovender() }}</label></div>
+						<div class="col-md-2"><label>{{ sport.getMovendum() }}</label></div>
+						<div class="col-md-2"><label>{{ trans('synchronization')|capitalize }}</label></div>
+						<div class="col-md-2"><label>{{ trans('direction')|capitalize }}</label></div>
+					</div>
+					<div class="row" style="min-height: 30px;">
+						<div class="col-md-2 rotation-col">
+							<label class="control-label-checkbox">
+								<input type="checkbox" class="rotation" data-axis="longitudinal" id="rotation-longitudinal-movender" name="longitudinal_flags[]" value="{{ flags.movender }}"{% if skill.getLongitudinalFlags() b-and flags.movender %}checked{% endif %}> {{ trans('longitudinal') }}
+							</label>
+						</div>
+						<div class="col-md-2 rotation-col"><label class="control-label-checkbox"><input type="checkbox" class="rotation" data-axis="longitudinal" id="rotation-longitudinal-movendum" name="longitudinal_flags[]" value="{{ flags.movendum }}"{% if skill.getLongitudinalFlags() b-and flags.movendum %}checked{% endif %}> {{ trans('longitudinal') }}</label></div>
+						<div class="col-md-2">
+							<select name="longitudinal_flags[]" class="select2 sync" id="synchronization-longitudinal" data-axis="longitudinal">
+								<option value="{{ flags.simultaneous }}" {% if skill.getLongitudinalFlags() b-and flags.simultaneous %}selected{% endif %}>{{ trans('simultaneous') }}</option>
+								<option value="{{ flags.isolated }}" {% if skill.getLongitudinalFlags() b-and flags.isolated %}selected{% endif %}>{{ trans('isolated') }}</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select name="longitudinal_flags[]" class="select2" id="direction-longitudinal" data-axis="longitudinal">
+								<option value="{{ flags.same }}" {% if skill.getLongitudinalFlags() b-and flags.same %}selected{% endif %}>{{ trans('same') }}</option>
+								<option value="{{ flags.opposite }}" {% if skill.getLongitudinalFlags() b-and flags.opposite %}selected{% endif %}>{{ trans('opposite') }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="row" style="min-height: 30px;">
+						<div class="col-md-2 rotation-col">
+							<label class="control-label-checkbox">
+								<input type="checkbox" class="rotation" data-axis="latitudinal" id="rotation-latitudinal-movender" name="latitudinal_flags[]" value="{{ flags.movender }}"{% if skill.getLatitudinalFlags() b-and flags.movender %}checked{% endif %}> {{ trans('latitudinal') }}
+							</label>
+						</div>
+						<div class="col-md-2 rotation-col"><label class="control-label-checkbox"><input type="checkbox" class="rotation" data-axis="latitudinal" id="rotation-latitudinal-movendum" name="latitudinal_flags[]" value="{{ flags.movendum }}"{% if skill.getLatitudinalFlags() b-and flags.movendum %}checked{% endif %}> {{ trans('latitudinal') }}</label></div>
+						<div class="col-md-2">
+							<select name="latitudinal_flags[]" class="select2 sync" id="synchronization-latitudinal" data-axis="latitudinal">
+								<option value="{{ flags.simultaneous }}" {% if skill.getLatitudinalFlags() b-and flags.simultaneous %}selected{% endif %}>{{ trans('simultaneous') }}</option>
+								<option value="{{ flags.isolated }}" {% if skill.getLatitudinalFlags() b-and flags.isolated %}selected{% endif %}>{{ trans('isolated') }}</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select name="latitudinal_flags[]" class="select2" id="direction-latitudinal" data-axis="latitudinal">
+								<option value="{{ flags.same }}" {% if skill.getLatitudinalFlags() b-and flags.same %}selected{% endif %}>{{ trans('same') }}</option>
+								<option value="{{ flags.opposite }}" {% if skill.getLatitudinalFlags() b-and flags.opposite %}selected{% endif %}>{{ trans('opposite') }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="row" style="min-height: 30px;">
+						<div class="col-md-2 rotation-col">
+							<label class="control-label-checkbox">
+								<input type="checkbox" class="rotation" data-axis="transversal" id="rotation-transversal-movender" name="transversal_flags[]" value="{{ flags.movender }}"{% if skill.getTransversalFlags() b-and flags.movender %}checked{% endif %}> {{ trans('transversal') }}
+							</label>
+						</div>
+						<div class="col-md-2 rotation-col"><label class="control-label-checkbox"><input type="checkbox" class="rotation" data-axis="transversal" id="rotation-transversal-movendum" name="transversal_flags[]" value="{{ flags.movendum }}"{% if skill.getTransversalFlags() b-and flags.movendum %}checked{% endif %}> {{ trans('transversal') }}</label></div>
+						<div class="col-md-2">
+							<select name="transversal_flags[]" class="select2 sync" id="synchronization-transversal" data-axis="transversal">
+								<option value="{{ flags.simultaneous }}" {% if skill.getTransversalFlags() b-and flags.simultaneous %}selected{% endif %}>{{ trans('simultaneous') }}</option>
+								<option value="{{ flags.isolated }}" {% if skill.getTransversalFlags() b-and flags.isolated %}selected{% endif %}>{{ trans('isolated') }}</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select name="transversal_flags[]" class="select2" id="direction-transversal" data-axis="transversal">
+								<option value="{{ flags.same }}" {% if skill.getTransversalFlags() b-and flags.same %}selected{% endif %}>{{ trans('same') }}</option>
+								<option value="{{ flags.opposite }}" {% if skill.getTransversalFlags() b-and flags.opposite %}selected{% endif %}>{{ trans('opposite') }}</option>
+							</select>
+						</div>
+					</div>
+					<script>
+						var toggleDirection = function(axis) {
+							var sync = $('#s2id_synchronization-' + axis);
+							var direction = $('#s2id_direction-' + axis);
+							
+							if (sync.select2('val') == {{ flags.isolated }}) {
+								direction.show();
+							} else {
+								direction.hide();
+							}
+						}
+						var toggleAxis = function(axis) {
+							var movender = document.getElementById('rotation-' + axis + '-movender');
+							var movendum = document.getElementById('rotation-' + axis + '-movendum');
+							var sync = $('#s2id_synchronization-' + axis);
+							var direction = $('#s2id_direction-' + axis);
+	
+							if (movender.checked && movendum.checked) {
+								sync.show();
+								toggleDirection(axis);
+							} else {
+								sync.hide();
+								direction.hide();
+							}
+						};
+					
+						var rots = document.getElementsByClassName('rotation');
+						for (var i = 0; i < rots.length; i++) {
+							rots[i].addEventListener('change', function (e) {
+								toggleAxis(e.target.dataset.axis);
+							}, false);
+						}
+						$('.sync').each(function () {
+							$(this).on('change', function(e) {
+								toggleDirection(e.target.dataset.axis);
+							});
+						});
+						$(document).ready(function() {
+							toggleAxis('longitudinal');
+							toggleAxis('latitudinal');
+							toggleAxis('transversal');
+						});
+					</script>
+					{% else %}
+					<label class="control-label-checkbox">
+						<input type="checkbox" name="longitudinal_flags[]" value="4"{% if skill.getLongitudinalFlags() b-and flags.movender %}checked{% endif %}> {{ trans('longitudinal') }}
+					</label>
+					<label class="control-label-checkbox">
+						<input type="checkbox" name="latitudinal_flags[]" value="4"{% if skill.getLatitudinalFlags() b-and flags.movender %}checked{% endif %}> {{ trans('latitudinal') }}
+					</label>
+					<label class="control-label-checkbox">
+						<input type="checkbox" name="transversal_flags[]" value="4"{% if skill.getTransversalFlags() b-and flags.movender %}checked{% endif %}> {{ trans('transversal') }}
+					</label>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			var rotation = document.getElementById('rotation');
+			var rotationParameters = document.getElementById('rotationParameters');
+
+			var toggleRotation = function() {
+				if (rotation.checked) {
+					rotationParameters.classList.remove('hidden');
+				} else {
+					rotationParameters.classList.add('hidden');
+				}
+				{% if sport.getHasMovendum() %}
+				toggleRotationRelationship();
+				{% endif %}
+			};
+
+			{% if sport.getHasMovendum() %}
+			var toggleRotationRelationship = function() {
+			}
+			{% endif %}
+
+			rotation.addEventListener('change', toggleRotation, false);
+			toggleRotation();
+		</script>
+		
+	</fieldset>
+	
+	<fieldset>
+		<legend>{{ trans('relationships-legend') }}</legend>
+	
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="variationOf">{{ trans('variation-of')|capitalize }}</label>
+			<div class="col-md-6">
+				<select id="variationOf" name="variation_of" style="width: 100%;">
+				<option></option>
+				{% for s in skills %}
+				{% if s.getVariationOfId() is null %}
+				<option value="{{ s.getId() }}"{% if skill.getVariationOfId() == s.getId() %} selected{% endif %}>{{ s.getName() }}</option>
+				{% endif %}
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+			
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="classification">{{ trans('classification')|capitalize }}</label>
+			<div class="col-md-2">
+				<select id="classification" name="classification" style="width: 100%;">
+					<option value="is_skill">{{ sport.getSkillLabel() }}</option>
+					<option value="is_composite"{% if skill.getIsComposite() %} selected{% endif %}>{{ trans('composite')|capitalize }}</option>
+					<option value="is_multiple"{% if skill.getIsMultiple() %} selected{% endif %}>{{ trans('multiple')|capitalize }}</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group" id="dependenciesGroup">
+			<label class="col-md-2 control-label" for="dependencies">{{ trans('ancients')|capitalize }}</label>
+			<div class="col-md-6">
+				<select name="dependencies[]" id="dependencies" multiple style="width: 100%" class="select2">
+				{% for s in skills %}
+				<option value="{{ s.getId() }}"{% if skill.hasAncient(s) %} selected{% endif %}>{{ s.getName() }}</option>
+				{% endfor %}
+				</select>
+				<span id="multiplier-help" class="help-block">{{ trans('learn-before', {'skills': sport.getSkillPluralLabel()}) }}</span>
+			</div>
+		</div>
+		
+		<div class="form-group hidden" id="partsGroup">
+			<label class="col-md-2 control-label" for="parts">{{ trans('parts')|capitalize }}</label>
+			<div class="col-md-6">
+				<select name="parts[]" id="parts" multiple style="width: 100%" class="select2">
+				{% for s in skills %}
+				{% if not s.getIsMultiple() %}
+				<option value="{{ s.getId() }}"{% if skill.hasPart(s) %} selected{% endif %}>{{ s.getName() }}</option>
+				{% endif %}
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+		
+		<div id="multipleGroup" class="hidden">
+			<div class="form-group">
+				<label class="col-md-2 control-label control-label-top" for="multiple">{{ trans('multiple-of')|capitalize }}</label>
+				<div class="col-md-6">
+					<select name="multiple" id="multiple" style="width: 100%">
+					<option></option>
+					{% for s in skills %}
+					{% if s.getIsMultiple() %}
+					<option value="{{ s.getId() }}"{% if skill.getMultipleOfId() == s.getId() %} selected{% endif %}>{{ s.getName() }}</option>
+					{% endif %}
+					{% endfor %}
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group" id="multiplierGroup">
+				<label class="col-md-2 control-label" for="multiplier">{{ trans('multiplier')|capitalize }}</label>
+				<div class="col-md-6">
+					<input type="text" class="form-control" id="multiplier" name="multiplier" value="{{ skill.getMultiplier() }}" aria-describedby="multiplier-help">
+					<span id="multiplier-help" class="help-block">{{ trans('multiplier-help') }}</span>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			$('#variationOf').select2({
+				allowClear: true
+			});
+
+			var classification = $('#classification');
+			classification.select2();
+
+			var multiple = $('#multiple');
+			multiple.select2({
+				allowClear: true
+			});
+
+			var multiples = document.getElementById('multipleGroup');
+			var parts = document.getElementById('partsGroup');
+			var ancients = document.getElementById('dependenciesGroup');
+			var multiplier = document.getElementById('multiplierGroup');
+			
+			var showClassification = function() {
+				var val = classification.val();
+				if (val == 'is_multiple') {
+					multiples.classList.add('hidden');
+					parts.classList.add('hidden');
+					ancients.classList.remove('hidden');
+				} else if (val == 'is_composite') {
+					multiples.classList.add('hidden');
+					parts.classList.remove('hidden');
+					ancients.classList.add('hidden');
+				} else {
+					multiples.classList.remove('hidden');
+					parts.classList.add('hidden');
+				}
+			}
+			
+			var showMultiplier = function() {
+				if (multiple.val()) {
+					multiplier.classList.remove('hidden');
+				} else {
+					multiplier.classList.add('hidden');
+				}
+			}
+			
+			classification.on('change', showClassification);
+			multiple.on('change', showMultiplier);
+			showClassification();
+			showMultiplier();
+		</script>
+		
+	</fieldset>
+	
+	{% if skill.getId() %}
+	<fieldset>
+		<legend>{{ trans('audit-legend') }}</legend>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label control-label-top" for="change_comment">{{ trans('change-comment') }}</label>
+			<div class="col-md-6">
+				<textarea class="form-control" id="change_comment" name="change_comment" required placeholder="{{ trans('change-comment-placeholder') }}"></textarea>
+			</div>
+		</div>	
+	</fieldset>
+	{% endif %}
+	
+	
+	<div class="form-group">
+		<div class="col-md-6 col-md-offset-2">
+			<input type="submit" class="btn btn-primary form-control" value="{{ trans('save') }}">
+		</div>
+	</div>
+</form>
+{% endblock %}

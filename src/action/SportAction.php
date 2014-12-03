@@ -1,17 +1,18 @@
 <?php
 namespace gossi\trixionary\client\action;
 
-use keeko\core\action\AbstractAction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use gossi\trixionary\model\GroupQuery;
+use gossi\trixionary\model\SkillQuery;
 
 /**
  * Sports Listing
  * 
  * @author gossi
  */
-class SportAction extends AbstractAction {
+class SportAction extends AbstractSportAction {
 
 	/**
 	 * Automatically generated run method
@@ -20,12 +21,12 @@ class SportAction extends AbstractAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$backend = $this->getModule()->getBackend();
-		$sport = $backend->getSport($this->params['sport']);
-		$this->response->setData([
-			'sport' => $sport
+		$this->addData([
+			'groups' => $this->getGroups(),
+			'groupCount' => GroupQuery::create()->filterBySport($this->getSport())->count(),
+			'skillCount' => SkillQuery::create()->filterBySport($this->getSport())->count()
 		]);
-		return $this->response->run($request);
+		return $this->getResponse($request);
 	}
 	
 	

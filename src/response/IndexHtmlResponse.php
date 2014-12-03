@@ -19,6 +19,6 @@ class IndexHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		return new Response();
+		return $this->render('index.twig', $this->data);
 	}
 }
