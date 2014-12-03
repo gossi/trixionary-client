@@ -25,20 +25,29 @@ class GraphAction extends AbstractSportAction {
 		$router = $this->getModule()->getRouter();
 		$skills = SkillQuery::create()->filterBySport($sport)->filterByIsMultiple(null)->find();
 		
+		$transitions = [];
 		$nodes = [];
 		$edges = [];
 		foreach ($skills as $skill) {
-			$nodes[] = [
+			$node = [
 				'label' => $skill->getName(),
 				'id' => $skill->getId(),
 				'slug' => $skill->getSlug(),
 				'importance' => $skill->getImportance(),
+				'generation' => $skill->getGeneration(),
+				'level' => $skill->getGeneration(),
 				'description' => $skill->getDescription()
 			];
 			
-			foreach ($skill->getAncients() as $ancient) {
+			if ($skill->isTransition()) {
+				$transitions[] = $node;
+			} else {
+				$nodes[] = $node;
+			}
+			
+			foreach ($skill->getParents() as $parent) {
 				$edges[] = [
-					'from' => $ancient->getId(),
+					'from' => $parent->getId(),
 					'to' => $skill->getId()
 				];
 			}
@@ -51,10 +60,10 @@ class GraphAction extends AbstractSportAction {
 			}
 		}
 
-
 		$this->addData([
 			'nodes' => json_encode($nodes),
 			'edges' => json_encode($edges),
+			'transitions' => $transitions,
 			'url_pattern' => $router->generate('skill', $sport, ['skill' => '_skill_'])
 		]);
 		return $this->getResponse($request);

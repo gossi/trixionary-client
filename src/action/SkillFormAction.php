@@ -41,14 +41,9 @@ abstract class SkillFormAction extends AbstractSportAction {
 			$skill->setSport($sport);
 			
 			// add groups
-			$skill->getSkillGroups()->delete();
-// 			if ($skill->getGroups()->count() > 0) {
-// 				$skill->getGroups()->delete();
-// 			}
-// 			SkillGroupQuery::create()->filterBySkill($skill)->deleteAll();
+			$skill->deleteGroups();
 			foreach ($request->request->get('groups', [], true) as $groupId) {
-				$sg = (new SkillGroup())->setSkill($skill)->setGroupId($groupId);
-				$skill->addSkillGroup($sg);
+				$skill->addGroup(GroupQuery::create()->findOneById($groupId));
 			}
 			
 			$skill->setDescription($request->request->get('description'));
@@ -75,10 +70,10 @@ abstract class SkillFormAction extends AbstractSportAction {
 			}
 			
 
-			// add ancients
-			$skill->getSkillDependenciesRelatedBySkillId()->delete();
+			// add parents
+			$skill->deleteParents();
 			foreach ($request->request->get('dependencies', [], true) as $skillId) {
-				$skill->addAncient(SkillQuery::create()->findOneById($skillId));
+				$skill->addParent(SkillQuery::create()->findOneById($skillId));
 			}
 			
 			$multiple = $request->request->get('multiple');
@@ -92,13 +87,13 @@ abstract class SkillFormAction extends AbstractSportAction {
 			else if ($request->request->get('classification') == 'is_composite') {
 				$skill->setIsComposite(true);
 				
-				// add parts  ... and also add them as ancients
-				$skill->getSkillPartsRelatedByCompositeId()->delete();
-				$skill->getSkillDependenciesRelatedBySkillId()->delete();
+				// add parts  ... and also add them as parents
+				$skill->deleteParents();
+				$skill->deleteParts();
 				foreach ($request->request->get('parts', [], true) as $skillId) {
 					$s = SkillQuery::create()->findOneById($skillId);
 					$skill->addPart($s);
-					$skill->addAncient($s);
+					$skill->addParent($s);
 				}
 			}
 

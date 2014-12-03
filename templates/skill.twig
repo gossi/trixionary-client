@@ -71,7 +71,6 @@
 	</div>
 </div>
 
-
 <div role="tabpanel">
 
 	<ul class="nav nav-tabs" role="tablist">
@@ -84,6 +83,7 @@
 	<!-- Tab panes -->
 	<div class="tab-content">
 		
+		<!-- Movement Parameters -->
 		<div role="tabpanel" class="tab-pane active" id="movement">
 			<div class="col-md-8">
 				<div class="row">
@@ -133,20 +133,22 @@
 				</ul>
 			</div>
 		</div>
+		
+		<!-- Relationshuip Parameters -->
 		<div role="tabpanel" class="tab-pane" id="relationships">
 			<div class="col-md-8">
 				<div class="row">
 					<div class="col-md-6">
-						<h3>{{ trans('ancients') }}</h3>
+						<h3>{{ trans('parents') }}</h3>
 						<p>{{ trans('learn-before', {'skills': sport.getSkillPluralLabel()}) }}</p>
 						{% import 'skill-listing.twig' as listing %}
-						{{ listing.simple(skill.getAncients(), url_pattern) }}
+						{{ listing.simple(skill.getParents(), url_pattern) }}
 					</div>
 					<div class="col-md-6">
-						<h3>{{ trans('descendents') }}</h3>
+						<h3>{{ trans('children') }}</h3>
 						<p>{{ trans('learn-after', {'skills': sport.getSkillPluralLabel()}) }}</p>
 						{% import 'skill-listing.twig' as listing %}
-						{{ listing.simple(skill.getDescendents(), url_pattern) }}
+						{{ listing.simple(skill.getChildren(), url_pattern) }}
 					</div>
 				</div>
 				{% if skill.getVariations().count() > 0 %}
@@ -174,11 +176,11 @@
 				<table class="details">
 					<tr>
 						<td>{{ trans('start-position') }}</td>
-						<td><a href="{{ transitions_in_url }}">{{ skill.getStartPosition().getTitle() }}</a> ({{ transitions_in_count }} {{ sport.getTransitionPluralLabel() }})</td>
+						<td><a href="{{ transitions_out_url }}">{{ skill.getStartPosition().getTitle() }}</a> ({{ transitions_in_count }} {{ sport.getTransitionPluralLabel() }})</td>
 					</tr>
 					<tr>
 						<td>{{ trans('end-position') }}</td>
-						<td><a href="{{ transitions_out_url }}">{{ skill.getEndPosition().getTitle() }}</a> ({{ transitions_out_count }} {{ sport.getTransitionPluralLabel() }})</td>
+						<td><a href="{{ transitions_in_url }}">{{ skill.getEndPosition().getTitle() }}</a> ({{ transitions_out_count }} {{ sport.getTransitionPluralLabel() }})</td>
 					</tr>
 				</table>
 				{% endif %}
@@ -218,7 +220,21 @@
 				{% endif %}
 			</div>
 		</div>
+
+		{% if skill.getHistory() is not empty %}
+		<!-- History -->
+		<div role="tabpanel" class="tab-pane" id="history">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 20px;">
+						<p>{{ skill.getHistory() }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
 		
+		<!-- Credits -->
 		<div role="tabpanel" class="tab-pane" id="credits">
 			<div class="col-md-12">
 				<div class="row">
@@ -254,18 +270,7 @@
 				</div>
 			</div>
 		</div>
-		
-		{% if skill.getHistory() is not empty %}
-		<div role="tabpanel" class="tab-pane" id="history">
-			<div class="col-md-12">
-				<div class="row">
-					<div class="col-md-12" style="margin-top: 20px;">
-						<p>{{ skill.getHistory() }}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		{% endif %}
+
 	</div>
 </div>
 

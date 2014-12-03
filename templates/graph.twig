@@ -3,27 +3,74 @@
 {% block main %}
 <h2>Graph</h2>
 
-<div id="vis">
+<div id="widget">
 	<div id="graph"></div>
 	<div id="info" class="hidden">
 		<a></a>
 		<p class="description"></p>
 		<p>{{ trans('importance') }}: <span class="importance"></span></p>
+		<p>{{ trans('generation') }}: <span class="generation"></span></p>
+	</div>
+	<div class="btn-group btn-group-sm" id="controls" role="group">
+
+		<!-- <div class="btn-group btn-group-sm" role="group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+	    		Filters <span class="caret"></span>
+	  		</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="#">Variations</a></li>
+				<li><a href="#">Transitions</a></li>
+			</ul>
+		</div>-->
+		<button type="button" class="btn btn-default" id="fullscreen"><span class="glyphicon glyphicon-fullscreen"></span></button>
 	</div>
 </div>
 
 <script>
-var nodes = {{ nodes|raw }};
-var nodesMap = {};
-for (var i = 0; i < nodes.length; i++) {
-	nodesMap[nodes[i].id] = nodes[i];
+// actions
+var widget = document.getElementById('widget');
+var fullscreen = document.getElementById('fullscreen');
+var dropdowns = document.querySelectorAll('#controls .dropdown-menu');
+fullscreen.addEventListener('click', function(e) {
+	BigScreen.toggle(widget, onFullscreenEntered, onFullscreenExited, function() {});
+});
+BigScreen.onExit = onFullscreenExited;
+function onFullscreenEntered() {
+	widget.classList.add('fullscreen');
+	fullscreen.classList.add('active');
+	graph.redraw();
+	for (var i = 0; i < dropdowns.length; i++) {
+		dropdowns[i].classList.add('dropdown-menu-right');
+	}
 }
+function onFullscreenExited() {
+	widget.classList.remove('fullscreen');
+	fullscreen.classList.remove('active');
+	graph.redraw();
+	for (var i = 0; i < dropdowns.length; i++) {
+		dropdowns[i].classList.remove('dropdown-menu-right');
+	}
+}
+window.addEventListener('resize', function (e) {
+	graph.redraw();
+});
+
+
+// vis
+var info = document.getElementById('info');
+var link = document.querySelector('#info a');
+var desc = document.querySelector('#info .description');
+var importance = document.querySelector('#info .importance');
+var generation = document.querySelector('#info .generation');
 var container = document.getElementById('graph');
+
+var nodes = new vis.DataSet({{ nodes|raw }});
+var edges = new vis.DataSet({{ edges|raw }});
+
 var data = {
     nodes: nodes,
-    edges: {{ edges|raw }}
+    edges: edges
 };
-
 var options = {
 	hierarchicalLayout: {
 		nodeSpacing: 50,
@@ -52,23 +99,18 @@ var options = {
 	smoothCurves: false,
 	navigation: true
 };
-var network = new vis.Network(container, data, options);
-var info = document.getElementById('info');
-var link = document.querySelector('#info a');
-var desc = document.querySelector('#info .description');
-var importance = document.querySelector('#info .importance');
-network.on('select', function(e) {
+var graph = new vis.Network(container, data, options);
+graph.on('select', function(e) {
 	if (e.nodes && e.nodes.length && e.nodes.length > 0) {
 		var id = e.nodes[0];
-		var node = nodesMap[id];
-
-		console.log(node);
-
+		var node = nodes.get(id);
+		
 		info.classList.remove('hidden');
 		link.href = '{{ url_pattern }}'.replace('_skill_', node.slug);
 		link.innerHTML = node.label;
 		desc.innerHTML = node.description;
 		importance.innerHTML = node.importance;
+		generation.innerHTML = node.generation;
 	} else {
 		info.classList.add('hidden');
 	}

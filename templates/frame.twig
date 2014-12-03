@@ -14,17 +14,15 @@
 				{% if sport %}
 				<div class="btn-group" role="group">
 					{% block actions %}{% endblock %}
-		
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{ locations.create_skill }}">Create Trick</a></li>
-							<li><a href="{{ locations.create_group }}">Create Struct</a></li>
-							<li><a href="{{ locations.create_position }}">Create Position</a></li>
-						</ul>
-					</div>
+
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="{{ locations.create_skill }}">Create Trick</a></li>
+						<li><a href="{{ locations.create_group }}">Create Struct</a></li>
+						<li><a href="{{ locations.create_position }}">Create Position</a></li>
+					</ul>
 				</div>
 				{% endif %}
 

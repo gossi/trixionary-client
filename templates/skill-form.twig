@@ -286,11 +286,11 @@
 		</div>
 
 		<div class="form-group" id="dependenciesGroup">
-			<label class="col-md-2 control-label" for="dependencies">{{ trans('ancients')|capitalize }}</label>
+			<label class="col-md-2 control-label" for="dependencies">{{ trans('parents')|capitalize }}</label>
 			<div class="col-md-6">
 				<select name="dependencies[]" id="dependencies" multiple style="width: 100%" class="select2">
 				{% for s in skills %}
-				<option value="{{ s.getId() }}"{% if skill.hasAncient(s) %} selected{% endif %}>{{ s.getName() }}</option>
+				<option value="{{ s.getId() }}"{% if skill.hasParent(s) %} selected{% endif %}>{{ s.getName() }}</option>
 				{% endfor %}
 				</select>
 				<span id="multiplier-help" class="help-block">{{ trans('learn-before', {'skills': sport.getSkillPluralLabel()}) }}</span>

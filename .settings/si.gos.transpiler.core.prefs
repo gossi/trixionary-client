@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+transpilers=si.gos.transpiler.core.transpiler.less
+transpilers/si.gos.transpiler.core.transpiler.less/options=
+transpilers/si.gos.transpiler.core.transpiler.less/paths=assets/trixionary.less\:public/css/trixionary.css

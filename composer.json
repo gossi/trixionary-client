@@ -211,9 +211,14 @@
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\GraphHtmlResponse"
 						},
-						"assets": {
-						    "styles": ["components/vis/dist/vis.min.css"],
-						    "scripts": ["components/vis/dist/vis.js"]
+						"assets" : {
+							"styles" : [
+								"components/vis/dist/vis.min.css"
+							],
+							"scripts" : [
+								"components/vis/dist/vis.js",
+								"components/bigscreen/bigscreen.min.js"
+							]
 						}
 					}
 				}
