@@ -57,8 +57,10 @@
 	"credits": "Credits",
 	"generation": "Generation",
 	"movement-type": "Movement Type",
-	"ancients": "Ancients",
+	"ancestors": "Ancestors",
 	"descendents": "Descendents",
+	"parents": "Parents",
+	"children": "Children",
 	"learn-before": "{skills} you should learn before",
 	"learn-after": "{skills} you can learn afterwards",
 	"variations": "Variations",
@@ -66,8 +68,20 @@
 	"authors": "Authors",
 	"references": "References",
 	"importance": "Importance",
+	"from": "from",
+	"to": "to",
 	"connections": "Connections",
 	"version": "Version",
 	"date": "Date",
-	"comment": "Comment"
+	"comment": "Comment",
+	
+	"manage-pictures": "Manage Pictures",
+	"manage-videos": "Manage Videos",
+	"manage-references": "Manage References",
+	"create-picture": "Create Picture",
+	"create-video": "Create Video",
+	"create-reference": "Create Reference",
+	"picture": "Picture|Pictures",
+	"video": "Video|Videos",
+	"reference": "Reference|References"
 }

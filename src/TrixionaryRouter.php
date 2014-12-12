@@ -77,7 +77,19 @@ class TrixionaryRouter {
 			$subRoutes->add($sport->getSlug() . '-graph', new Route('graph', $params));
 			$subRoutes->add($sport->getSlug() . '-group', new Route($sport->getGroupSlug().'/{group}', $params));
 			$subRoutes->add($sport->getSlug() . '-skill', new Route($sport->getSkillSlug().'/{skill}', $params));
-
+			
+			// skill prop routes
+			foreach (['picture', 'video', 'reference'] as $prop) {
+				$slug = $sport->getSkillSlug().'/{skill}/' . $slugifier->slugify($translator->transChoice($prop, 2, [], 'gossi.trixionary-client'));
+				$subRoutes->add(sprintf('%s-%ss', $sport->getSlug(), $prop), new Route($slug, $params));
+				
+				foreach (['create', 'edit', 'delete'] as $method) {
+					$route = $slug . '/' . $slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client'));
+					$subRoutes->add(sprintf('%s-%s-%s', $sport->getSlug(), $prop, $method), new Route($route, $params));
+				}
+			}
+			
+			// group & skill crud routes
 			$objects = ['skill' => $sport->getSkillSlug(), 'group' => $sport->getGroupSlug()];
 
 			if ($sport->getCompositional()) {
@@ -89,9 +101,10 @@ class TrixionaryRouter {
 					if ($method === 'create') {
 						$route = $slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client')).'/'.$label;
 					} else {
-						$route = $label.'/{'.$object.'}/'.$slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client'));
+						$route = sprintf('%s/{%s}/%s', $label, $object, 
+							$slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client')));
 					}
-					$subRoutes->add($sport->getSlug() . '-'.$object.'-'.$method, new Route($route, $params));
+					$subRoutes->add(sprintf('%s-%s-%s', $sport->getSlug(), $object, $method), new Route($route, $params));
 				}
 			}
 			

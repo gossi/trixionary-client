@@ -29,12 +29,19 @@ class GraphAction extends AbstractSportAction {
 		$nodes = [];
 		$edges = [];
 		foreach ($skills as $skill) {
+			$generationIds = $skill->getGenerationIds();
+			if ($generationIds !== null) {
+				$generationIds = json_decode($generationIds);
+			} else{
+				$generationIds = [];
+			}
 			$node = [
 				'label' => $skill->getName(),
 				'id' => $skill->getId(),
 				'slug' => $skill->getSlug(),
 				'importance' => $skill->getImportance(),
 				'generation' => $skill->getGeneration(),
+				'generationIds' => $generationIds,
 				'level' => $skill->getGeneration(),
 				'description' => $skill->getDescription()
 			];
@@ -46,14 +53,18 @@ class GraphAction extends AbstractSportAction {
 			}
 			
 			foreach ($skill->getParents() as $parent) {
-				$edges[] = [
+				$id = $parent->getId() . '-' . $skill->getId();
+				$edges[$id] = [
+					'id' => $id,
 					'from' => $parent->getId(),
 					'to' => $skill->getId()
 				];
 			}
 			
 			if ($skill->getVariationOf() !== null) {
-				$edges[] = [
+				$id = $skill->getVariationOfId() . '-' . $skill->getId();
+				$edges[$id] = [
+					'id' => $id,
 					'from' => $skill->getVariationOfId(),
 					'to' => $skill->getId()
 				];
@@ -62,7 +73,7 @@ class GraphAction extends AbstractSportAction {
 
 		$this->addData([
 			'nodes' => json_encode($nodes),
-			'edges' => json_encode($edges),
+			'edges' => json_encode(array_values($edges)),
 			'transitions' => $transitions,
 			'url_pattern' => $router->generate('skill', $sport, ['skill' => '_skill_'])
 		]);

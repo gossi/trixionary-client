@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * HtmlResponse for Deletes a stance
+ * HtmlResponse for Deletes a position
  * 
  * @author gossi
  */
@@ -19,6 +19,6 @@ class PositionDeleteHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		return new Response();
+		return $this->render('position-delete.twig', $this->data);
 	}
 }

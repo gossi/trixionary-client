@@ -71,6 +71,14 @@ var data = {
     nodes: nodes,
     edges: edges
 };
+var highlight = {
+	background: '#EEE',
+	border: '#777'
+};
+var normal = {
+	background: '#DDD',
+	border: '#AAA'
+};
 var options = {
 	hierarchicalLayout: {
 		nodeSpacing: 50,
@@ -85,7 +93,14 @@ var options = {
 		color: {
 			background: '#DDD',
 			border: '#AAA',
-			highlight: {
+			highlight: highlight
+		}
+	},
+	groups: {
+		selected: {
+			shape: 'box',
+			radius: 5,
+			color: {
 				background: '#EEE',
 				border: '#777'
 			}
@@ -94,16 +109,50 @@ var options = {
 	edges: {
 		arrowScaleFactor: 0.7,
 		style: 'arrow',
-		widthSelectionMultiplier: 1.1
+		widthSelectionMultiplier: 1.1,
+		color: {
+			color: '#AAA',
+			highlight: '#777'
+		},
+		inheritColor: false
 	},
 	smoothCurves: false,
 	navigation: true
 };
 var graph = new vis.Network(container, data, options);
+var selecting = false;
+var lastSelection = null;
 graph.on('select', function(e) {
+	if (selecting) {
+		return;
+	}
+	if (lastSelection !== null) {
+		lastSelection.color = normal;
+		nodes.update(lastSelection);
+		lastSelection = null;
+	}
+	selecting = true;
 	if (e.nodes && e.nodes.length && e.nodes.length > 0) {
 		var id = e.nodes[0];
 		var node = nodes.get(id);
+
+		try {
+			if (node.edges) {
+				var edges = node.edges;
+			} else {
+				var edges = [];
+				node.generationIds.reduce(function (a, b) {
+					edges.push(a + '-' + b);
+					return b;
+				});
+				edges.push(node.generationIds[node.generationIds.length - 1] + '-' + id);
+				node.edges = edges;
+			}
+			node.color = highlight;
+			nodes.update(node);
+			lastSelection = node;
+			graph.selectEdges(edges);
+		} catch (e) {}
 		
 		info.classList.remove('hidden');
 		link.href = '{{ url_pattern }}'.replace('_skill_', node.slug);
@@ -111,10 +160,11 @@ graph.on('select', function(e) {
 		desc.innerHTML = node.description;
 		importance.innerHTML = node.importance;
 		generation.innerHTML = node.generation;
+		console.log(graph.getCenterCoordinates());
 	} else {
 		info.classList.add('hidden');
 	}
+	selecting = false;
 });
 </script>
-
 {% endblock %}

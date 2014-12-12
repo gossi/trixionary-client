@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * HtmlResponse for Creates a stance
+ * HtmlResponse for Creates a position
  * 
  * @author gossi
  */

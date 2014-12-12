@@ -129,12 +129,6 @@ abstract class SkillFormAction extends AbstractSportAction {
 			'positions' => $this->getPositions(),
 			'groups' => $this->getGroups(),
 			'skills' => $skills,
-			'delete_url' => !empty($this->params['skill'])
-				? $router->generate('skill-delete', $sport, ['skill' => $skill->getSlug()])
-				: '',
-			'edit_url' => !empty($this->params['skill'])
-				? $router->generate('skill-edit', $sport, ['skill' => $skill->getSlug()])
-				: '',
 			'flags' => [
 				'movender' => Skill::FLAG_MOVENDER,
 				'movendum' => Skill::FLAG_MOVENDUM,
@@ -144,6 +138,19 @@ abstract class SkillFormAction extends AbstractSportAction {
 				'opposite' => Skill::FLAG_OPPOSITE
 			]
 		]);
+		
+		if (!empty($this->params['skill'])) {
+			$this->addData([
+				'delete_url' => $router->generate('skill-delete', $sport, ['skill' => $skill->getSlug()]),
+				'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $skill->getSlug()]),
+				'manage_pictures_url' => $router->generate('pictures-manage', $sport, ['skill' => $skill->getSlug()]),
+				'manage_videos_url' => $router->generate('videos-manage', $sport, ['skill' => $skill->getSlug()]),
+				'manage_references_url' => $router->generate('references-manage', $sport, ['skill' => $skill->getSlug()]),
+				'create_picture_url' => $router->generate('pictures-create', $sport, ['skill' => $skill->getSlug()]),
+				'create_video_url' => $router->generate('videos-create', $sport, ['skill' => $skill->getSlug()]),
+				'create_reference_url' => $router->generate('references-create', $sport, ['skill' => $skill->getSlug()]),
+			]);
+		}
 		return $this->getResponse($request);
 	}
 	

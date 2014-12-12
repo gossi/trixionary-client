@@ -35,6 +35,12 @@ class SkillAction extends AbstractSportAction {
 			'transitions_out_url' => $router->generate('transitions', $sport, ['qs' => ['to' => $skill->getStartPosition()->getSlug()]]),
 			'transitions_out_count' => SkillQuery::create()->filterByStartPosition($skill->getEndPosition())->where(SkillTableMap::COL_START_POSITION_ID . ' != ' . SkillTableMap::COL_END_POSITION_ID)->count(),
 			'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $slug]),
+			'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $slug]),
+			'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $slug]),
+			'manage_references_url' => $router->generate('references', $sport, ['skill' => $slug]),
+			'create_picture_url' => $router->generate('picture-create', $sport, ['skill' => $slug]),
+			'create_video_url' => $router->generate('video-create', $sport, ['skill' => $slug]),
+			'create_reference_url' => $router->generate('reference-create', $sport, ['skill' => $slug]),
 			'flags' => [
 				'movender' => Skill::FLAG_MOVENDER,
 				'movendum' => Skill::FLAG_MOVENDUM,
@@ -46,7 +52,7 @@ class SkillAction extends AbstractSportAction {
 		]);
 		return $this->getResponse($request);
 	}
-	
+
 	protected function setDefaultParams(OptionsResolverInterface $resolver) {
 		$resolver->setRequired(['sport', 'skill']);
 	}

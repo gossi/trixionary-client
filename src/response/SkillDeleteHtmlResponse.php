@@ -19,6 +19,6 @@ class SkillDeleteHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		return new Response();
+		return $this->render('skill-delete.twig', $this->data);
 	}
 }

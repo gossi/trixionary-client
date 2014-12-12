@@ -1,9 +1,9 @@
 <?php
 namespace gossi\trixionary\client\response;
 
+use keeko\core\action\AbstractResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use keeko\core\action\AbstractResponse;
 
 /**
  * HtmlResponse for Deletes a group
@@ -19,6 +19,6 @@ class GroupDeleteHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		return new Response();
+		return $this->render('group-delete.twig', $this->data);
 	}
 }

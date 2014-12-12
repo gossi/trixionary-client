@@ -31,6 +31,9 @@ a[role=tab]:focus {
   font-weight: 600;
   padding-right: 5px;
 }
+.info-box li {
+  white-space: nowrap;
+}
 .details {
   width: 100%;
 }
@@ -99,4 +102,15 @@ a[role=tab]:focus {
 }
 #widget.fullscreen #info {
   left: 20px;
+}
+#progress {
+  margin-top: 5px;
+  height: 5px;
+}
+.upload-box label {
+  vertical-align: middle;
+  line-height: 34px;
+}
+.upload-box .col-md-6 {
+  margin-bottom: 15px;
 }

@@ -17,7 +17,8 @@
 		"keeko/composer-installer" : "*",
 		"guzzle/guzzle" : "~3",
 		"gossi/trixionary" : "dev-master",
-		"cocur/slugify" : "~0"
+		"cocur/slugify" : "~0",
+		"imagine/imagine" : "~0"
 	},
 	"require-dev" : {
 		"composer/composer" : "@dev",
@@ -219,6 +220,147 @@
 								"components/vis/dist/vis.js",
 								"components/bigscreen/bigscreen.min.js"
 							]
+						}
+					},
+					"upload" : {
+						"title" : "Upload a media file",
+						"class" : "gossi\\trixionary\\client\\action\\UploadAction",
+						"acl" : [
+							"user",
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\UploadHtmlResponse"
+						}
+					},
+					"picture-create" : {
+						"title" : "Upload a new picture",
+						"class" : "gossi\\trixionary\\client\\action\\PictureCreateAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\PictureCreateHtmlResponse"
+						},
+						"assets" : {
+							"styles" : [
+								"components/jquery-file-upload/css/jquery.fileupload.css"
+							],
+							"scripts" : [
+								"components/jquery-file-upload/js/vendor/jquery.ui.widget.js",
+								"components/jquery-file-upload/js/jquery.iframe-transport.js",
+								"components/jquery-file-upload/js/jquery.fileupload.js"
+							]
+						}
+					},
+					"picture-edit" : {
+						"title" : "Edits a picture",
+						"class" : "gossi\\trixionary\\client\\action\\PictureEditAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\PictureEditHtmlResponse"
+						}
+					},
+					"picture-delete" : {
+						"title" : "Delets a picture",
+						"class" : "gossi\\trixionary\\client\\action\\PictureDeleteAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\PictureDeleteHtmlResponse"
+						}
+					},
+					"pictures" : {
+						"title" : "Manage Pictures",
+						"class" : "gossi\\trixionary\\client\\action\\PictureManageAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\PictureManageHtmlResponse"
+						}
+					},
+					"video-create" : {
+						"title" : "Creates a new video",
+						"class" : "gossi\\trixionary\\client\\action\\VideoCreateAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\VideoCreateHtmlResponse"
+						}
+					},
+					"video-edit" : {
+						"title" : "Edits a video",
+						"class" : "gossi\\trixionary\\client\\action\\VideoEditAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\VideoEditHtmlResponse"
+						}
+					},
+					"video-delete" : {
+						"title" : "Deletes a video",
+						"class" : "gossi\\trixionary\\client\\action\\VideoDeleteAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\VideoDeleteHtmlResponse"
+						}
+					},
+					"videos" : {
+						"title" : "Manage Videos",
+						"class" : "gossi\\trixionary\\client\\action\\VideoManageAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\VideoManageHtmlResponse"
+						}
+					},
+					"reference-create" : {
+						"title" : "Creates a new reference",
+						"class" : "gossi\\trixionary\\client\\action\\ReferenceCreateAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\ReferenceCreateHtmlResponse"
+						}
+					},
+					"reference-edit" : {
+						"title" : "Edits a reference",
+						"class" : "gossi\\trixionary\\client\\action\\ReferenceEditAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\ReferenceEditHtmlResponse"
+						}
+					},
+					"reference-delete" : {
+						"title" : "Deletes a reference",
+						"class" : "gossi\\trixionary\\client\\action\\ReferenceDeleteAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\ReferenceDeleteHtmlResponse"
+						}
+					},
+					"references" : {
+						"title" : "Manage references",
+						"class" : "gossi\\trixionary\\client\\action\\ReferenceManageAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\ReferenceManageHtmlResponse"
 						}
 					}
 				}

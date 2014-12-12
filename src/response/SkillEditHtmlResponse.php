@@ -19,7 +19,6 @@ class SkillEditHtmlResponse extends AbstractResponse {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$twig = $this->getTwig();
-		return new Response($twig->render('skill-form.twig', $this->data));
+		return $this->render('skill-form.twig', $this->data);
 	}
 }
