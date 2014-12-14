@@ -60,9 +60,11 @@
 <h2>{{ skill.getName() }}</h2>
 
 <div class="media">
+	{% if skill.getFeaturedPicture() %}
 	<div class="media-left">
-		[picture]
+		<img src="{{ getPictureThumbUrl(skill.getFeaturedPicture()) }}" class="preview-sm">
 	</div>
+	{% endif %}
 	<div class="media-body" style="width: 100%;">
 		<p>{{ skill.getDescription() }}</p>
 	</div>
@@ -94,6 +96,7 @@
 
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#movement" aria-controls="movement" role="tab" data-toggle="tab">{{ trans('movement-legend') }}</a></li>
+		{% if skill.getPictures().count() > 0 %}<li role="presentation"><a href="#pictures" aria-controls="pictures" role="tab" data-toggle="tab">{{ transchoice('picture', 2) }}</a></li>{% endif %}
 		<li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab">{{ trans('relationships') }}</a></li>
 		{% if skill.getHistory() is not empty %}<li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">{{ trans('history') }}</a></li>{% endif %}
 		<li role="presentation"><a href="#credits" aria-controls="credits" role="tab" data-toggle="tab">{{ trans('credits') }}</a></li>
@@ -153,20 +156,45 @@
 			</div>
 		</div>
 		
-		<!-- Relationshuip Parameters -->
+		{% if skill.getPictures().count() > 0 %}
+		<!-- Pictures -->
+		<div role="tabpanel" class="tab-pane" id="pictures">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>{{ transchoice('picture', 2) }}</h3>
+						
+						{% for picture in skill.getPictures() %}
+						<a href="{{ getPictureUrl(picture) }}" title="{{ picture.getTitle() }}" class="gallery">
+							<img src="{{ getPictureThumbUrl(picture) }}" class="preview img-thumbnail">
+						</a>
+						{% endfor %}
+						<script>
+							$(".gallery").colorbox({
+								rel: 'gallery',
+								maxHeight: '95%'
+							});
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		
+		<!-- Relationship Parameters -->
 		<div role="tabpanel" class="tab-pane" id="relationships">
 			<div class="col-md-8">
 				<div class="row">
 					<div class="col-md-6">
 						<h3>{{ trans('parents') }}</h3>
 						<p>{{ trans('learn-before', {'skills': sport.getSkillPluralLabel()}) }}</p>
-						{{ listing.simple(skill.getParents(), url_pattern) }}
+						{{ listing.simple(skill.getParents(), _context) }}
 					</div>
 					<div class="col-md-6">
 						<h3>{{ trans('children') }}</h3>
 						<p>{{ trans('learn-after', {'skills': sport.getSkillPluralLabel()}) }}</p>
 						{% import 'skill-listing.twig' as listing %}
-						{{ listing.simple(skill.getChildren(), url_pattern) }}
+						{{ listing.simple(skill.getChildren(), _context) }}
 					</div>
 				</div>
 				{% if skill.getVariations().count() > 0 %}
@@ -174,7 +202,7 @@
 					<div class="col-md-12">
 						<h3>{{ trans('variations') }}</h3>
 						{% import 'skill-listing.twig' as listing %}
-						{{ listing.simple(skill.getVariations(), url_pattern) }}
+						{{ listing.simple(skill.getVariations(), _context) }}
 					</div>
 				</div>
 				{% endif %}
@@ -183,7 +211,7 @@
 					<div class="col-md-12">
 						<h3>{{ trans('multiples') }}</h3>
 						{% import 'skill-listing.twig' as listing %}
-						{{ listing.simple(skill.getMultiples(), url_pattern) }}
+						{{ listing.simple(skill.getMultiples(), _context) }}
 					</div>
 				</div>
 				{% endif %}

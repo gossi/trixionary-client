@@ -82,9 +82,17 @@ class TrixionaryRouter {
 			foreach (['picture', 'video', 'reference'] as $prop) {
 				$slug = $sport->getSkillSlug().'/{skill}/' . $slugifier->slugify($translator->transChoice($prop, 2, [], 'gossi.trixionary-client'));
 				$subRoutes->add(sprintf('%s-%ss', $sport->getSlug(), $prop), new Route($slug, $params));
+				$methods = ['create', 'edit', 'delete'];
 				
-				foreach (['create', 'edit', 'delete'] as $method) {
+				if ($prop == 'picture') {
+					$methods[] = 'feature';
+				}
+				
+				foreach ($methods as $method) {
 					$route = $slug . '/' . $slugifier->slugify($translator->trans($method, [], 'gossi.trixionary-client'));
+					if ($method !== 'create') {
+						$route .= '/{id}';
+					}
 					$subRoutes->add(sprintf('%s-%s-%s', $sport->getSlug(), $prop, $method), new Route($route, $params));
 				}
 			}

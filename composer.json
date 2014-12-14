@@ -86,6 +86,14 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\SkillHtmlResponse"
+						},
+						"assets": {
+						    "styles": [
+						        "components/jquery-colorbox/example3/colorbox.css"
+						    ],
+						    "scripts": [
+						        "components/jquery-colorbox/jquery.colorbox-min.js"
+						    ]
 						}
 					},
 					"skill-create" : {
@@ -261,11 +269,31 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\PictureEditHtmlResponse"
+						},
+						"assets" : {
+							"styles" : [
+								"components/jquery-file-upload/css/jquery.fileupload.css"
+							],
+							"scripts" : [
+								"components/jquery-file-upload/js/vendor/jquery.ui.widget.js",
+								"components/jquery-file-upload/js/jquery.iframe-transport.js",
+								"components/jquery-file-upload/js/jquery.fileupload.js"
+							]
 						}
 					},
 					"picture-delete" : {
 						"title" : "Delets a picture",
 						"class" : "gossi\\trixionary\\client\\action\\PictureDeleteAction",
+						"acl" : [
+							"admin"
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\PictureDeleteHtmlResponse"
+						}
+					},
+					"picture-feature" : {
+						"title" : "Features a picture",
+						"class" : "gossi\\trixionary\\client\\action\\PictureFeatureAction",
 						"acl" : [
 							"admin"
 						],
@@ -361,6 +389,26 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\ReferenceManageHtmlResponse"
+						}
+					},
+					"help" : {
+						"title" : "Displays help",
+						"class" : "gossi\\trixionary\\client\\action\\HelpAction",
+						"acl" : [
+							""
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\HelpHtmlResponse"
+						}
+					},
+					"info" : {
+						"title" : "Displays info",
+						"class" : "gossi\\trixionary\\client\\action\\InfoAction",
+						"acl" : [
+							""
+						],
+						"response" : {
+							"html" : "gossi\\trixionary\\client\\response\\InfoHtmlResponse"
 						}
 					}
 				}

@@ -60,7 +60,7 @@ to.addEventListener('change', changeUrl, false);
 <h3>{{ sport.getSkillPluralLabel() }}</h3>
 {% if from or to %}
 {% import 'skill-listing.twig' as listing %}
-{{ listing.simple(skills, url_pattern) }}
+{{ listing.simple(skills, _context) }}
 {% endif %}
 
 {% endblock %}

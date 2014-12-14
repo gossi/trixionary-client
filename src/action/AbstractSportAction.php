@@ -12,6 +12,10 @@ use gossi\trixionary\model\PositionQuery;
 use gossi\trixionary\model\GroupQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Filesystem\Filesystem;
+use gossi\trixionary\model\Skill;
+use gossi\trixionary\TrixionaryModule;
+use gossi\trixionary\model\Picture;
 
 abstract class AbstractSportAction extends AbstractAction {
 	
@@ -23,6 +27,51 @@ abstract class AbstractSportAction extends AbstractAction {
 	 */
 	public function __construct(Action $model, AbstractModule $module, AbstractResponse $response) {
 		parent::__construct($model, $module, $response);
+
+		$twig = $this->getTwig();
+		$twig->addFunction(new \Twig_SimpleFunction('getSkillThumbUrl', function (Skill $skill) {
+			if ($skill->getFeaturedPicture() !== null) {
+				return $this->getPictureThumbUrl($skill->getFeaturedPicture());
+			}
+			
+			$fs = new Filesystem();
+			if ($fs->exists($this->getTrixionary()->getSkillPreviewPath($this->getSport()))) {
+				return $this->getTrixionary()->getSkillPreviewUrl($this->getSport());
+			}
+			return null;
+		}));
+
+		$twig->addFunction(new \Twig_SimpleFunction('getPictureUrl', function (Picture $picture) {
+			return $this->getPictureUrl($picture);
+		}));
+		$twig->addFunction(new \Twig_SimpleFunction('getPictureThumbUrl', function (Picture $picture) {
+			return $this->getPictureThumbUrl($picture);
+		}));
+	}
+	
+	protected function getPictureUrl(Picture $picture) {
+		$slugifier = new Slugify();
+		$url = $this->getTrixionary()->getPicturesUrl($picture->getSkill()) . '/';
+		$url .= $slugifier->slugify($picture->getMovender()) . '-' . $picture->getId() . '.jpg';
+		
+		return $url;
+	}
+	
+	protected function getPictureThumbUrl(Picture $picture) {
+		$slugifier = new Slugify();
+		$url = $this->getTrixionary()->getPicturesUrl($picture->getSkill()) . '/thumbs/';
+		$url .= $slugifier->slugify($picture->getMovender()) . '-' . $picture->getId() . '.jpg';
+			
+		return $url;
+	}
+	
+	/**
+	 * Returns the trixionary module
+	 * 
+	 * @return TrixionaryModule
+	 */
+	protected function getTrixionary() {
+		return $this->getServiceContainer()->getModuleManager()->load('gossi/trixionary');
 	}
 
 	/**
@@ -34,27 +83,6 @@ abstract class AbstractSportAction extends AbstractAction {
 		}
 
 		return $this->sport;
-	}
-
-	private function getRootPath($sport) {
-		$module = $this->getServiceContainer()->getModuleManager()->load('gossi/trixionary');
-		return $module->getManagedFilesPath();
-	}
-
-	protected function getSkillFolderPath(Sport $sport) {
-		$slugifier = new Slugify();
-		$path = $this->getRootPath();
-		$path .= '/' . $sport->getSlug();
-		$path .= '/' . $slugifier->slugify($sport->getSkillPluralLabel());
-
-		return str_replace('//', '/', $path);
-	}
-
-	protected function getUploadPath() {
-		$path = $this->getRootPath();
-		$path .= '/_uploads';
-
-		return str_replace('//', '/', $path);
 	}
 
 	protected function addData($data) {

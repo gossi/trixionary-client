@@ -6,6 +6,7 @@
 <div id="widget">
 	<div id="graph"></div>
 	<div id="info" class="hidden">
+		<img class="preview pull-right">
 		<a></a>
 		<p class="description"></p>
 		<p>{{ trans('importance') }}: <span class="importance"></span></p>
@@ -58,6 +59,7 @@ window.addEventListener('resize', function (e) {
 
 // vis
 var info = document.getElementById('info');
+var picture = document.querySelector('#info img');
 var link = document.querySelector('#info a');
 var desc = document.querySelector('#info .description');
 var importance = document.querySelector('#info .importance');
@@ -160,7 +162,13 @@ graph.on('select', function(e) {
 		desc.innerHTML = node.description;
 		importance.innerHTML = node.importance;
 		generation.innerHTML = node.generation;
-		console.log(graph.getCenterCoordinates());
+
+		if (node.picture) {
+			picture.src = node.picture;
+			picture.classList.remove('hidden');
+		} else {
+			picture.classList.add('hidden');
+		}
 	} else {
 		info.classList.add('hidden');
 	}

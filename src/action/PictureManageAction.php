@@ -5,6 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use gossi\trixionary\model\SkillQuery;
+use gossi\trixionary\model\PictureQuery;
 
 /**
  * Manage Pictures
@@ -24,8 +25,13 @@ class PictureManageAction extends AbstractSportAction {
 		$sport = $this->getSport();
 		$slug = $this->params['skill'];
 		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$pictures = PictureQuery::create()->filterBySkill($skill)->find();
 		$this->addData([
 			'skill' => $skill,
+			'pictures' => $pictures,
+			'edit_url_pattern' => $router->generate('picture-edit', $sport, ['skill' => $slug, 'id' => '_id']),
+			'delete_url_pattern' => $router->generate('picture-delete', $sport, ['skill' => $slug, 'id' => '_id']),
+			'feature_url_pattern' => $router->generate('picture-feature', $sport, ['skill' => $slug, 'id' => '_id']),
 			'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $slug]),
 			'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $slug]),
 			'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $slug]),

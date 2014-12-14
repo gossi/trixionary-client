@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use gossi\trixionary\model\SkillQuery;
 use gossi\trixionary\model\Map\SkillTableMap;
 use gossi\trixionary\model\PositionQuery;
+use gossi\trixionary\model\Skill;
 
 /**
  * Transitions

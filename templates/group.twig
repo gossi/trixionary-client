@@ -9,5 +9,5 @@
 <p>{{ group.getDescription() }}</p>
 
 {% import 'skill-listing.twig' as listing %}
-{{ listing.detail(skills, url_pattern) }}
+{{ listing.detail(skills, _context) }}
 {% endblock %}

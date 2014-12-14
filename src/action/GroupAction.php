@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use gossi\trixionary\model\GroupQuery;
 use gossi\trixionary\model\SkillQuery;
+use gossi\trixionary\model\Skill;
 
 /**
  * List skills of a group
@@ -33,9 +34,7 @@ class GroupAction extends AbstractSportAction {
 			'groups' => $this->getGroups(),
 			'skills' => $skills,
 			'url_pattern' => $urlPattern, 
-			'edit_url' => !empty($this->params['group'])
-				? $router->generate('group-edit', $sport, ['group' => $group->getSlug()])
-				: ''
+			'edit_url' => $router->generate('group-edit', $sport, ['group' => $group->getSlug()])
 		]);
 		return $this->getResponse($request);
 	}

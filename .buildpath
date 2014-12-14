@@ -9,12 +9,15 @@
 	<buildpathentry kind="src" path="vendor/symfony/yaml"/>
 	<buildpathentry kind="src" path="vendor/symfony/event-dispatcher"/>
 	<buildpathentry kind="src" path="vendor/propel/propel/src"/>
+	<buildpathentry kind="src" path="vendor/gossi/common/src"/>
 	<buildpathentry kind="src" path="vendor/keeko/composer-installer/src"/>
 	<buildpathentry kind="src" path="vendor/symfony/process"/>
 	<buildpathentry excluding="Symfony/Component/HttpFoundation/Resources/stubs/" kind="src" path="vendor/symfony/http-foundation"/>
 	<buildpathentry kind="src" path="vendor/symfony/routing"/>
+	<buildpathentry kind="src" path="vendor/gossi/collection/src"/>
 	<buildpathentry kind="src" path="src"/>
 	<buildpathentry kind="src" path="templates"/>
+	<buildpathentry kind="src" path="vendor/imagine/imagine/lib"/>
 	<buildpathentry kind="src" path="vendor/kriswallsmith/assetic/src"/>
 	<buildpathentry kind="src" path="vendor/cocur/slugify/src"/>
 	<buildpathentry excluding="composer/" kind="src" path="vendor/composer"/>
@@ -27,6 +30,7 @@
 	<buildpathentry kind="src" path="core/src"/>
 	<buildpathentry kind="src" path="vendor/symfony/options-resolver"/>
 	<buildpathentry kind="src" path="vendor/symfony/filesystem"/>
+	<buildpathentry kind="src" path="vendor/monolog/monolog/src/Monolog"/>
 	<buildpathentry kind="src" path="vendor/ircmaxell/password-compat/lib"/>
 	<buildpathentry kind="src" path="vendor/composer/composer/src"/>
 	<buildpathentry kind="src" path="vendor/justinrainbow/json-schema/src"/>

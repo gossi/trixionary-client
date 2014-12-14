@@ -95,14 +95,14 @@ $('#fileupload').fileupload({
 	<div class="form-group">
 		<label class="col-sm-2 control-label" for="photographer">{{ trans('photographer') }}</label>
 		<div class="col-sm-6">
-			<input type="text" class="form-control" id="photographer" name="photographer" value="{{ picture.getPhotographer() }}">
+			<input type="text" class="form-control" id="photographer" name="photographer" required value="{{ picture.getPhotographer() }}">
 		</div>
 	</div>
 	
 	<div class="form-group">
 		<label class="col-sm-2 control-label" for="movender">{{ sport.getMovender() }}</label>
 		<div class="col-sm-6">
-			<input type="text" class="form-control" id="movender" name="movender" value="{{ picture.getMovender() }}">
+			<input type="text" class="form-control" id="movender" name="movender" required value="{{ picture.getMovender() }}">
 		</div>
 	</div>
 	

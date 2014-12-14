@@ -46,6 +46,10 @@ class GraphAction extends AbstractSportAction {
 				'description' => $skill->getDescription()
 			];
 			
+			if ($skill->getFeaturedPicture()) {
+				$node['picture'] = $this->getPictureThumbUrl($skill->getFeaturedPicture());
+			}
+			
 			if ($skill->isTransition()) {
 				$transitions[] = $node;
 			} else {

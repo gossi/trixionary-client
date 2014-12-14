@@ -1,13 +1,16 @@
-{% macro detail(skills, url_pattern) %}
+{% macro detail(skills, context) %}
 <ul class="media-list">
 	{% for skill in skills %}
 	{% if not skill.getVariationOfId() and not skill.getMultipleOfId() %}
 	<li class="media">
-		<a class="media-left" href="{{ url_pattern|replace({'_skill_': skill.getSlug()}) }}">
-			[picture]
+		{% set thumb = getSkillThumbUrl(skill) %}
+		{% if thumb is not null %}
+		<a class="media-left media-preview" href="{{ context.url_pattern|replace({'_skill_': skill.getSlug()}) }}">
+			<img src="{{ thumb }}" class="preview">
 		</a>
+		{% endif %}
 		<div class="media-body">
-			<a href="{{ url_pattern|replace({'_skill_': skill.getSlug()}) }}">
+			<a href="{{ context.url_pattern|replace({'_skill_': skill.getSlug()}) }}">
 				<h3 class="media-heading">{{ skill.getName() }}</h3>
 			</a>
 			<p>{{ skill.getDescription() }}</p>
@@ -15,7 +18,7 @@
 			{% if skill.getVariations().count() %}
 			<p><b>{{ trans('variations') }}: </b>
 				{% for s in skill.getVariations() %}
-				<a href="{{ url_pattern|replace({'_skill_': s.getSlug()}) }}">{{ s.getName() }}</a>{% if not loop.last %}, {% endif %}
+				<a href="{{ context.url_pattern|replace({'_skill_': s.getSlug()}) }}">{{ s.getName() }}</a>{% if not loop.last %}, {% endif %}
 				{% endfor %}
 			</p>
 			{% endif %}
@@ -23,7 +26,7 @@
 			{% if skill.getMultiples().count() %}
 			<p><b>{{ trans('multiples') }}: </b>
 				{% for s in skill.getMultiples() %}
-				<a href="{{ url_pattern|replace({'_skill_': s.getSlug()}) }}">{{ s.getName() }}</a>{% if not loop.last %}, {% endif %}
+				<a href="{{ context.url_pattern|replace({'_skill_': s.getSlug()}) }}">{{ s.getName() }}</a>{% if not loop.last %}, {% endif %}
 				{% endfor %}
 			</p>
 			{% endif %}
@@ -34,15 +37,18 @@
 </ul>
 {% endmacro %}
 
-{% macro simple(skills, url_pattern) %}
+{% macro simple(skills, context) %}
 <ul class="media-list">
 	{% for skill in skills %}
 	<li class="media">
-		<a class="media-left" href="{{ url_pattern|replace({'_skill_': skill.getSlug()}) }}">
-			[picture]
+		{% set thumb = getSkillThumbUrl(skill) %}
+		{% if thumb is not null %}
+		<a class="media-left media-preview-xs" href="{{ context.url_pattern|replace({'_skill_': skill.getSlug()}) }}">
+			<img src="{{ thumb }}" class="preview-xs">
 		</a>
+		{% endif %}
 		<div class="media-body">
-			<a href="{{ url_pattern|replace({'_skill_': skill.getSlug()}) }}">{{ skill.getName() }}</a>
+			<a href="{{ context.url_pattern|replace({'_skill_': skill.getSlug()}) }}">{{ skill.getName() }}</a>
 		</div>
 	</li>
 	{% endfor %}
