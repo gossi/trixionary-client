@@ -100,7 +100,8 @@ abstract class AbstractSportAction extends AbstractAction {
 	protected function getResponse(Request $request) {
 		$this->addData([
 			'sport' => $this->getSport(),
-			'locations' => $this->getModule()->getLocations($this->getSport())
+			'locations' => $this->getModule()->getLocations($this->getSport()),
+			'permissions' => $this->getModule()->getPermissions()
 		]);
 		$this->response->setData($this->data);
 		return $this->response->run($request);

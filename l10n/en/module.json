@@ -81,7 +81,45 @@
 	"create-picture": "Create Picture",
 	"create-video": "Create Video",
 	"create-reference": "Create Reference",
+	
 	"picture": "Picture|Pictures",
+	"file": "File",
+	"thumbnail": "Thumbnail",
+	"photographer": "Photographer",
+	"actions": "Actions",
+	
 	"video": "Video|Videos",
-	"reference": "Reference|References"
+	"reference": "Reference|References",
+	
+	"type": "Type",
+	"book": "Book",
+	"article": "Article",
+	"inbook": "In Book",
+	"incollection": "In Collection",
+	"url": "Url",
+	"unpublished": "Unpublished",
+	"bachelorthesis": "Bachelor Thesis",
+	"masterthesis": "Master Thesis",
+	"diplomathesis": "Diploma Thesis",
+	"phdthesis": "Phd Thesis",
+	"habilitationthesis": "Habilitation Thesis",
+	"multimedia": "Multimedia",
+	
+	"booktitle": "Book Title",
+	"year": "Year",
+	"author": "Author(s)",
+	"publisher": "Publisher",
+	"address": "Address",
+	"editor": "Editor(s)",
+	"person_help": "In the form: Family Name, Given Name (multiple names can be separated with a semicolon [;])",
+	"journal": "Journal",
+	"school": "School",
+	"volume": "Volume",
+	"number": "Number",
+	"edition": "Edition",
+	"pages": "Pages",
+	"howpublished": "How published",
+	"note": "Note",
+	"lastchecked": "Last checked"
+	
 }

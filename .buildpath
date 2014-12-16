@@ -5,6 +5,8 @@
 	<buildpathentry kind="src" path="vendor/twig/twig/lib"/>
 	<buildpathentry kind="src" path="vendor/guzzle/guzzle/src"/>
 	<buildpathentry kind="src" path="vendor/symfony/translation"/>
+	<buildpathentry kind="src" path="core/database"/>
+	<buildpathentry kind="src" path="core/vendor"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 	<buildpathentry kind="src" path="vendor/symfony/yaml"/>
 	<buildpathentry kind="src" path="vendor/symfony/event-dispatcher"/>

@@ -15,6 +15,7 @@ use gossi\trixionary\model\SkillPart;
 use gossi\trixionary\model\SkillPartQuery;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Propel;
+use keeko\core\model\ActivityObject;
 
 abstract class SkillFormAction extends AbstractSportAction {
 	
@@ -113,7 +114,7 @@ abstract class SkillFormAction extends AbstractSportAction {
 			
 			$user = $this->getServiceContainer()->getAuthManager()->getUser();
 			$user->newActivity([
-				'verb' => $create ? 'create' : 'edit',
+				'verb' => $create ? ActivityObject::VERB_CREATE : ActivityObject::VERB_EDIT,
 				'object' => $skill,
 				'target' => $sport
 			]);
@@ -143,12 +144,12 @@ abstract class SkillFormAction extends AbstractSportAction {
 			$this->addData([
 				'delete_url' => $router->generate('skill-delete', $sport, ['skill' => $skill->getSlug()]),
 				'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $skill->getSlug()]),
-				'manage_pictures_url' => $router->generate('pictures-manage', $sport, ['skill' => $skill->getSlug()]),
-				'manage_videos_url' => $router->generate('videos-manage', $sport, ['skill' => $skill->getSlug()]),
-				'manage_references_url' => $router->generate('references-manage', $sport, ['skill' => $skill->getSlug()]),
-				'create_picture_url' => $router->generate('pictures-create', $sport, ['skill' => $skill->getSlug()]),
-				'create_video_url' => $router->generate('videos-create', $sport, ['skill' => $skill->getSlug()]),
-				'create_reference_url' => $router->generate('references-create', $sport, ['skill' => $skill->getSlug()]),
+				'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]),
+				'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $skill->getSlug()]),
+				'manage_references_url' => $router->generate('references', $sport, ['skill' => $skill->getSlug()]),
+				'create_picture_url' => $router->generate('picture-create', $sport, ['skill' => $skill->getSlug()]),
+				'create_video_url' => $router->generate('video-create', $sport, ['skill' => $skill->getSlug()]),
+				'create_reference_url' => $router->generate('reference-create', $sport, ['skill' => $skill->getSlug()]),
 			]);
 		}
 		return $this->getResponse($request);

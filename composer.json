@@ -87,13 +87,13 @@
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\SkillHtmlResponse"
 						},
-						"assets": {
-						    "styles": [
-						        "components/jquery-colorbox/example3/colorbox.css"
-						    ],
-						    "scripts": [
-						        "components/jquery-colorbox/jquery.colorbox-min.js"
-						    ]
+						"assets" : {
+							"styles" : [
+								"components/jquery-colorbox/example3/colorbox.css"
+							],
+							"scripts" : [
+								"components/jquery-colorbox/jquery.colorbox-min.js"
+							]
 						}
 					},
 					"skill-create" : {
@@ -108,6 +108,14 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\SkillCreateHtmlResponse"
+						},
+						"assets" : {
+							"styles" : [
+								"components/select2/select2.css"
+							],
+							"scripts" : [
+								"components/select2/select2.min.js"
+							]
 						}
 					},
 					"skill-edit" : {
@@ -122,6 +130,14 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\SkillEditHtmlResponse"
+						},
+						"assets" : {
+							"styles" : [
+								"components/select2/select2.css"
+							],
+							"scripts" : [
+								"components/select2/select2.min.js"
+							]
 						}
 					},
 					"skill-delete" : {
@@ -359,6 +375,14 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\ReferenceCreateHtmlResponse"
+						},
+						"assets" : {
+							"styles" : [
+								"components/select2/select2.css"
+							],
+							"scripts" : [
+								"components/select2/select2.min.js"
+							]
 						}
 					},
 					"reference-edit" : {
@@ -369,6 +393,14 @@
 						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\ReferenceEditHtmlResponse"
+						},
+						"assets" : {
+							"styles" : [
+								"components/select2/select2.css"
+							],
+							"scripts" : [
+								"components/select2/select2.min.js"
+							]
 						}
 					},
 					"reference-delete" : {
@@ -394,9 +426,6 @@
 					"help" : {
 						"title" : "Displays help",
 						"class" : "gossi\\trixionary\\client\\action\\HelpAction",
-						"acl" : [
-							""
-						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\HelpHtmlResponse"
 						}
@@ -404,9 +433,6 @@
 					"info" : {
 						"title" : "Displays info",
 						"class" : "gossi\\trixionary\\client\\action\\InfoAction",
-						"acl" : [
-							""
-						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\InfoHtmlResponse"
 						}

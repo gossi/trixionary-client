@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use gossi\trixionary\model\SkillQuery;
 use gossi\trixionary\model\Skill;
 use gossi\trixionary\model\Map\SkillTableMap;
+use gossi\trixionary\client\formatter\apa\ApaFormatter;
 
 /**
  * Displays a skill
@@ -26,13 +27,22 @@ class SkillAction extends AbstractSportAction {
 		$sport = $this->getSport();
 		$slug = $this->params['skill'];
 		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$this->getServiceContainer()->getApplication()->getPage()->setTitle($skill->getName());
+		$formatter = new ApaFormatter();
+		$references = [];
+		foreach ($skill->getReferences() as $reference) {
+			$references[] = $reference;
+		}
+		$references = $formatter->sort($references);
 		$this->addData([
 			'skill' => $skill,
+			'formatter' => $formatter,
+			'references' => $references,
 			'url_pattern' => $router->generate('skill', $sport, ['skill' => '_skill_']),
 			'group_url_pattern' => $router->generate('group', $sport, ['group' => '_group_']),
 			'transitions_in_url' => $router->generate('transitions', $sport, ['qs' => ['from' => $skill->getStartPosition()->getSlug()]]),
 			'transitions_in_count' => SkillQuery::create()->filterByEndPosition($skill->getStartPosition())->where(SkillTableMap::COL_START_POSITION_ID . ' != ' . SkillTableMap::COL_END_POSITION_ID)->count(),
-			'transitions_out_url' => $router->generate('transitions', $sport, ['qs' => ['to' => $skill->getStartPosition()->getSlug()]]),
+			'transitions_out_url' => $router->generate('transitions', $sport, ['qs' => ['to' => $skill->getEndPosition()->getSlug()]]),
 			'transitions_out_count' => SkillQuery::create()->filterByStartPosition($skill->getEndPosition())->where(SkillTableMap::COL_START_POSITION_ID . ' != ' . SkillTableMap::COL_END_POSITION_ID)->count(),
 			'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $slug]),
 			'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $slug]),

@@ -46,8 +46,10 @@ class PictureDeleteAction extends AbstractSportAction {
 		}
 		
 		if ($skill->getPictureId() == $picture->getId()) {
+			SkillQuery::disableVersioning();
 			$skill->setFeaturedPicture(null);
 			$skill->save();
+			SkillQuery::enableVersioning();
 		}
 		
 		$picture->delete();

@@ -11,6 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Cocur\Slugify\Slugify;
 use Imagine\Image\ImageInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use keeko\core\model\ActivityObject;
 
 class PictureFormAction extends AbstractSportAction {
 	const IMAGE_SIZE = 1600;
@@ -24,6 +25,7 @@ class PictureFormAction extends AbstractSportAction {
 		$picture = $this->getPicture();
 		
 		if ($request->isMethod('POST')) {
+			$create = $picture->isNew();
 			$user = $this->getServiceContainer()->getAuthManager()->getUser();
 			$picture->setUploaderId($user->getId());
 			$picture->setPhotographer($request->request->get('photographer'));
@@ -79,6 +81,14 @@ class PictureFormAction extends AbstractSportAction {
 				$skill->save();
 				SkillQuery::enableVersioning();
 			}
+			
+			// activity
+			$user = $this->getServiceContainer()->getAuthManager()->getUser();
+			$user->newActivity([
+				'verb' => $create ? ActivityObject::VERB_UPLOAD : ActivityObject::VERB_EDIT,
+				'object' => $picture,
+				'target' => $skill
+			]);
 			
 			$url = $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]);
 			return new RedirectResponse($url);

@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-md-6">
 		{{ trans('from')|capitalize }}:
-		<select id="from">
+		<select id="from" class="select2">
 			<option></option>
 			{% for p in positions %}
 			<option value="{{ p.getSlug() }}" {% if p.getSlug() == from %}selected{% endif %}>{{ p.getTitle() }}</option>

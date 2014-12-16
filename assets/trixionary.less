@@ -23,10 +23,6 @@ div[role=tabpanel] {
 	margin-top: 15px;
 }
 
-a:focus {
-	outline: none;
-}
-
 .info-box {
 	padding: 5px;
 	
@@ -180,31 +176,41 @@ a:focus {
 }
 
 .media-preview {
-		width: 100px;
-		height: 100px;
+	width: 100px;
+	height: 100px;
+	box-sizing: content-box;
+	
+	img {
+		float: right;
+	}
+	
+	&-sm {
+		width: 75px;
+		height: 75px;
 		box-sizing: content-box;
 		
 		img {
 			float: right;
 		}
+	}
+	
+	&-xs {
+		width: 50px;
+		height: 50px;
+		box-sizing: content-box;
 		
-		&-sm {
-			width: 75px;
-			height: 75px;
-			box-sizing: content-box;
-			
-			img {
-				float: right;
-			}
-		}
-		
-		&-xs {
-			width: 50px;
-			height: 50px;
-			box-sizing: content-box;
-			
-			img {
-				float: right;
-			}
+		img {
+			float: right;
 		}
 	}
+}
+
+.references {
+	list-style: none;
+	padding-left: 0;
+	
+	& > li {
+		margin-left: 40px;
+		text-indent: -40px; 
+	}
+}

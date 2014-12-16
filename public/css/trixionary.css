@@ -17,9 +17,6 @@ input[type=radio]:focus {
 div[role=tabpanel] {
   margin-top: 15px;
 }
-a:focus {
-  outline: none;
-}
 .info-box {
   padding: 5px;
 }
@@ -161,4 +158,12 @@ a:focus {
 }
 .media-preview-xs img {
   float: right;
+}
+.references {
+  list-style: none;
+  padding-left: 0;
+}
+.references > li {
+  margin-left: 40px;
+  text-indent: -40px;
 }
