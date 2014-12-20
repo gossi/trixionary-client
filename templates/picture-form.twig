@@ -1,15 +1,21 @@
 {% extends 'toolbar.twig' %}
 
+{% block breadcrumb %}
+{{ parent() }}
+<a href="{{ skill_url }}">{{ skill.getName() }}</a> &gt;
+{% if not picture.isNew() %}<a href="{{ manage_pictures_url }}">{{ trans('manage-pictures') }}</a> &gt;{% endif %}
+{{ trans('heading') }}
+{% endblock %}
+
 {% block main %}
-<h2>{{ trans('create-picture') }}</h2>
+<h2>{{ trans('heading') }}</h2>
 
 <div class="row upload-box">
 	<label class="control-label col-md-2">{{ trans('file') }}</label>
 	<div class="col-md-6 clearfix">
 		<span class="btn btn-success fileinput-button">
 			<i class="glyphicon glyphicon-plus"></i>
-			<span>Select file...</span>
-			<!-- The file input field used as target for the file upload widget -->
+			<span>{{ trans('select-file') }}...</span>
 			<input id="fileupload" type="file" name="file">
 		</span>
 		<img id="preview" class="hidden pull-right" style="max-width: 100px; max-height: 100px;">

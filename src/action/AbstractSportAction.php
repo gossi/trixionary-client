@@ -16,6 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use gossi\trixionary\model\Skill;
 use gossi\trixionary\TrixionaryModule;
 use gossi\trixionary\model\Picture;
+use gossi\trixionary\model\Video;
 
 abstract class AbstractSportAction extends AbstractAction {
 	
@@ -47,6 +48,10 @@ abstract class AbstractSportAction extends AbstractAction {
 		$twig->addFunction(new \Twig_SimpleFunction('getPictureThumbUrl', function (Picture $picture) {
 			return $this->getPictureThumbUrl($picture);
 		}));
+		
+		$twig->addFunction(new \Twig_SimpleFunction('getVideoUrl', function (Video $video) {
+			return $this->getVideoUrl($video);
+		}));
 	}
 	
 	protected function getPictureUrl(Picture $picture) {
@@ -62,6 +67,13 @@ abstract class AbstractSportAction extends AbstractAction {
 		$url = $this->getTrixionary()->getPicturesUrl($picture->getSkill()) . '/thumbs/';
 		$url .= $slugifier->slugify($picture->getMovender()) . '-' . $picture->getId() . '.jpg';
 			
+		return $url;
+	}
+	
+	protected function getVideoUrl(Video $video) {
+		$url = $this->getTrixionary()->getVideosUrl($video->getSkill()) . '/';
+		$url .= $video->getFilename();
+	
 		return $url;
 	}
 	

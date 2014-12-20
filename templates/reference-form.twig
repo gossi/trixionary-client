@@ -1,7 +1,14 @@
 {% extends 'toolbar.twig' %}
 
+{% block breadcrumb %}
+{{ parent() }}
+<a href="{{ skill_url }}">{{ skill.getName() }}</a> &gt;
+{% if not reference.isNew() %}<a href="{{ manage_references_url }}">{{ trans('manage-references') }}</a> &gt;{% endif %}
+{{ trans('heading') }}
+{% endblock %}
+
 {% block main %}
-<h2>{{ trans('create-reference') }}</h2>
+<h2>{{ trans('heading') }}</h2>
 
 <form class="form-horizontal" action="{{ global.locations.uri }}" method="post">
 
@@ -27,7 +34,7 @@
 		<label class="col-sm-2 control-label" for="author">{{ trans('author') }}</label>
 		<div class="col-sm-6">
 			<input type="text" class="form-control" id="author" name="author" value="{{ reference.getAuthor() }}">
-			<small class="help-block">{{ trans('person_help') }}</small>
+			<small class="help-block">{{ trans('person-help') }}</small>
 		</div>
 	</div>
 	
@@ -77,7 +84,7 @@
 		<label class="col-sm-2 control-label" for="editor">{{ trans('editor') }}</label>
 		<div class="col-sm-6">
 			<input type="text" class="form-control" id="editor" name="editor" value="{{ reference.getEditor() }}">
-			<small class="help-block">{{ trans('person_help') }}</small>
+			<small class="help-block">{{ trans('person-help') }}</small>
 		</div>
 	</div>
 	

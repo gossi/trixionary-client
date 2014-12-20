@@ -1,5 +1,11 @@
 {% extends 'toolbar.twig' %}
 
+{% block breadcrumb %}
+{{ parent() }}
+<a href="{{ skill_url }}">{{ skill.getName() }}</a> &gt;
+{{ trans('manage-pictures') }}
+{% endblock %}
+
 {% block main %}
 <h2>{{ trans('manage-pictures') }}</h2>
 

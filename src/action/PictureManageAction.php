@@ -28,6 +28,7 @@ class PictureManageAction extends AbstractSportAction {
 		$pictures = PictureQuery::create()->filterBySkill($skill)->find();
 		$this->addData([
 			'skill' => $skill,
+			'skill_url' => $router->generate('skill', $sport, ['skill' => $slug]),
 			'pictures' => $pictures,
 			'edit_url_pattern' => $router->generate('picture-edit', $sport, ['skill' => $slug, 'id' => '_id']),
 			'delete_url_pattern' => $router->generate('picture-delete', $sport, ['skill' => $slug, 'id' => '_id']),

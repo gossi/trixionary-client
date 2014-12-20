@@ -11,6 +11,9 @@ input[type=checkbox]:focus,
 input[type=radio]:focus {
   outline: none;
 }
+.skill h2 {
+  margin-top: 0;
+}
 .rotation-col label {
   margin-top: 4px;
 }
@@ -60,6 +63,9 @@ div[role=tabpanel] {
 }
 .part-box .part-text {
   line-height: 40px;
+}
+.network-manipulation-closeDiv {
+  display: none !important;
 }
 #graph,
 #widget {
@@ -115,8 +121,8 @@ div[role=tabpanel] {
   margin-bottom: 15px;
 }
 .preview {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 125px;
+  max-height: 125px;
   border: 1px solid #000;
 }
 .preview-sm {
@@ -129,10 +135,10 @@ div[role=tabpanel] {
   max-height: 50px;
   border: 1px solid #000;
 }
-.gallery > .preview {
+figure.media > .preview {
   border-color: #DDD;
 }
-.gallery > .preview:hover {
+figure.media > .preview:hover {
   background-color: #EEE;
 }
 .media-preview {
@@ -166,4 +172,171 @@ div[role=tabpanel] {
 .references > li {
   margin-left: 40px;
   text-indent: -40px;
+}
+.gallery figure {
+  margin-top: 10px !important;
+  max-height: 150px;
+  float: left;
+}
+.gallery .preview {
+  display: block;
+  cursor: pointer;
+}
+.gallery-videos .preview,
+.gallery-videos .media-left .title {
+  max-width: 225px;
+  max-height: 150px;
+}
+.gallery-pictures .preview,
+.gallery-pictures .media-left .title {
+  max-width: 150px;
+  max-height: 150px;
+}
+.gallery .media-left .title {
+  font-size: small;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.gallery .movender,
+.gallery .photographer {
+  font-size: smaller;
+  color: #777;
+  display: block;
+}
+.gallery .description {
+  font-size: small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.gallery-details .media-left .title {
+  display: none;
+}
+.gallery-details .media-body {
+  display: table-cell;
+}
+.gallery-details figure {
+  margin-right: 15px;
+}
+.gallery-details.gallery-videos figure {
+  width: 45%;
+  margin-right: 5%;
+}
+.gallery-details.gallery-pictures figure {
+  width: 30%;
+  margin-right: 3%;
+}
+.gallery-list .media-left .title {
+  display: inline-block;
+}
+.gallery-list .media-body {
+  display: none;
+}
+.switcher {
+  margin-top: 20px;
+}
+.spin {
+  animation: spin 2s infinite linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.outline-icon {
+  border-radius: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  border: 2px solid #000000;
+  padding-left: 3px;
+  font-family: "Glyphicons Halflings";
+}
+.structure .btn-edit {
+  margin-top: 21px;
+}
+.structure div.network-manipulationDiv {
+  background: none;
+  border: 0;
+}
+.structure div.network-seperatorLine {
+  margin: 5px 7px 0px 7px;
+}
+.structure span.network-manipulationLabel {
+  line-height: 25px;
+  margin: 0px 0px 0px 5px;
+  vertical-align: 1px;
+}
+.structure span.network-manipulationUI {
+  background: none !important;
+  margin: -14px 0px 0px 0px;
+  padding: 0;
+}
+.structure span.network-manipulationUI:hover {
+  box-shadow: none;
+}
+.structure span.network-manipulationUI.add::before {
+  content: "+";
+  border-radius: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  border: 2px solid #000000;
+  padding-left: 3px;
+  font-family: "Glyphicons Halflings";
+}
+.structure span.network-manipulationUI.connect::before {
+  content: "";
+  border-radius: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  border: 2px solid #000000;
+  padding-left: 3px;
+  font-family: "Glyphicons Halflings";
+}
+.structure span.network-manipulationUI.edit::before {
+  content: "✏";
+  border-radius: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  border: 2px solid #000000;
+  padding-left: 3px;
+  font-family: "Glyphicons Halflings";
+}
+.structure span.network-manipulationUI.delete::before {
+  content: "";
+  border-radius: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  border: 2px solid #000000;
+  padding-left: 3px;
+  font-family: "Glyphicons Halflings";
+}
+.structure span.network-manipulationUI.back::before {
+  content: "";
+  text-indent: -1px;
+  border-radius: 11px;
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  border: 2px solid #000000;
+  padding-left: 3px;
+  font-family: "Glyphicons Halflings";
+}
+.legend p {
+  margin: 0;
+  font-weight: bold;
+}
+.legend span {
+  display: inline-block;
+  width: 27px;
+  height: 16px;
+  vertical-align: sub;
 }

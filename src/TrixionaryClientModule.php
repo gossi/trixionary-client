@@ -83,6 +83,10 @@ class TrixionaryClientModule extends AbstractModule {
 			'reference_create' => $this->hasPermission('reference-create'),
 			'reference_edit' => $this->hasPermission('reference-edit'),
 			'reference_delete' => $this->hasPermission('reference-delete'),
+			'kstruktur_init' => $this->hasPermission('kstruktur-init'),
+			'kstruktur_update' => $this->hasPermission('kstruktur-update'),
+			'functionphase_init' => $this->hasPermission('functionphase-init'),
+			'functionphase_update' => $this->hasPermission('functionphase-update'),
 		];
 	}
 }

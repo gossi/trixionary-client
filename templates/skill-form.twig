@@ -2,6 +2,14 @@
 {% set active = 'edit' %}
 {% extends 'toolbar.twig' %}
 
+{% block breadcrumb %}
+{{ parent() }}
+{% if not skill.isNew() %}
+<a href="{{ skill_url }}">{{ skill.getName() }}</a> &gt;
+{% endif %}
+{{ trans('heading', {'skill': sport.getSkillLabel()}) }}
+{% endblock %}
+
 {% block main %}
 <h2>{{ trans('heading', {'skill': sport.getSkillLabel()}) }}</h2>
 

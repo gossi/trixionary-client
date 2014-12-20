@@ -126,7 +126,8 @@ abstract class SkillFormAction extends AbstractSportAction {
 		$skills = SkillQuery::create()->filterBySport($sport)->find();
 
 		$this->addData([
-			'skill' => $skill, 
+			'skill' => $skill,
+			'skill_url' => !$skill->isNew() ? $router->generate('skill', $sport, ['skill' => $skill->getSlug()]) : '',
 			'positions' => $this->getPositions(),
 			'groups' => $this->getGroups(),
 			'skills' => $skills,
@@ -147,6 +148,8 @@ abstract class SkillFormAction extends AbstractSportAction {
 				'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]),
 				'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $skill->getSlug()]),
 				'manage_references_url' => $router->generate('references', $sport, ['skill' => $skill->getSlug()]),
+				'init_kstruktur_url' => $router->generate('kstruktur-init', $sport, ['skill' => $skill->getSlug()]),
+				'init_functionphase_url' => $router->generate('functionphase-init', $sport, ['skill' => $skill->getSlug()]),
 				'create_picture_url' => $router->generate('picture-create', $sport, ['skill' => $skill->getSlug()]),
 				'create_video_url' => $router->generate('video-create', $sport, ['skill' => $skill->getSlug()]),
 				'create_reference_url' => $router->generate('reference-create', $sport, ['skill' => $skill->getSlug()]),

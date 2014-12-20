@@ -30,23 +30,30 @@ class TrixionaryRouter {
 	}
 	
 	public function match($request) {
+		if (($pos = strpos($request, '?')) !== false) {
+			$request = substr($request, 0, $pos);
+		}
 		$data = $this->matcher->match($request);
 		
-		if (isset($data['qs'])) {
-			$qs = $this->unserializeQueryString($data['qs']);
-			unset($data['qs']);
+		$req = Request::createFromGlobals();
+		$data = array_merge($req->query->all(), $data);
+// 		if (isset($data['qs'])) {
+// 			$qs = $this->unserializeQueryString($data['qs']);
+// 			unset($data['qs']);
 			
-			foreach ($qs as $k => $v) {
-				$data[$k] = $v;
-			}
-		}
+// 			foreach ($qs as $k => $v) {
+// 				$data[$k] = $v;
+// 			}
+// 		}
 		
 		return $data;
 	}
 
 	public function generate($name, $sport, $data = []) {
-		$name = $sport->getSlug() . '-' . $name;
-		$data['sport'] = $sport->getSlug();
+		if (strpos($name, '_') === false) { 
+			$name = $sport->getSlug() . '-' . $name;
+			$data['sport'] = $sport->getSlug();
+		}
 		if (isset($data['qs'])) {
 			$data['qs'] = $this->serializeQueryString($data['qs'], true);
 		}
@@ -73,10 +80,14 @@ class TrixionaryRouter {
 			$params = $sport->getIsDefault() ? ['sport' => $sport->getSlug()] : [];
 
 			$subRoutes->add($sport->getSlug() . '-sport', new Route('', $params));
-			$subRoutes->add($sport->getSlug() . '-transitions', new Route($sport->getTransitionsSlug().'{qs}', array_merge($params, ['qs' => '?']), ['qs' => '.*']));
+			$subRoutes->add($sport->getSlug() . '-transitions', new Route($sport->getTransitionsSlug(), $params));
 			$subRoutes->add($sport->getSlug() . '-graph', new Route('graph', $params));
 			$subRoutes->add($sport->getSlug() . '-group', new Route($sport->getGroupSlug().'/{group}', $params));
 			$subRoutes->add($sport->getSlug() . '-skill', new Route($sport->getSkillSlug().'/{skill}', $params));
+			$subRoutes->add($sport->getSlug() . '-kstruktur-init', new Route($sport->getSkillSlug().'/{skill}/kstruktur/init', $params));
+			$subRoutes->add($sport->getSlug() . '-kstruktur-update', new Route($sport->getSkillSlug().'/{skill}/kstruktur/update', $params));
+			$subRoutes->add($sport->getSlug() . '-functionphase-init', new Route($sport->getSkillSlug().'/{skill}/functionphase/init', $params));
+			$subRoutes->add($sport->getSlug() . '-functionphase-update', new Route($sport->getSkillSlug().'/{skill}/functionphase/update', $params));
 			
 			// skill prop routes
 			foreach (['picture', 'video', 'reference'] as $prop) {
@@ -127,6 +138,8 @@ class TrixionaryRouter {
 		if ($needsIndex) {
 			$routes->add('index', new Route('/'));
 		}
+		
+		$routes->add('_video-fetch-data', new Route('/fetch-url'));
 		
 // 		echo '<pre>';
 // 		print_r($routes);

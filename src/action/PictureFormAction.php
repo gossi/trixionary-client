@@ -96,6 +96,7 @@ class PictureFormAction extends AbstractSportAction {
 		
 		$this->addData([
 			'skill' => $skill,
+			'skill_url' => $router->generate('skill', $sport, ['skill' => $slug]),
 			'picture' => $picture,
 			'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $slug]),
 			'api_url' => $this->getServiceContainer()->getPreferenceLoader()->getSystemPreferences()->getApiUrl(),

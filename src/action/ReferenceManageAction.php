@@ -7,7 +7,6 @@ use gossi\trixionary\model\SkillQuery;
 use gossi\trixionary\model\ReferenceQuery;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use gossi\trixionary\model\Reference;
-use gossi\trixionary\client\folder\ReferenceInterface;
 
 /**
  * Manage references
@@ -30,6 +29,7 @@ class ReferenceManageAction extends AbstractSportAction {
 		$references = ReferenceQuery::create()->filterBySkill($skill)->find();
 		$this->addData([
 			'skill' => $skill,
+			'skill_url' => $router->generate('skill', $sport, ['skill' => $slug]),
 			'references' => $references,
 			'edit_url_pattern' => $router->generate('reference-edit', $sport, ['skill' => $slug, 'id' => '_id']),
 			'delete_url_pattern' => $router->generate('reference-delete', $sport, ['skill' => $slug, 'id' => '_id']),

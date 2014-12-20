@@ -3,7 +3,8 @@
 	"edit": "edit",
 	"delete": "delete",
 	"create": "create",
-	"save": "Save",
+	"save": "save",
+	"saving": "saving",
 	
 	"title": "Title",
 	"slug": "Slug",
@@ -111,7 +112,7 @@
 	"publisher": "Publisher",
 	"address": "Address",
 	"editor": "Editor(s)",
-	"person_help": "In the form: Family Name, Given Name (multiple names can be separated with a semicolon [;])",
+	"person-help": "In the form: Family Name, Given Name (multiple names can be separated with a semicolon [;])",
 	"journal": "Journal",
 	"school": "School",
 	"volume": "Volume",
@@ -120,6 +121,9 @@
 	"pages": "Pages",
 	"howpublished": "How published",
 	"note": "Note",
-	"lastchecked": "Last checked"
+	"lastchecked": "Last checked",
 	
+	"tutorial": "Tutorial|Tutorials", 
+	"upload": "Upload",
+	"select-file": "Select File"
 }

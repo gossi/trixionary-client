@@ -4,6 +4,10 @@
 		{% if sport %}
 		<a href="{{ locations.transitions }}">{{ sport.getTransitionPluralLabel() }}</a> |
 		<a href="{{ locations.graph }}">Graph</a>
+		{% set path %}{% block breadcrumb %}{% endblock %}{% endset %}
+		{% if path is not empty %}
+		| Path: {{ path }}
+		{% endif %}
 		{% endif %}
 	</div>
 	<div class="col-md-5">

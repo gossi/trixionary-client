@@ -7,7 +7,7 @@
 {% endmacro %}
 
 {% macro rotation(skill_flags, label, flags, sport) %}
-	{% if skill_flags> 0 %}
+	{% if skill_flags > 0 %}
 	<tr>
 		<td>{{ label|capitalize }}</td>
 		<td>
@@ -31,19 +31,97 @@
 	{% endif %}
 {% endmacro %}
 
+{% macro videos(videos, context) %}
+	<div class="gallery gallery-details gallery-videos clearfix">
+	{% for video in videos %}
+	<figure class="media">
+		<div class="media-left">
+			{% if video.getReference() %}
+			<img src="{{ video.getPosterUrl() }}" title="{{ video.getTitle() }}" class="preview {{ video.getProvider() }}" href="{{ video.getPlayerUrl() }}" data-width="{{ video.getWidth() }}" data-height="{{ video.getHeight() }}">
+			{% else %}
+			<video src="{{ getVideoUrl(video) }}" title="{{ video.getTitle() }}" class="preview video" href="#video-player" type="video/mp4"></video>
+			{% endif %}
+			<span class="title" title="{{ video.getTitle() }}">{{ video.getTitle() }}</span>
+		</div>
+		<div class="media-body">
+			<h4 class="media-heading title">{{ video.getTitle() }}</h4>
+			<span class="movender">{{ context.sport.getMovender() }}: {{ video.getMovender() }}</span>
+			
+			<p class="description">{{ video.getDescription() }}</p>
+		</div>
+	</figure>
+	{% endfor %}
+	</div>
+{% endmacro %}
+
+{% macro structure(id, title, description, context) %}
+{% set permission = context.permissions[(id ~ '_update')] %}
+<div class="col-md-8 structure">
+	<h3>{{ title }}</h3>
+
+	<div id="{{ id }}-vis"></div>
+</div>
+<div class="col-md-4 structure">
+	{% if permission %}
+	<button class="btn btn-primary btn-xs btn-edit pull-right" id="{{ id }}-edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {{ trans('edit')|capitalize }}</button>
+	{% endif %}
+	<h3>{{ trans('information') }}</h3>
+
+	{% if permission %}
+	<div id="{{ id }}-error" class="alert alert-danger alert-dismissible hidden" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<strong>{{ trans('error') }}!</strong> <span id="{{ id }}-error-message"></span>
+	</div>
+	
+	<form id="{{ id }}-form" role="form" class="alert alert-warning hidden">
+		<div class="form-group">
+			<label for="{{ id }}-title">Title</label>
+			<input class="form-control" type="text" id="{{ id }}-title" required>
+		</div>
+		
+		<div class="form-group">
+			<label for="{{ id }}-type">Type</label>
+			<select id="{{ id }}-type" style="width: 100%; display: block;">
+			{% for type in context[(id ~ '_types')] %}
+				<option value="{{ type }}">{{ trans(type) }}</option>
+			{% endfor %}	
+			</select>
+		</div>
+		
+		<input type="submit" class="btn btn-primary btn-sm" id="{{ id }}-save" value="{{ trans('save') }}">
+	</form>
+	{% endif %}
+	
+	<p>{{ description }}</p>
+	
+	<div class="legend">
+		<p>{{ trans('legend') }}</p>
+		<ul class="list-unstyled" id="{{ id }}-legend">
+			{% for type in context[(id ~ '_types')] %}
+			<li><span class="{{ type }}"></span> {{ trans(type) }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endmacro %}
+
 {% import _self as macros %}
 {% import 'skill-listing.twig' as listing %}
 
-{% block main %}
-<h2>{{ skill.getName() }}</h2>
+{% block breadcrumb %}
+{{ parent() }}
+<a href="{{ global.locations.uri }}">{{ skill.getName() }}</a>
+{% endblock %}
 
-<div class="media">
+{% block main %}
+<div class="media skill">
 	{% if skill.getFeaturedPicture() %}
 	<div class="media-left">
 		<img src="{{ getPictureThumbUrl(skill.getFeaturedPicture()) }}" class="preview-sm">
 	</div>
 	{% endif %}
 	<div class="media-body" style="width: 100%;">
+		<h2>{{ skill.getName() }}</h2>
 		<p>{{ skill.getDescription() }}</p>
 	</div>
 	<div class="media-right bg-info info-box">
@@ -75,8 +153,11 @@
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#movement" aria-controls="movement" role="tab" data-toggle="tab">{{ trans('movement-legend') }}</a></li>
 		{% if skill.getPictures().count() > 0 %}<li role="presentation"><a href="#pictures" aria-controls="pictures" role="tab" data-toggle="tab">{{ transchoice('picture', 2) }}</a></li>{% endif %}
+		{% if videos is not empty %}<li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">{{ transchoice('video', 2) }}</a></li>{% endif %}
 		<li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab">{{ trans('relationships') }}</a></li>
 		{% if skill.getHistory() is not empty %}<li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">{{ trans('history') }}</a></li>{% endif %}
+		{% if skill.getFunctionphases().count() > 0 %}<li role="presentation"><a href="#functionphase" aria-controls="functionphase" role="tab" data-toggle="tab">{{ transchoice('functionphase', 2) }}</a></li>{% endif %}
+		{% if skill.getKstrukturs().count() > 0 %}<li role="presentation"><a href="#k-struktur" aria-controls="k-struktur" role="tab" data-toggle="tab">k-Struktur</a></li>{% endif %}
 		<li role="presentation"><a href="#credits" aria-controls="credits" role="tab" data-toggle="tab">{{ trans('credits') }}</a></li>
 	</ul>
   
@@ -139,20 +220,83 @@
 		<div role="tabpanel" class="tab-pane" id="pictures">
 			<div class="col-md-12">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-10">
 						<h3>{{ transchoice('picture', 2) }}</h3>
-						
+					</div>
+					<div class="col-md-2">
+						<div class="btn-group btn-group-sm pull-right switcher" role="group" href="#picture-gallery">
+							<button type="button" class="btn btn-default active" data-view="list"><span class="glyphicon glyphicon-th-large"></span></button>
+							<button type="button" class="btn btn-default" data-view="details"><span class="glyphicon glyphicon-th-list"></span></button>
+						</div>
+					</div>
+					
+					<div class="col-md-12" id="picture-gallery">
+						<div class="gallery gallery-list gallery-pictures clearfix">
 						{% for picture in skill.getPictures() %}
-						<a href="{{ getPictureUrl(picture) }}" title="{{ picture.getTitle() }}" class="gallery">
-							<img src="{{ getPictureThumbUrl(picture) }}" class="preview img-thumbnail">
-						</a>
+						<figure class="media">
+							<div class="media-left">
+								<a href="{{ getPictureUrl(picture) }}" title="{{ picture.getTitle() }}" class="pictures">
+									<img src="{{ getPictureThumbUrl(picture) }}" class="preview">
+								</a>
+								<span class="title" title="{{ picture.getTitle() }}">{{ picture.getTitle() }}</span>
+							</div>
+						
+							<div class="media-body">
+								<h4 class="media-heading title">{{ picture.getTitle() }}</h4>
+								<span class="movender">{{ sport.getMovender() }}: {{ picture.getMovender() }}</span>
+								<span class="photographer">{{ trans('photographer') }}: {{ picture.getPhotographer() }}</span>
+								
+								<p class="description">{{ picture.getDescription() }}</p>
+							</div>
+						</figure>
 						{% endfor %}
-						<script>
-							$(".gallery").colorbox({
-								rel: 'gallery',
-								maxHeight: '95%'
-							});
-						</script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		
+		{% if videos is not empty %}
+		<!-- Videos -->
+		<div role="tabpanel" class="tab-pane" id="videos">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-10">
+						<h3>{{ transchoice('video', 2) }}</h3>
+					</div>
+					<div class="col-md-2">
+						<div class="btn-group btn-group-sm pull-right switcher" role="group" href="#video-gallery">
+							<button type="button" class="btn btn-default" data-view="list"><span class="glyphicon glyphicon-th-large"></span></button>
+							<button type="button" class="btn btn-default active" data-view="details"><span class="glyphicon glyphicon-th-list"></span></button>
+						</div>
+					</div>
+					
+					<div class="col-md-12" id="video-gallery">
+						{{ macros.videos(videos, _context) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		
+		{% if tutorials is not empty %}
+		<!-- Videos -->
+		<div role="tabpanel" class="tab-pane" id="tutorials">
+			<div class="col-md-10">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>{{ transchoice('tutorials', 2) }}</h3>
+					</div>
+					<div class="col-md-2">
+						<div class="btn-group btn-group-sm pull-right switcher" role="group" href="#tutorials-gallery">
+							<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span></button>
+							<button type="button" class="btn btn-default active"><span class="glyphicon glyphicon-th-list"></span></button>
+						</div>
+					</div>
+					
+					<div class="col-md-12" id="tutorials-gallery">	
+						{{ macros.videos(tutorials, _context) }}
 					</div>
 				</div>
 			</div>
@@ -258,6 +402,20 @@
 		</div>
 		{% endif %}
 		
+		{% if skill.getKstrukturs().count() > 0 %}
+		<!-- k-struktur -->
+		<div role="tabpanel" class="tab-pane" id="k-struktur">
+			{{ macros.structure('kstruktur', 'k-Struktur', trans('kassat-desc'), _context) }}
+		</div>
+		{% endif %}
+		
+		{% if skill.getFunctionPhases().count() > 0 %}
+		<!-- function phases -->
+		<div role="tabpanel" class="tab-pane" id="functionphase">
+			{{ macros.structure('functionphase', transchoice('functionphase', 2), trans('goehner-desc'), _context) }}
+		</div>
+		{% endif %}
+		
 		<!-- Credits -->
 		<div role="tabpanel" class="tab-pane" id="credits">
 			<div class="col-md-12">
@@ -303,5 +461,69 @@
 
 	</div>
 </div>
+
+<video style="width: 100%;" controls id="video-player" class="hidden"></video>
+{% if skill.getKstrukturs().count() > 0 or skill.getFunctionphases().count() > 0 %}
+<script>
+{% if skill.getKstrukturs().count() > 0 %}
+// kstruktur
+$(function() {
+	var kstruktur = new Structure({
+		'id': 'kstruktur',
+		'update_url': '{{ kstruktur_update_url }}',
+		'root': '{{ kstruktur_root }}',
+		'nodes': {{ kstruktur_nodes|raw }},
+		'edges': {{ kstruktur_edges|raw }},
+		'groups': {
+			{% for group in kstruktur_types %}
+			"{{ group }}": {
+				color: Structure.colors[{{ loop.index0 }}]
+			}{% if not loop.last %},{% endif %}
+			{% endfor %}
+		},
+		'default_group': '{{ kstruktur_default_type }}',
+		'labels': {
+			'edit': '{{ trans('edit')|capitalize }}',
+			'save': '{{ trans('save')|capitalize }}',
+			'saving': '{{ trans('saving')|capitalize }}'
+		}
+	});
+
+	$('a[href=#k-struktur]').on('shown.bs.tab', function (e) {
+		kstruktur.redraw();
+	});
+});
+{% endif %}
+{% if skill.getFunctionphases().count() > 0 %}
+// function phase
+$(function() {
+	var functionphase = new Structure({
+		'id': 'functionphase',
+		'update_url': '{{ functionphase_update_url }}',
+		'root': '{{ functionphase_root }}',
+		'nodes': {{ functionphase_nodes|raw }},
+		'edges': {{ functionphase_edges|raw }},
+		'groups': {
+			{% for group in functionphase_types %}
+			"{{ group }}": {
+				color: Structure.colors[{{ loop.index0 }}]
+			}{% if not loop.last %},{% endif %}
+			{% endfor %}
+		},
+		'default_group': '{{ functionphase_default_type }}',
+		'labels': {
+			'edit': '{{ trans('edit')|capitalize }}',
+			'save': '{{ trans('save')|capitalize }}',
+			'saving': '{{ trans('saving')|capitalize }}'
+		}
+	});
+
+	$('a[href=#functionphase]').on('shown.bs.tab', function (e) {
+		functionphase.redraw();
+	});
+});
+{% endif %}
+</script>
+{% endif %}
 
 {% endblock %}

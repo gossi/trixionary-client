@@ -33,8 +33,12 @@ abstract class ReferenceFormAction extends AbstractSportAction {
 		$skill = $this->getSkill();
 		$router = $this->getModule()->getRouter();
 		$reference = $this->getReference();
+		
+		if ($reference->getManaged()) {
+			$url = $router->generate('references', $sport, ['skill' => $skill->getSlug()]);
+			return new RedirectResponse($url);
+		}
 
-		// ['pages', 'howpublished', 'url', 'lastchecked'];
 		if ($request->isMethod('POST')) {
 			$post = $request->request;
 			$reference->setSkill($skill);
@@ -73,6 +77,7 @@ abstract class ReferenceFormAction extends AbstractSportAction {
 		
 		$this->addData([
 			'skill' => $skill,
+			'skill_url' => $router->generate('skill', $sport, ['skill' => $skill->getSlug()]),
 			'reference' => $reference,
 			'types' => [
 				ReferenceInterface::BOOK,
