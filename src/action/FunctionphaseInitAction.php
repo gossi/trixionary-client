@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * 
  * @author gossi
  */
-class FunctionphaseInitAction extends AbstractSportAction {
+class FunctionphaseInitAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -23,10 +23,7 @@ class FunctionphaseInitAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
-		$router = $this->getModule()->getRouter();
+		$skill = $this->getSkill();
 		
 		if ($skill->getFunctionphases()->count() == 0) {
 			$main = new FunctionPhase();
@@ -36,7 +33,7 @@ class FunctionphaseInitAction extends AbstractSportAction {
 			$main->save();
 		}
 		
-		$url = $router->generate('skill', $sport, ['skill' => $slug]) . '#k-struktur';
+		$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]) . '#k-struktur';
 		return new RedirectResponse($url);
 	}
 	

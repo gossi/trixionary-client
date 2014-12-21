@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use gossi\trixionary\model\GroupQuery;
+use gossi\trixionary\model\SkillQuery;
 
 /**
  * Deletes a group
@@ -21,12 +22,26 @@ class GroupDeleteAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$group = GroupQuery::create()->filterBySport($this->getSport())->filterBySlug($this->params['group'])->findOne();
-		$group->delete();
+		$sport = $this->getSport();
+		$group = GroupQuery::create()->filterBySport($sport)->filterBySlug($this->params['group'])->findOne();
 		
-		$router = $this->getModule()->getRouter();
-		$url = $router->generate('sport', $this->getSport());
-		return new RedirectResponse($url);
+		// check for dependencies
+		$skills = SkillQuery::create()->filterByGroup($group);
+		if ($skills->count()) {
+			$this->addData([
+				'group' => $group,
+				'skills' => $skills->find(),
+				'group_url' => $this->generateUrl('group', ['group' => $group->getSlug()]),
+				'url_pattern' => $this->generateUrl('skill', ['skill' => '_skill_'])
+			]);
+			
+			return $this->getResponse($request);
+		} else {
+			$group->delete();
+			
+			$url = $this->generateUrl('sport');
+			return new RedirectResponse($url);
+		}
 	}
 	
 	protected function setDefaultParams(OptionsResolverInterface $resolver) {

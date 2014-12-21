@@ -16,8 +16,12 @@ use gossi\trixionary\model\SkillPartQuery;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Propel;
 use keeko\core\model\ActivityObject;
+use Symfony\Component\Filesystem\Filesystem;
+use Imagine\Gd\Imagine;
 
-abstract class SkillFormAction extends AbstractSportAction {
+abstract class SkillFormAction extends AbstractSkillAction {
+	
+	const IMAGE_SIZE = 1600;
 	
 	/**
 	 * Automatically generated run method
@@ -28,7 +32,8 @@ abstract class SkillFormAction extends AbstractSportAction {
 	public function run(Request $request) {
 		$sport = $this->getSport();
 		$skill = $this->getSkill();
-		$router = $this->getModule()->getRouter();
+		$fs = new Filesystem();
+		$sequenceExists = !$skill->isNew() && $fs->exists($this->getTrixionary()->getSequencePath($skill));
 
 		if ($request->isMethod('POST')) {
 			$slug = $request->request->get('slug'); 
@@ -108,6 +113,40 @@ abstract class SkillFormAction extends AbstractSportAction {
 			if ($request->request->has('change_comment')) {
 				$skill->setVersionComment($request->request->get('change_comment'));
 			}
+			
+			// file uploaded
+			$uploadname = $request->request->get('filename');
+			if (!empty($uploadname)) {
+				// create folder
+				$skillFolder = $this->getTrixionary()->getSkillPath($skill);
+				if (!$fs->exists($skillFolder)) {
+					$fs->mkdir($skillFolder, 0777);
+				}
+				
+				// load file
+				$imagine = new Imagine();
+				$image = $imagine->open($this->getTrixionary()->getUploadPath() . '/' . $uploadname);
+				
+				// resize
+				$size = $image->getSize();
+				if (max($size->getWidth(), $size->getHeight()) > self::IMAGE_SIZE) {
+					if ($size->getWidth() > $size->getHeight()) {
+						$size = $size->widen(self::IMAGE_SIZE);
+					} else {
+						$size = $size->heighten(self::IMAGE_SIZE);
+					}
+					$image = $image->resize($size);
+				}
+
+				// save
+				$filename = $this->getTrixionary()->getSequencePath($skill);
+				$image->save($filename, ['jpeg_quality' => 100]);
+			}
+			
+			// delete uploaded file
+			if ($sequenceExists && $request->request->get('sequence_delete')) {
+				$fs->remove($this->getTrixionary()->getSequencePath($skill));
+			} 
 
 			$create = $skill->isNew();
 			$skill->save();			
@@ -119,7 +158,7 @@ abstract class SkillFormAction extends AbstractSportAction {
 				'target' => $sport
 			]);
 
-			$url = $router->generate('skill', $sport, ['skill' => $skill->getSlug()]);
+			$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]);
 			return new RedirectResponse($url);
 		}
 		
@@ -127,7 +166,8 @@ abstract class SkillFormAction extends AbstractSportAction {
 
 		$this->addData([
 			'skill' => $skill,
-			'skill_url' => !$skill->isNew() ? $router->generate('skill', $sport, ['skill' => $skill->getSlug()]) : '',
+			'sequence_url' => $sequenceExists ? $this->getTrixionary()->getSequenceUrl($skill) : '',
+			'api_url' => $this->getServiceContainer()->getPreferenceLoader()->getSystemPreferences()->getApiUrl(),
 			'positions' => $this->getPositions(),
 			'groups' => $this->getGroups(),
 			'skills' => $skills,
@@ -140,21 +180,6 @@ abstract class SkillFormAction extends AbstractSportAction {
 				'opposite' => Skill::FLAG_OPPOSITE
 			]
 		]);
-		
-		if (!empty($this->params['skill'])) {
-			$this->addData([
-				'delete_url' => $router->generate('skill-delete', $sport, ['skill' => $skill->getSlug()]),
-				'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $skill->getSlug()]),
-				'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]),
-				'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $skill->getSlug()]),
-				'manage_references_url' => $router->generate('references', $sport, ['skill' => $skill->getSlug()]),
-				'init_kstruktur_url' => $router->generate('kstruktur-init', $sport, ['skill' => $skill->getSlug()]),
-				'init_functionphase_url' => $router->generate('functionphase-init', $sport, ['skill' => $skill->getSlug()]),
-				'create_picture_url' => $router->generate('picture-create', $sport, ['skill' => $skill->getSlug()]),
-				'create_video_url' => $router->generate('video-create', $sport, ['skill' => $skill->getSlug()]),
-				'create_reference_url' => $router->generate('reference-create', $sport, ['skill' => $skill->getSlug()]),
-			]);
-		}
 		return $this->getResponse($request);
 	}
 	
@@ -177,7 +202,7 @@ abstract class SkillFormAction extends AbstractSportAction {
 		return $flags;
 	}
 	
-	private function getSkill() {
+	protected function getSkill() {
 		if (isset($this->params['skill'])) {
 			return SkillQuery::create()
 				->filterBySlug($this->params['skill'])

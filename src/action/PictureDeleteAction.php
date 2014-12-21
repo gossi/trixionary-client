@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * 
  * @author gossi
  */
-class PictureDeleteAction extends AbstractSportAction {
+class PictureDeleteAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -24,15 +24,12 @@ class PictureDeleteAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$router = $this->getModule()->getRouter();
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		$picture = PictureQuery::create()->findOneById($this->params['id']);
 		
 		$fs = new Filesystem();
 		$filename = $picture->getFilename();
-		$trickFolder = $this->getSkillFolderPath() . '/' . $slug . '/pictures';
+		$trickFolder = $this->getTrixionary()->getPicturesPath($skill);
 		$thumbsFolder = $trickFolder . '/thumbs';
 		$trick = $trickFolder . '/' . $filename;
 		$thumb = $thumbsFolder . '/' . $filename;
@@ -54,7 +51,7 @@ class PictureDeleteAction extends AbstractSportAction {
 		
 		$picture->delete();
 
-		$url = $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]);
+		$url = $this->generateUrl('pictures', ['skill' => $skill->getSlug()]);
 		return new RedirectResponse($url);
 	}
 

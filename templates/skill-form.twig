@@ -14,6 +14,8 @@
 <h2>{{ trans('heading', {'skill': sport.getSkillLabel()}) }}</h2>
 
 <form class="form-horizontal" action="{{ global.location.uri }}" method="post">
+<input type="hidden" name="filename" id="filename">
+<input type="hidden" name="sequence_delete" id="sequence_delete">
 
 	<fieldset>
 		<legend>{{ trans('descriptive-legend') }}</legend>
@@ -66,6 +68,65 @@
 	
 	<fieldset>
 		<legend>{{ trans('movement-legend') }}</legend>
+
+		<div class="form-group">
+			<label class="control-label control-label-top col-md-2">{{ trans('file') }}</label>
+			<div class="col-md-6 clearfix">
+				<span class="btn btn-success fileinput-button">
+					<i class="glyphicon glyphicon-plus"></i>
+					<span>{{ trans('select-file') }}...</span>
+					<input id="fileupload" type="file" name="file">
+				</span>
+				<img id="preview" {% if sequence_url is not empty %}src="{{ sequence_url }}" class="pull-right"{% else %} class="hidden pull-right"{% endif %} style="max-width: 100px; max-height: 100px;">
+				<button type="button" id="upload-delete" style="margin-right: 5px;" class="close pull-right{% if sequence_url is empty %} hidden{% endif %}"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<span id="uploaded"></span>
+				<div id="progress" class="progress hidden"><div class="progress-bar progress-bar-success"></div></div>
+			</div>
+			
+			<script>
+			var lastFile = null;
+			$('#fileupload').fileupload({
+				url: '{{ api_url }}gossi.trixionary/upload',
+				dataType: 'json',
+				acceptFileTypes: /(\.|\/)(jpe?g|png)$/i,
+				done: function (e, data) {
+					lastFile = data.result.files[0];
+					if (lastFile.error) {
+						$('#uploaded').text(lastFile.error).addClass('text-danger');
+					} else {
+						$('#uploaded').text(lastFile.name).removeClass('text-danger');
+						$('#filename').val(lastFile.name);
+						$('#upload-delete').removeClass('hidden');
+						$('#sequence_delete').val('');
+					}
+					$('#preview').attr('src', lastFile.url).removeClass('hidden');
+					$('#progress').addClass('hidden');
+					$('#fileupload').val('');
+				},
+				progressall: function (e, data) {
+					var progress = parseInt(data.loaded / data.total * 100, 10);
+					$('#progress .progress-bar').css(
+						'width',
+						progress + '%'
+					);
+				}
+			}).on('fileuploadadd', function (e, data) {
+				if (lastFile !== null && data.files[0].name !== lastFile.name) {
+					var xhr = new XMLHttpRequest();
+					xhr.open(lastFile.deleteType, lastFile.deleteUrl, true);
+					xhr.send();
+					$('#filename').val('');
+				}
+				$('#progress').removeClass('hidden');
+			});
+			$('#upload-delete').on('click', function (e) {
+				$('#sequence_delete').val('1');
+				$('#uploaded').text('');
+				$('#preview').addClass('hidden');
+				$('#upload-delete').addClass('hidden');
+			});
+			</script>
+		</div>
 		
 		<div class="form-group">
 			<label class="col-md-2 control-label control-label-top" for="movement-description">{{ trans('movement-description') }}</label>
@@ -293,7 +354,7 @@
 			<div class="col-md-6">
 				<select name="dependencies[]" id="dependencies" multiple style="width: 100%">
 				{% for s in skills %}
-				<option value="{{ s.getId() }}"{% if skill.hasParent(s) %} selected{% endif %}>{{ s.getName() }}</option>
+				<option class="{% if s.isTransition() %}transition{% else %}skill{% endif %}" value="{{ s.getId() }}"{% if skill.hasParent(s) %} selected{% endif %}>{{ s.getName() }}</option>
 				{% endfor %}
 				</select>
 				<span id="multiplier-help" class="help-block">{{ trans('learn-before', {'skills': sport.getSkillPluralLabel()}) }}</span>
@@ -385,12 +446,52 @@
 			showClassification();
 			showMultiplier();
 
-			// post script
+			// toggle transitions
+			var skills = document.querySelectorAll('#dependencies option.skill');
+			var transitions = document.querySelectorAll('#dependencies option.transition');
+			
+			var startPosition = $('#startPosition').select2();
+			var endPosition = $('#endPosition').select2();
+			var toggleParents = function () {
+				var start = startPosition.val();
+				var end = endPosition.val();
+
+				// show skill
+				if (start == end) {
+					for (var i = 0; i < skills.length; i++) {
+						var node = skills[i];
+						node.classList.remove('hidden');
+					}
+
+					for (var i = 0; i < transitions.length; i++) {
+						var node = transitions[i];
+						node.classList.add('hidden');
+					}
+				} 
+
+				// show transitions
+				else {
+					for (var i = 0; i < skills.length; i++) {
+						var node = skills[i];
+						node.classList.add('hidden');
+					}
+
+					for (var i = 0; i < transitions.length; i++) {
+						var node = transitions[i];
+						node.classList.remove('hidden');
+					}
+				}
+			}
+			startPosition.on('change', toggleParents);
+			endPosition.on('change', toggleParents);
+
+			toggleParents();
+
+			// post scriptum
 			$('#groups').select2();
 			$('#parts').select2();
 			$('#dependencies').select2();
-			$('#startPosition').select2();
-			$('#endPosition').select2();
+			$('.select2').select2();
 		</script>
 		
 	</fieldset>
@@ -411,7 +512,7 @@
 	
 	<div class="form-group">
 		<div class="col-md-6 col-md-offset-2">
-			<input type="submit" class="btn btn-primary form-control" value="{{ trans('save') }}">
+			<input type="submit" class="btn btn-primary form-control" value="{{ trans('save')|capitalize }}">
 		</div>
 	</div>
 </form>

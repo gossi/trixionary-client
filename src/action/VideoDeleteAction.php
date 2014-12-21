@@ -15,7 +15,7 @@ use gossi\trixionary\model\VideoQuery;
  * 
  * @author gossi
  */
-class VideoDeleteAction extends AbstractSportAction {
+class VideoDeleteAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -24,10 +24,7 @@ class VideoDeleteAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$router = $this->getModule()->getRouter();
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		$video = VideoQuery::create()->findOneById($this->params['id']);
 		
 		$fs = new Filesystem();
@@ -37,9 +34,13 @@ class VideoDeleteAction extends AbstractSportAction {
 			$fs->remove($filename);
 		}
 		
+		if ($video->getReference()) {
+			$video->getReference()->delete();
+		}
+		
 		$video->delete();
 
-		$url = $router->generate('videos', $sport, ['skill' => $skill->getSlug()]);
+		$url = $this->generateUrl('videos', ['skill' => $skill->getSlug()]);
 		return new RedirectResponse($url);
 	}
 

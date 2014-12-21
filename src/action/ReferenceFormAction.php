@@ -20,7 +20,7 @@ use gossi\trixionary\model\Reference;
 use gossi\trixionary\model\ReferenceQuery;
 use gossi\trixionary\client\formatter\ReferenceInterface;
 
-abstract class ReferenceFormAction extends AbstractSportAction {
+abstract class ReferenceFormAction extends AbstractSkillAction {
 	
 	/**
 	 * Automatically generated run method
@@ -29,13 +29,11 @@ abstract class ReferenceFormAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$sport = $this->getSport();
 		$skill = $this->getSkill();
-		$router = $this->getModule()->getRouter();
 		$reference = $this->getReference();
 		
 		if ($reference->getManaged()) {
-			$url = $router->generate('references', $sport, ['skill' => $skill->getSlug()]);
+			$url = $this->generateUrl('references', ['skill' => $skill->getSlug()]);
 			return new RedirectResponse($url);
 		}
 
@@ -71,13 +69,11 @@ abstract class ReferenceFormAction extends AbstractSportAction {
 				'target' => $skill
 			]);
 
-			$url = $router->generate('skill', $sport, ['skill' => $skill->getSlug()]);
+			$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]);
 			return new RedirectResponse($url);
 		}
 		
 		$this->addData([
-			'skill' => $skill,
-			'skill_url' => $router->generate('skill', $sport, ['skill' => $skill->getSlug()]),
 			'reference' => $reference,
 			'types' => [
 				ReferenceInterface::BOOK,
@@ -91,25 +87,10 @@ abstract class ReferenceFormAction extends AbstractSportAction {
 				ReferenceInterface::PHDTHESIS,
 				ReferenceInterface::HABILITATIONTHESIS,
 				ReferenceInterface::MULTIMEDIA
-			],
-			'delete_url' => $router->generate('skill-delete', $sport, ['skill' => $skill->getSlug()]),
-			'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $skill->getSlug()]),
-			'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]),
-			'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $skill->getSlug()]),
-			'manage_references_url' => $router->generate('references', $sport, ['skill' => $skill->getSlug()]),
-			'create_picture_url' => $router->generate('picture-create', $sport, ['skill' => $skill->getSlug()]),
-			'create_video_url' => $router->generate('video-create', $sport, ['skill' => $skill->getSlug()]),
-			'create_reference_url' => $router->generate('reference-create', $sport, ['skill' => $skill->getSlug()]),
+			]
 		]);
 
 		return $this->getResponse($request);
-	}
-	
-	private function getSkill() {
-		return SkillQuery::create()
-			->filterBySlug($this->params['skill'])
-			->filterBySport($this->getSport())
-			->findOne();
 	}
 	
 	/**

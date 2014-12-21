@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * 
  * @author gossi
  */
-class KstrukturInitAction extends AbstractSportAction {
+class KstrukturInitAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -21,10 +21,7 @@ class KstrukturInitAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
-		$router = $this->getModule()->getRouter();
+		$skill = $this->getSkill();
 		
 		if ($skill->getKstrukturs()->count() == 0) {
 			$main = new Kstruktur();
@@ -34,7 +31,7 @@ class KstrukturInitAction extends AbstractSportAction {
 			$main->save();
 		}
 		
-		$url = $router->generate('skill', $sport, ['skill' => $slug]) . '#k-struktur';
+		$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]) . '#k-struktur';
 		return new RedirectResponse($url);
 	}
 	

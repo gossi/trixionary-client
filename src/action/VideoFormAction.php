@@ -11,13 +11,10 @@ use Symfony\Component\Filesystem\Filesystem;
 use gossi\trixionary\model\Reference;
 use gossi\trixionary\client\formatter\ReferenceInterface;
 
-class VideoFormAction extends AbstractSportAction {
+class VideoFormAction extends AbstractSkillAction {
 
 	public function run(Request $request) {
-		$router = $this->getModule()->getRouter();
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		$video = $this->getVideo();
 		
 		if ($request->isMethod('POST')) {
@@ -34,6 +31,7 @@ class VideoFormAction extends AbstractSportAction {
 			$video->setPosterUrl($post->get('poster_url'));
 			$video->setWidth($post->get('width'));
 			$video->setHeight($post->get('height'));
+			$video->setIsTutorial($post->get('tutorial'));
 			$video->setSkill($skill);
 			
 			if ($post->get('type') == 'upload') {
@@ -74,23 +72,15 @@ class VideoFormAction extends AbstractSportAction {
 				'target' => $skill
 			]);
 
-			$url = $router->generate('videos', $sport, ['skill' => $skill->getSlug()]);
+			$url = $this->generateUrl('videos', ['skill' => $skill->getSlug()]);
 			return new RedirectResponse($url);
 		}
 		
 		$this->addData([
-			'skill' => $skill,
-			'skill_url' => $router->generate('skill', $sport, ['skill' => $slug]),
 			'video' => $video,
-			'edit_url' => $router->generate('skill-edit', $sport, ['skill' => $slug]),
+			'edit_url' => $this->generateUrl('skill-edit', ['skill' => $skill->getSlug()]),
 			'api_url' => $this->getServiceContainer()->getPreferenceLoader()->getSystemPreferences()->getApiUrl(),
-			'fetch_url' => $router->generate('_video-fetch-data', null),
-			'manage_pictures_url' => $router->generate('pictures', $sport, ['skill' => $slug]),
-			'manage_videos_url' => $router->generate('videos', $sport, ['skill' => $slug]),
-			'manage_references_url' => $router->generate('references', $sport, ['skill' => $slug]),
-			'create_picture_url' => $router->generate('picture-create', $sport, ['skill' => $slug]),
-			'create_video_url' => $router->generate('video-create', $sport, ['skill' => $slug]),
-			'create_reference_url' => $router->generate('reference-create', $sport, ['skill' => $slug]),
+			'fetch_url' => $this->generateUrl('_video-fetch-data')
 		]);
 		return $this->getResponse($request);
 	}

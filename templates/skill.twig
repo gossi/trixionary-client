@@ -154,6 +154,7 @@
 		<li role="presentation" class="active"><a href="#movement" aria-controls="movement" role="tab" data-toggle="tab">{{ trans('movement-legend') }}</a></li>
 		{% if skill.getPictures().count() > 0 %}<li role="presentation"><a href="#pictures" aria-controls="pictures" role="tab" data-toggle="tab">{{ transchoice('picture', 2) }}</a></li>{% endif %}
 		{% if videos is not empty %}<li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">{{ transchoice('video', 2) }}</a></li>{% endif %}
+		{% if tutorials is not empty %}<li role="presentation"><a href="#tutorials" aria-controls="tutorials" role="tab" data-toggle="tab">{{ transchoice('tutorial', 2) }}</a></li>{% endif %}
 		<li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab">{{ trans('relationships') }}</a></li>
 		{% if skill.getHistory() is not empty %}<li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">{{ trans('history') }}</a></li>{% endif %}
 		{% if skill.getFunctionphases().count() > 0 %}<li role="presentation"><a href="#functionphase" aria-controls="functionphase" role="tab" data-toggle="tab">{{ transchoice('functionphase', 2) }}</a></li>{% endif %}
@@ -170,7 +171,9 @@
 				<div class="row">
 					<div class="col-md-12">
 						<h3>{{ trans('movement-description') }}</h3>
-						<p>[verlaufsbild]</p>
+						{% if sequence_url is not empty %}
+						<p><img src="{{ sequence_url }}" style="width: 100%;"></p>
+						{% endif %}
 						<p>{{ skill.getMovementDescription() }}</p>
 					</div>
 				</div>
@@ -180,9 +183,12 @@
 						<h3>{{ trans('parts') }}</h3>
 						{% for part in skill.getParts() %}
 						<div class="part-item part-box pull-left">
+							{% set thumb = getSkillThumbUrl(part) %}
+							{% if thumb is not null %}
 							<a class="pull-left skill-picture" href="{{ url_pattern|replace({'_skill_': part.getSlug()}) }}">
-								[picture]
+								<img src="{{ thumb }}" class="preview preview-xs">
 							</a>
+							{% endif %}
 							<a class="part-text" href="{{ url_pattern|replace({'_skill_': part.getSlug()}) }}">{{ part.getName() }}</a>
 						</div>
 						{% if not loop.last %}
@@ -283,15 +289,15 @@
 		{% if tutorials is not empty %}
 		<!-- Videos -->
 		<div role="tabpanel" class="tab-pane" id="tutorials">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<div class="row">
-					<div class="col-md-12">
-						<h3>{{ transchoice('tutorials', 2) }}</h3>
+					<div class="col-md-10">
+						<h3>{{ transchoice('tutorial', 2) }}</h3>
 					</div>
 					<div class="col-md-2">
 						<div class="btn-group btn-group-sm pull-right switcher" role="group" href="#tutorials-gallery">
-							<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span></button>
-							<button type="button" class="btn btn-default active"><span class="glyphicon glyphicon-th-list"></span></button>
+							<button type="button" class="btn btn-default" data-view="list"><span class="glyphicon glyphicon-th-large"></span></button>
+							<button type="button" class="btn btn-default active" data-view="details"><span class="glyphicon glyphicon-th-list"></span></button>
 						</div>
 					</div>
 					

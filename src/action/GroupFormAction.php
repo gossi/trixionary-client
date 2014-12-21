@@ -15,7 +15,6 @@ abstract class GroupFormAction extends AbstractSportAction {
 		$group = $this->getGroup();
 		
 		$redirect = $request->headers->get('referer');
-		$router = $this->getModule()->getRouter();
 	
 		if ($request->isMethod('POST')) {
 			$redirect = $request->request->get('redirect');
@@ -32,16 +31,18 @@ abstract class GroupFormAction extends AbstractSportAction {
 			
 			return new RedirectResponse($redirect);
 		}
-	
+		
+		if (!empty($this->params['group'])) {
+			$this->addData([
+				'group_url' => $this->generateUrl('group', ['group' => $group->getSlug()]),
+				'delete_url' => $this->generateUrl('group-delete', ['group' => $group->getSlug()]),
+				'edit_url' => $this->generateUrl('group-edit', ['group' => $group->getSlug()])
+			]);
+		}
+
 		$this->addData([
 			'group' => $group,
-			'redirect' => $redirect,
-			'delete_url' => !empty($this->params['group'])
-				? $router->generate('group-delete', $sport, ['group' => $group->getSlug()])
-				: '',
-			'edit_url' => !empty($this->params['group'])
-				? $router->generate('group-edit', $sport, ['group' => $group->getSlug()])
-				: ''
+			'redirect' => $redirect
 		]);
 		return $this->getResponse($request);
 	}

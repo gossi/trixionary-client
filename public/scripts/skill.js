@@ -392,4 +392,16 @@ Structure.colors = [{
 	highlight: {
 		border: '#56a957'
 	}
-}, fallback, fallback, fallback];
+}, fallback, {
+	background: '#FCF8E3',
+	border: '#c7ac7d',
+	highlight: {
+		border: '#b89559'
+	}
+}, {
+	background: '#fae3c4',
+	border: '#ec971f',
+	highligh: {
+		border: '#c77c11'
+	}
+}];

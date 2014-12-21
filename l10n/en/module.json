@@ -125,5 +125,23 @@
 	
 	"tutorial": "Tutorial|Tutorials", 
 	"upload": "Upload",
-	"select-file": "Select File"
+	"select-file": "Select File",
+	"information": "Information",
+	"legend": "Legend",
+	
+	"init-functionphases": "Initialize Function Phases", 
+	"functionphase": "Function Phase|Function Phases",
+	"goehner-desc": "This is the structuring model, invented by Ulrich Göhner",
+	"main": "Main function phase",
+	"helpful": "Helpful function phase",
+	"prepare": "Preparing function phase",
+	"support": "Supportive function phase",
+	"transition": "Transitional function phase",
+	
+	"init-kstruktur": "Initialize k-Struktur",
+	"goehner-desc": "This is the structuring model, invented by Georg Kassat",
+	"structure": "Structual",
+	"effect": "Effect",
+	"action": "Action"
+	
 }

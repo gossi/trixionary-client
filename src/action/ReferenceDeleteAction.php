@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * 
  * @author gossi
  */
-class ReferenceDeleteAction extends AbstractSportAction {
+class ReferenceDeleteAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -23,14 +23,11 @@ class ReferenceDeleteAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$router = $this->getModule()->getRouter();
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		$reference = ReferenceQuery::create()->findOneById($this->params['id']);
 		$reference->delete();
 
-		$url = $router->generate('references', $sport, ['skill' => $skill->getSlug()]);
+		$url = $this->generateUrl('references', ['skill' => $skill->getSlug()]);
 		return new RedirectResponse($url);
 	}
 

@@ -14,7 +14,7 @@ use gossi\trixionary\model\FunctionPhaseQuery;
  * 
  * @author gossi
  */
-class FunctionphaseUpdateAction extends AbstractSportAction {
+class FunctionphaseUpdateAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -23,9 +23,7 @@ class FunctionphaseUpdateAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		
 		$content = json_decode($request->getContent(), true);
 		$nodes = $content['nodes'];

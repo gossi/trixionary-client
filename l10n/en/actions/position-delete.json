@@ -1,0 +1,4 @@
+{
+	"heading": "Delete Position",
+	"error-msg": "Cannot delete {position}, the following {skills} still depend on it:"
+}

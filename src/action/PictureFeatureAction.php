@@ -3,10 +3,8 @@ namespace gossi\trixionary\client\action;
 
 use keeko\core\action\AbstractAction;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use gossi\trixionary\model\SkillQuery;
 use gossi\trixionary\model\PictureQuery;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -15,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * 
  * @author gossi
  */
-class PictureFeatureAction extends AbstractSportAction {
+class PictureFeatureAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -24,10 +22,7 @@ class PictureFeatureAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$router = $this->getModule()->getRouter();
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		$picture = PictureQuery::create()->findOneById($this->params['id']);
 		
 		SkillQuery::disableVersioning();
@@ -35,7 +30,7 @@ class PictureFeatureAction extends AbstractSportAction {
 		$skill->save();
 		SkillQuery::enableVersioning();
 
-		$url = $router->generate('pictures', $sport, ['skill' => $skill->getSlug()]);
+		$url = $this->generate('pictures', ['skill' => $skill->getSlug()]);
 		return new RedirectResponse($url);
 	}
 

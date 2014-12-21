@@ -15,8 +15,11 @@
 		<div class="pull-right trixionary-actions">
 			<div class="btn-toolbar" role="toolbar">
 				{% if sport %}
+				{% set actions %}{% block actions %}{% endblock %}{% endset %}
+				{% if actions is not empty %}
 				<div class="btn-group" role="group">
-					{% block actions %}{% endblock %}
+				{% endif %}
+					{{ actions }}
 
 					{% set extendedAccess = extendedAccess ?: false %}
 					{% set createAccess = permissions.skill_create or permissions.group_create or permissions.position_create or extendedAccess %}
@@ -33,7 +36,9 @@
 					</ul>
 					</div>
 					{% endif %}
+				{% if actions is not empty %}
 				</div>
+				{% endif %}
 				{% endif %}
 
 				<!-- Search group here -->

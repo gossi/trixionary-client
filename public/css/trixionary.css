@@ -54,18 +54,14 @@ div[role=tabpanel] {
 .part-box {
   border: 1px solid #CCC;
   background-color: #F5F5F5;
-  padding: 5px;
-  width: 250px;
-  margin-right: 5px;
+  width: 200px;
 }
 .part-box .skill-picture {
   margin-right: 5px;
 }
-.part-box .part-text {
-  line-height: 40px;
-}
-.network-manipulation-closeDiv {
-  display: none !important;
+.part-item {
+  padding: 5px;
+  margin-right: 5px;
 }
 #graph,
 #widget {
@@ -142,8 +138,8 @@ figure.media > .preview:hover {
   background-color: #EEE;
 }
 .media-preview {
-  width: 100px;
-  height: 100px;
+  width: 125px;
+  height: 125px;
   box-sizing: content-box;
 }
 .media-preview img {
@@ -248,16 +244,24 @@ figure.media > .preview:hover {
   }
 }
 .outline-icon {
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+}
+.manipulation-icon {
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
   border-radius: 11px;
   width: 21px;
   height: 21px;
-  display: inline-block;
-  border: 2px solid #000000;
   padding-left: 3px;
-  font-family: "Glyphicons Halflings";
 }
 .structure .btn-edit {
   margin-top: 21px;
+}
+.structure .network-manipulation-closeDiv {
+  display: none !important;
 }
 .structure div.network-manipulationDiv {
   background: none;
@@ -281,54 +285,54 @@ figure.media > .preview:hover {
 }
 .structure span.network-manipulationUI.add::before {
   content: "+";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
   border-radius: 11px;
   width: 21px;
   height: 21px;
-  display: inline-block;
-  border: 2px solid #000000;
   padding-left: 3px;
-  font-family: "Glyphicons Halflings";
 }
 .structure span.network-manipulationUI.connect::before {
   content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
   border-radius: 11px;
   width: 21px;
   height: 21px;
-  display: inline-block;
-  border: 2px solid #000000;
   padding-left: 3px;
-  font-family: "Glyphicons Halflings";
 }
 .structure span.network-manipulationUI.edit::before {
   content: "✏";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
   border-radius: 11px;
   width: 21px;
   height: 21px;
-  display: inline-block;
-  border: 2px solid #000000;
   padding-left: 3px;
-  font-family: "Glyphicons Halflings";
 }
 .structure span.network-manipulationUI.delete::before {
   content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
   border-radius: 11px;
   width: 21px;
   height: 21px;
-  display: inline-block;
-  border: 2px solid #000000;
   padding-left: 3px;
-  font-family: "Glyphicons Halflings";
 }
 .structure span.network-manipulationUI.back::before {
   content: "";
   text-indent: -1px;
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
   border-radius: 11px;
   width: 21px;
   height: 21px;
-  display: inline-block;
-  border: 2px solid #000000;
   padding-left: 3px;
-  font-family: "Glyphicons Halflings";
 }
 .legend p {
   margin: 0;
@@ -339,4 +343,147 @@ figure.media > .preview:hover {
   width: 27px;
   height: 16px;
   vertical-align: sub;
+}
+.navigation-icon {
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+#graph div.network-navigation {
+  background: none;
+  border: 0;
+}
+#graph div.network-navigation:hover {
+  box-shadow: none;
+}
+#graph div.network-navigation:hover:before {
+  box-shadow: 0px 0px 3px 3px #EEE;
+}
+#graph div.network-navigation.down::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+  width: 31px;
+  height: 31px;
+}
+#graph div.network-navigation.up::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+  width: 31px;
+  height: 31px;
+  padding-left: 5px;
+  padding-top: 1px;
+}
+#graph div.network-navigation.left::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+#graph div.network-navigation.right::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+#graph div.network-navigation.zoomIn::before {
+  content: "+";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+#graph div.network-navigation.zoomOut::before {
+  content: "−";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+#graph div.network-navigation.zoomExtends::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
 }

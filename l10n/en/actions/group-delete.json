@@ -1,0 +1,4 @@
+{
+	"heading": "Delete {group}",
+	"error-msg": "Cannot delete {group}, the following {skills} still depend on it:"
+}

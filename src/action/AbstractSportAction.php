@@ -109,6 +109,10 @@ abstract class AbstractSportAction extends AbstractAction {
 		}
 	}
 	
+	protected function generateUrl($name, array $params = []) {
+		return $this->getModule()->getRouter()->generate($name, $this->getSport(), $params);
+	}
+	
 	protected function getResponse(Request $request) {
 		$this->addData([
 			'sport' => $this->getSport(),

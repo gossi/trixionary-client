@@ -17,7 +17,7 @@ use gossi\trixionary\model\SkillQuery;
  * 
  * @author gossi
  */
-class KstrukturUpdateAction extends AbstractSportAction {
+class KstrukturUpdateAction extends AbstractSkillAction {
 
 	/**
 	 * Automatically generated run method
@@ -26,9 +26,7 @@ class KstrukturUpdateAction extends AbstractSportAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$sport = $this->getSport();
-		$slug = $this->params['skill'];
-		$skill = SkillQuery::create()->filterBySport($sport)->filterBySlug($slug)->findOne();
+		$skill = $this->getSkill();
 		
 		$content = json_decode($request->getContent(), true);
 		$nodes = $content['nodes'];
