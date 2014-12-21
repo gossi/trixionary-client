@@ -140,6 +140,8 @@ class TrixionaryRouter {
 		}
 		
 		$routes->add('_video-fetch-data', new Route('/fetch-url'));
+		$routes->add('_info', new Route('/info'));
+		$routes->add('_help', new Route('/help'));
 		
 // 		echo '<pre>';
 // 		print_r($routes);

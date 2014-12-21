@@ -460,6 +460,9 @@
 					"help" : {
 						"title" : "Displays help",
 						"class" : "gossi\\trixionary\\client\\action\\HelpAction",
+						"acl" : [
+							"guest"
+						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\HelpHtmlResponse"
 						}
@@ -467,6 +470,9 @@
 					"info" : {
 						"title" : "Displays info",
 						"class" : "gossi\\trixionary\\client\\action\\InfoAction",
+						"acl" : [
+							"guest"
+						],
 						"response" : {
 							"html" : "gossi\\trixionary\\client\\response\\InfoHtmlResponse"
 						}

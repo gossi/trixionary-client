@@ -1,0 +1,11 @@
+{
+	"about": "about",
+	"intro": "Trixionary is developed and invented by {gossi}. The code is open sourced under an MIT license.",
+	"hosted": "Source code is hosted on Github in multiple repositories:",
+	"repo-trixionary": "The Trixionary backend and API",
+	"repo-client": "This frontend",
+	"contributions-heading": "Contributions",
+	"contributions": "Contributions are heartly welcomed. Feedback in any form is appreciated, via mail, github issues or even pull-requests.",
+	"support-heading": "Support",
+	"support": "The Trixionary is supported by:"	
+}

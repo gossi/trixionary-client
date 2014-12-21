@@ -1,16 +1,14 @@
 <?php
 namespace gossi\trixionary\client\action;
 
-use keeko\core\action\AbstractAction;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Displays info
  * 
  * @author gossi
  */
-class InfoAction extends AbstractAction {
+class InfoAction extends AbstractSportAction {
 
 	/**
 	 * Automatically generated run method
@@ -19,8 +17,6 @@ class InfoAction extends AbstractAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		// uncomment the following to pass data to your response
-		// $this->response->setData($data);
-		return $this->response->run($request);
+		return $this->getResponse($request);
 	}
 }

@@ -46,9 +46,9 @@ class TrixionaryClientModule extends AbstractModule {
 	
 	public function getLocations($sport = null) {
 		$locations = [];
+		$router = $this->getRouter();
 		
 		if ($sport !== null) {
-			$router = $this->getRouter();
 			$locations['sport_url'] = $router->generate('sport', $sport);
 			$locations['create_skill'] = $router->generate('skill-create', $sport);
 			$locations['create_group'] = $router->generate('group-create', $sport);
@@ -56,6 +56,9 @@ class TrixionaryClientModule extends AbstractModule {
 			$locations['transitions'] = $router->generate('transitions', $sport);
 			$locations['graph'] = $router->generate('graph', $sport);
 		}
+		
+		$locations['info'] = $router->generate('_info', null);
+		$locations['help'] = $router->generate('_help', null);
 		
 		return $locations;
 	}
