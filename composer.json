@@ -15,15 +15,16 @@
 	"require" : {
 		"php" : ">=5.4",
 		"keeko/composer-installer" : "*",
+		"gossi/trixionary" : "~0",
 		"guzzle/guzzle" : "~3",
-		"gossi/trixionary" : "dev-master",
 		"cocur/slugify" : "~0",
 		"imagine/imagine" : "~0"
 	},
 	"require-dev" : {
 		"composer/composer" : "@dev",
 		"keeko/core" : "dev-master",
-		"propel/propel" : "@dev"
+		"propel/propel" : "@dev",
+		"gossi/trixionary" : "dev-master"
 	},
 	"extra" : {
 		"keeko" : {
