@@ -94,12 +94,17 @@ class SkillAction extends AbstractSkillAction {
 			];
 		}
 		
+		// geneaology
+		$ids = json_decode($skill->getGenerationIds());
+		$geneaology = SkillQuery::create()->filterById($ids)->find();
+		
 		$fs = new Filesystem();
 		$this->addData([
 			'skill' => $skill,
 			'sequence_url' => $fs->exists($this->getTrixionary()->getSequencePath($skill)) 
 				? $this->getTrixionary()->getSequenceUrl($skill)
 				: '', 
+			'geneaology' => $geneaology,
 			'videos' => $videos,
 			'tutorials' => $tutorials,
 			'formatter' => $formatter,

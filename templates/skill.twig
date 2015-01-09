@@ -392,6 +392,15 @@
 					{% endif %}
 				</table>
 				{% endif %}
+				
+				{% if skill.getParents().count() > 0 %}
+				<h3>{{ trans('geneaology') }}</h3>
+				<ol reversed class="geneaology">
+					{% for s in geneaology|reverse %}
+					<li><a href="{{ url_pattern|replace({'_skill_': s.getSlug()}) }}">{{ s.getName() }}</a></li>
+					{% endfor %}
+				</ol>
+				{% endif %}
 			</div>
 		</div>
 

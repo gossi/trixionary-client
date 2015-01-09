@@ -232,6 +232,9 @@ figure.media > .preview:hover {
 .switcher {
   margin-top: 20px;
 }
+.geneaology {
+  padding-left: 20px;
+}
 .spin {
   animation: spin 2s infinite linear;
 }
