@@ -8,7 +8,7 @@
 		
 		<ul class="list-unstyled">
 		{% for group in groups %}
-			<li><a href="{{ locations.sport_url }}{{ sport.getGroupSlug() }}/{{ group.getSlug() }}">{{ group.getTitle() }}</a> ({{ group.countSkills() }})</li>
+			<li><a href="{{ locations.sport_url }}{{ sport.getGroupSlug() }}/{{ group.getSlug() }}">{{ group.getTitle() }} <span class="badge pull-right">{{ group.countSkills() }}</span></a></li>
 		{% endfor %}
 		</ul>
 	</div>
