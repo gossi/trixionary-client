@@ -139,7 +139,7 @@
 	"transition": "Transitional function phase",
 	
 	"init-kstruktur": "Initialize k-Struktur",
-	"goehner-desc": "This is the structuring model, invented by Georg Kassat",
+	"kassat-desc": "This is the structuring model, invented by Georg Kassat",
 	"structure": "Structual",
 	"effect": "Effect",
 	"action": "Action"
