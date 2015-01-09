@@ -34,11 +34,11 @@ class VideoDeleteAction extends AbstractSkillAction {
 			$fs->remove($filename);
 		}
 		
+		$video->delete();
+		
 		if ($video->getReference()) {
 			$video->getReference()->delete();
-		}
-		
-		$video->delete();
+		}		
 
 		$url = $this->generateUrl('videos', ['skill' => $skill->getSlug()]);
 		return new RedirectResponse($url);

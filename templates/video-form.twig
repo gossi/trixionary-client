@@ -12,12 +12,12 @@
 
 <form class="form-horizontal" action="{{ global.locations.uri }}" method="post" id="form">
 <input type="hidden" name="filename" id="filename">
-<input type="hidden" name="provider_id" id="provider_id">
-<input type="hidden" name="provider" id="provider">
-<input type="hidden" name="player_url" id="player_url">
-<input type="hidden" name="width" id="width">
-<input type="hidden" name="height" id="height">
-<input type="hidden" name="poster_url" id="poster_url">
+<input type="hidden" name="provider_id" id="provider_id" value="{{ video.getProviderId() }}">
+<input type="hidden" name="provider" id="provider" value="{{ video.getProvider() }}">
+<input type="hidden" name="player_url" id="player_url" value="{{ video.getPlayerUrl() }}">
+<input type="hidden" name="width" id="width" value="{{ video.getWidth() }}">
+<input type="hidden" name="height" id="height" value="{{ video.getHeight() }}">
+<input type="hidden" name="poster_url" id="poster_url" value="{{ video.getPosterUrl() }}">
 
 	<div class="form-group{% if not video.isNew() %} hidden{% endif %}">
 		<label class="col-sm-2 control-label">{{ trans('type') }}</label>

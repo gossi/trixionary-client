@@ -48,7 +48,11 @@ class VideoFormAction extends AbstractSkillAction {
 					$fs->rename($this->getTrixionary()->getUploadPath() . '/' . $uploadname, $videosFolder . '/' . $filename);
 				}
 			} else {
-				$reference = new Reference();
+				if ($video->isNew()) {
+					$reference = new Reference();
+				} else {
+					$reference = $video->getReference();
+				}
 				$reference->setSkill($skill);
 				$reference->setType(ReferenceInterface::MULTIMEDIA);
 				$reference->setTitle($post->get('title'));

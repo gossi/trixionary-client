@@ -24,11 +24,11 @@ class ReferenceManageAction extends AbstractSkillAction {
 	public function run(Request $request) {
 		$skill = $this->getSkill();
 		$references = ReferenceQuery::create()->filterBySkill($skill)->find();
-		
+
 		$this->addData([
 			'references' => $references,
-			'edit_url_pattern' => $this->generateUrl('reference-edit', ['skill' => $skill->getSlug(), 'id' => '_id']),
-			'delete_url_pattern' => $this->generateUrl('reference-delete', ['skill' => $skill->getSlug(), 'id' => '_id'])
+			'edit_url_pattern' => $this->generateUrl('reference-edit', ['skill' => $skill->getSlug(), 'id' => '_id']),
+			'delete_url_pattern' => $this->generateUrl('reference-delete', ['skill' => $skill->getSlug(), 'id' => '_id'])
 		]);
 		return $this->getResponse($request);
 	}
