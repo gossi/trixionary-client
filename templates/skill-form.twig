@@ -399,15 +399,29 @@
 		</div>
 		
 		<script>
-			$('#variationOf').select2({
+			var dependencies = $('#dependencies').select2();
+			var variationOf = $('#variationOf').select2({
 				allowClear: true
+			}).on('change', function (e) {
+				var deps = dependencies.select2('val');
+
+				if (e.removed !== null) {
+					for (var i = 0; i < deps.length; i++) {
+						if (deps[i] == e.removed.id) {
+							deps.splice(i, 1);
+						}
+					}
+				}
+
+				if (e.val) {
+					deps.push(e.val);
+				}
+
+				dependencies.select2('val', deps);
 			});
 
-			var classification = $('#classification');
-			classification.select2();
-
-			var multiple = $('#multiple');
-			multiple.select2({
+			var classification = $('#classification').select2();
+			var multiple = $('#multiple').select2({
 				allowClear: true
 			});
 
@@ -446,52 +460,12 @@
 			showClassification();
 			showMultiplier();
 
-			// toggle transitions
-			var skills = document.querySelectorAll('#dependencies option.skill');
-			var transitions = document.querySelectorAll('#dependencies option.transition');
-			
-			var startPosition = $('#startPosition').select2();
-			var endPosition = $('#endPosition').select2();
-			var toggleParents = function () {
-				var start = startPosition.val();
-				var end = endPosition.val();
-
-				// show skill
-				if (start == end) {
-					for (var i = 0; i < skills.length; i++) {
-						var node = skills[i];
-						node.classList.remove('hidden');
-					}
-
-					for (var i = 0; i < transitions.length; i++) {
-						var node = transitions[i];
-						node.classList.add('hidden');
-					}
-				} 
-
-				// show transitions
-				else {
-					for (var i = 0; i < skills.length; i++) {
-						var node = skills[i];
-						node.classList.add('hidden');
-					}
-
-					for (var i = 0; i < transitions.length; i++) {
-						var node = transitions[i];
-						node.classList.remove('hidden');
-					}
-				}
-			}
-			startPosition.on('change', toggleParents);
-			endPosition.on('change', toggleParents);
-
-			toggleParents();
-
 			// post scriptum
 			$('#groups').select2();
 			$('#parts').select2();
-			$('#dependencies').select2();
 			$('.select2').select2();
+			$('#startPosition').select2();
+			$('#endPosition').select2();
 		</script>
 		
 	</fieldset>
