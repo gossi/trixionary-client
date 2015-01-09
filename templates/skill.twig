@@ -174,7 +174,7 @@
 						{% if sequence_url is not empty %}
 						<p><img src="{{ sequence_url }}" style="width: 100%;"></p>
 						{% endif %}
-						<p>{{ skill.getMovementDescription() }}</p>
+						<p>{{ skill.getMovementDescription()|nl2br }}</p>
 					</div>
 				</div>
 				{% if skill.getParts().count() > 0 %}
