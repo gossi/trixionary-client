@@ -37,7 +37,7 @@
 </ul>
 {% endmacro %}
 
-{% macro simple(skills, context) %}
+{% macro simple(skills, context, showMultiplier = false) %}
 <ul class="media-list">
 	{% for skill in skills %}
 	<li class="media">
@@ -49,6 +49,9 @@
 		{% endif %}
 		<div class="media-body">
 			<a href="{{ context.url_pattern|replace({'_skill_': skill.getSlug()}) }}">{{ skill.getName() }}</a>
+			{% if showMultiplier %}
+			<p><small>{{ skill.getMultiplier() }}°</small></p>
+			{% endif %}
 		</div>
 	</li>
 	{% endfor %}

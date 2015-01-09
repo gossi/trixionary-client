@@ -339,7 +339,7 @@
 					<div class="col-md-12">
 						<h3>{{ trans('multiples') }}</h3>
 						{% import 'skill-listing.twig' as listing %}
-						{{ listing.simple(skill.getMultiples(), _context) }}
+						{{ listing.simple(skill.getMultiples(), _context, true) }}
 					</div>
 				</div>
 				{% endif %}
