@@ -198,9 +198,9 @@ Structure.prototype = {
 			navigation: false,
 			onAdd: function (data, callback) {that.onAdd(data, callback);},
 			onEdit: function (data, callback) {that.onEdit(data, callback);},
+			onDelete: function (data, callback) {that.onDelete(data, callback);},
 			onConnect: function (data, callback) {that.onConnect(data, callback);},
-			onEditEdge: function (data, callback) {that.onConnect(data, callback);},
-			onDelete: function (data, callback) {that.onDelete(data, callback);}
+			onEditEdge: function (data, callback) {that.onEditEdge(data, callback);}
 		};
 
 		this.network = new vis.Network(container, data, options);
@@ -214,6 +214,7 @@ Structure.prototype = {
 		data.isNew = true;
 		data.label = '';
 		data.group = this.options['default_group'];
+		data.parents = [];
 		this.editForm(data, callback);
 	},
 
@@ -223,43 +224,70 @@ Structure.prototype = {
 
 	onConnect: function (data, callback) {
 		var node = this.nodes.get(data.from);
-		if (node.parent) {
-			this.edges.remove(data.from + '-' + node.parent); 
-		}
-		node.parent = data.to;
+		node.parents.push(data.to);
 		this.nodes.update(node);
 		data.id = data.from + '-' + data.to;
 		callback(data);
 	},
+	
+	onEditEdge: function (data, callback) {
+		var edge = this.edges.get(data.id);
+		
+		// remove old parent
+		var node = this.nodes.get(edge.from);
+		for (var i = 0;i < node.parents.length; i++) {
+			if (node.parents[i] == edge.to) {
+				node.parents.splice(i, 1);
+				this.nodes.update(node);
+			}
+		}
+		
+		// set new parent
+		node = this.nodes.get(data.from);
+		node.parents.push(data.to);
+		this.nodes.update(node);
+
+		// callback
+		callback(data);
+		
+		// now really it's time to update the edge's id
+		var edge = this.edges.get(data.id);
+		edge.id = data.from + '-' + data.to;
+		this.edges.update(edge);
+	},
 
 	onDelete: function (data, callback) {
 		
-		// delete node
-		for (var i = 0; i < data.nodes.length; i++) {
-			var id = data.nodes[i];
-			var node = this.nodes.get(id);
-			var child = this.nodes.get({
-				filter: function (item) {
-					return item.parent == node.id;
-				}
-			})[0];
-			child.parent = null;
-			console.log(child);
-			this.nodes.update(child);
-			console.log(this.nodes.get(child.id));
-			
-			if (!node.hasOwnProperty('isNew')) {
-				this.deleted.push(node.id);
-			}
-		}
-
 		// delete edges
 		for (i = 0; i < data.edges.length; i++) {
 			var id = data.edges[i];
 			var edge = this.edges.get(id);
+			
+			// delete child from parent
 			var node = this.nodes.get(edge.from);
-			node.parent = null;
+			for (var j = 0; j < node.parents.length; j++) {
+				if (node.parents[j] == edge.to) {
+					node.parents.splice(j, 1);
+				}
+			}
 			this.nodes.update(node);
+			
+			// delete parent in childs
+			var node = this.nodes.get(edge.to);
+			for (var j = 0; j < node.parents.length; j++) {
+				if (node.parents[j] == edge.from) {
+					node.parents.splice(j, 1);
+				}
+			}
+		}
+		
+		// delete nodes
+		for (var i = 0; i < data.nodes.length; i++) {
+			var id = data.nodes[i];
+			var node = this.nodes.get(id);
+			if (!node.hasOwnProperty('isNew')) {
+				this.deleted.push(node.id);
+			}
 		}
 
 		callback(data);
@@ -301,11 +329,13 @@ Structure.prototype = {
 						
 		} else {
 			// integrity check
+			console.log('saving....');
 			var that = this;
 			var nodes = this.nodes.get();
 			for (var i = 0; i < nodes.length; i++) {
 				var node = nodes[i];
-				if (node.id != this.options['root'] && (!node.hasOwnProperty('parent') || node.parent == null)) {
+				console.log(node);
+				if (node.id != this.options['root'] && (!node.hasOwnProperty('parents') || node.parents.length == 0)) {
 					this.error.classList.remove('hidden');
 					this.errorMessage.innerHTML = '%title% must be assigned'.replace(/%title%/, node.label);
 
@@ -347,14 +377,26 @@ Structure.prototype = {
 						
 						var nodes = that.nodes.get({
 							filter: function (node) {
-								return node.parent && node.parent == oldId;
+								var hasParent = false;
+								if (node.parents && node.parents.length) {
+									for (var i = 0; i < node.parents.length; i++) {
+										hasParent = hasParent || node.parents[i].id == oldId;
+									}
+								}
+								return hasParent;
 							}
 						});
 						
 						for (i = 0; i < nodes.length; i++) {
 							var node = nodes[i];
 							
-							node.parent = newId;
+							if (node.parents && node.parents.length) {
+								for (var i = 0; i < node.parents.length; i++) {
+									if (node.parents[i].id == oldId) {
+										node.parents[i].id = newId;
+									}
+								}
+							}
 							that.nodes.update(node);
 						}
 					}

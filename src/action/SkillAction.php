@@ -11,6 +11,7 @@ use gossi\trixionary\client\formatter\apa\ApaFormatter;
 use gossi\trixionary\model\Kstruktur;
 use gossi\trixionary\model\FunctionPhase;
 use Symfony\Component\Filesystem\Filesystem;
+use gossi\trixionary\model\StructureNode;
 
 /**
  * Displays a skill
@@ -52,47 +53,45 @@ class SkillAction extends AbstractSkillAction {
 		// kstruktur
 		$kstrukturNodes = [];
 		$kstrukturEdges = [];
-		$kstrukturRoot = null;
 		foreach ($skill->getKstrukturs() as $kstruktur) {
+			$parents = [];
+			foreach ($kstruktur->getParents() as $parent) {
+				$kstrukturEdges[] = [
+					'id' => $parent->getId() . '-' . $parent->getParentId(),
+					'from' => $parent->getId(),
+					'to' => $parent->getParentId()
+				];
+				$parents[] = $parent->getParentId();
+			}
+			
 			$kstrukturNodes[] = [
 				'id' => $kstruktur->getId(),
 				'group' => $kstruktur->getType(),
 				'label' => $kstruktur->getTitle(),
-				'parent' => $kstruktur->getParentId()
+				'parents' => $parents
 			];
-			
-			if ($kstruktur->getParent()) {
-				$kstrukturEdges[] = [
-					'id' => $kstruktur->getId() . '-' . $kstruktur->getParentId(),
-					'from' => $kstruktur->getId(),
-					'to' => $kstruktur->getParentId()
-				];
-			} else {
-				$kstrukturRoot = $kstruktur->getId();
-			}
 		}
 		
 		// function phase
 		$functionPhaseNodes = [];
 		$functionPhaseEdges = [];
-		$functionPhaseRoot = null;
-		foreach ($skill->getFunctionPhases() as $functionPhase) {
-			$functionPhaseNodes[] = [
-				'id' => $functionPhase->getId(),
-				'group' => $functionPhase->getType(),
-				'label' => $functionPhase->getTitle(),
-				'parent' => $functionPhase->getParentId()
-			];
-	
-			if ($functionPhase->getParent()) {
+		foreach ($skill->getFunctionPhases() as $functionphase) {
+			$parents = [];
+			foreach ($functionphase->getParents() as $parent) {
 				$functionPhaseEdges[] = [
-					'id' => $functionPhase->getId() . '-' . $functionPhase->getParentId(),
-					'from' => $functionPhase->getId(),
-					'to' => $functionPhase->getParentId()
+					'id' => $parent->getId() . '-' . $parent->getParentId(),
+					'from' => $parent->getId(),
+					'to' => $parent->getParentId()
 				];
-			} else {
-				$functionPhaseRoot = $functionPhase->getId();
+				$parents[] = $parent->getParentId();
 			}
+				
+			$functionPhaseNodes[] = [
+				'id' => $functionphase->getId(),
+				'group' => $functionphase->getType(),
+				'label' => $functionphase->getTitle(),
+				'parents' => $parents
+			];
 		}
 		
 		$fs = new Filesystem();
@@ -105,13 +104,11 @@ class SkillAction extends AbstractSkillAction {
 			'tutorials' => $tutorials,
 			'formatter' => $formatter,
 			'references' => $references,
-			'functionphase_root' => $functionPhaseRoot,
 			'functionphase_default_type' => FunctionPhase::HELPFUL,
 			'functionphase_nodes' => json_encode($functionPhaseNodes),
 			'functionphase_edges' => json_encode($functionPhaseEdges),
 			'functionphase_types' => [FunctionPhase::MAIN, FunctionPhase::HELPFUL, FunctionPhase::PREPARE, FunctionPhase::SUPPORT, FunctionPhase::TRANSITION],
 			'functionphase_update_url' => $this->generateUrl('functionphase-update', ['skill' => $skill->getSlug()]),
-			'kstruktur_root' => $kstrukturRoot,
 			'kstruktur_default_type' => Kstruktur::STRUCTURE,
 			'kstruktur_nodes' => json_encode($kstrukturNodes),
 			'kstruktur_edges' => json_encode($kstrukturEdges),

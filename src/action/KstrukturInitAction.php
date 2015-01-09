@@ -23,12 +23,15 @@ class KstrukturInitAction extends AbstractSkillAction {
 	public function run(Request $request) {
 		$skill = $this->getSkill();
 		
-		if ($skill->getKstrukturs()->count() == 0) {
+		if ($skill->getKstrukturRoot() == null) {
 			$main = new Kstruktur();
 			$main->setSkill($skill);
 			$main->setTitle($skill->getName());
 			$main->setType(Kstruktur::STRUCTURE);
 			$main->save();
+
+			$skill->setKstrukturRoot($main);
+			$skill->save();
 		}
 		
 		$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]) . '#k-struktur';

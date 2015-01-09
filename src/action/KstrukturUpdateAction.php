@@ -11,6 +11,9 @@ use gossi\trixionary\model\KstrukturQuery;
 use keeko\core\model\Activity;
 use keeko\core\model\ActivityObject;
 use gossi\trixionary\model\SkillQuery;
+use gossi\trixionary\model\StructureNodeParentQuery;
+use gossi\trixionary\model\StructureNodeParent;
+use gossi\trixionary\model\StructureNodeQuery;
 
 /**
  * Batch update of k-Struktur
@@ -31,18 +34,11 @@ class KstrukturUpdateAction extends AbstractSkillAction {
 		$content = json_decode($request->getContent(), true);
 		$nodes = $content['nodes'];
 		$deleted = $content['deleted'];
-		$report = [];
-		
-		$root = null;
-		foreach ($skill->getKstrukturs() as $kstruktur) {
-			if (!$kstruktur->getParent()) {
-				$root = $kstruktur;
-				break;
-			}
-		}
+		$idMap = [];
+		$root = $skill->getKstrukturId();
 		
 		// root deleted? delete all
-		if ($root !== null && in_array($root->getId(), $deleted)) {
+		if ($root !== null && in_array($root, $deleted)) {
 			KstrukturQuery::create()->filterBySkill($skill)->delete();
 		} else {
 			foreach ($nodes as $node) {
@@ -53,14 +49,7 @@ class KstrukturUpdateAction extends AbstractSkillAction {
 					$kstruktur = new Kstruktur();
 					$kstruktur->setTitle($node['label']);
 					$kstruktur->setType($node['group']);
-					$kstruktur->setParentId($node['parent']);
 					$kstruktur->setSkill($skill);
-					
-					$parentId = $node['parent'];
-					if (isset($report[$parentId])) {
-						$parentId = $report[$parentId];
-					}
-					$kstruktur->setParentId($parentId);
 				} else {
 					$changed = false;
 					$kstruktur = KstrukturQuery::create()->findOneById($node['id']);
@@ -75,15 +64,6 @@ class KstrukturUpdateAction extends AbstractSkillAction {
 						$changed = true;
 					}
 					
-					if ($kstruktur->getParentId() != $node['parent']) {
-						$parentId = $node['parent'];
-						if (isset($report[$parentId])) {
-							$parentId = $report[$parentId];
-						}
-						$kstruktur->setParentId($parentId);
-						$changed = true;
-					}
-					
 					$canSave = $changed;
 				}
 				
@@ -91,7 +71,7 @@ class KstrukturUpdateAction extends AbstractSkillAction {
 					$kstruktur->save();
 					
 					if ($isNew) {
-						$report[$node['id']] = $kstruktur->getId();
+						$idMap[$node['id']] = $kstruktur->getId();
 					}
 					
 					$user = $this->getServiceContainer()->getAuthManager()->getUser();
@@ -103,12 +83,37 @@ class KstrukturUpdateAction extends AbstractSkillAction {
 				}
 			}
 			
+			// set parents
+			foreach ($nodes as $node) {
+				$id = $node['id'];
+				if (isset($idMap[$id])) {
+					$id = $idMap[$id];
+				}
+				
+				StructureNodeParentQuery::create()->filterById($id)->delete();
+				foreach ($node['parents'] as $parentId) {
+					if (isset($idMap[$parentId])) {
+						$parentId = $idMap[$parentId];
+					}
+
+					if (!in_array($parentId, $deleted)) {
+						$parent = new StructureNodeParent();
+						$parent->setId($id);
+						$parent->setParentId($parentId);
+						$parent->save();
+					}
+				}
+			}
+			
 			foreach ($deleted as $id) {
+				StructureNodeParentQuery::create()->filterbyId($id)->delete();
+				StructureNodeParentQuery::create()->filterByParentId($id)->delete();
+				StructureNodeQuery::create()->filterById($id)->delete();
 				KstrukturQuery::create()->filterById($id)->delete();
 			}
 		}
 		
-		$response = new JsonResponse($report);
+		$response = new JsonResponse($idMap);
 		$response->prepare($request);
 		$response->send();
 		exit;

@@ -157,8 +157,8 @@
 		{% if tutorials is not empty %}<li role="presentation"><a href="#tutorials" aria-controls="tutorials" role="tab" data-toggle="tab">{{ transchoice('tutorial', 2) }}</a></li>{% endif %}
 		<li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab">{{ trans('relationships') }}</a></li>
 		{% if skill.getHistory() is not empty %}<li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">{{ trans('history') }}</a></li>{% endif %}
-		{% if skill.getFunctionphases().count() > 0 %}<li role="presentation"><a href="#functionphase" aria-controls="functionphase" role="tab" data-toggle="tab">{{ transchoice('functionphase', 2) }}</a></li>{% endif %}
-		{% if skill.getKstrukturs().count() > 0 %}<li role="presentation"><a href="#k-struktur" aria-controls="k-struktur" role="tab" data-toggle="tab">k-Struktur</a></li>{% endif %}
+		{% if skill.getFunctionphaseRoot() %}<li role="presentation"><a href="#functionphase" aria-controls="functionphase" role="tab" data-toggle="tab">{{ transchoice('functionphase', 2) }}</a></li>{% endif %}
+		{% if skill.getKstrukturRoot() %}<li role="presentation"><a href="#k-struktur" aria-controls="k-struktur" role="tab" data-toggle="tab">k-Struktur</a></li>{% endif %}
 		<li role="presentation"><a href="#credits" aria-controls="credits" role="tab" data-toggle="tab">{{ trans('credits') }}</a></li>
 	</ul>
   
@@ -408,14 +408,14 @@
 		</div>
 		{% endif %}
 		
-		{% if skill.getKstrukturs().count() > 0 %}
+		{% if skill.getKstrukturRoot() %}
 		<!-- k-struktur -->
 		<div role="tabpanel" class="tab-pane" id="k-struktur">
 			{{ macros.structure('kstruktur', 'k-Struktur', trans('kassat-desc'), _context) }}
 		</div>
 		{% endif %}
 		
-		{% if skill.getFunctionPhases().count() > 0 %}
+		{% if skill.getFunctionPhaseRoot() %}
 		<!-- function phases -->
 		<div role="tabpanel" class="tab-pane" id="functionphase">
 			{{ macros.structure('functionphase', transchoice('functionphase', 2), trans('goehner-desc'), _context) }}
@@ -469,15 +469,15 @@
 </div>
 
 <video style="width: 100%;" controls id="video-player" class="hidden"></video>
-{% if skill.getKstrukturs().count() > 0 or skill.getFunctionphases().count() > 0 %}
+{% if skill.getKstrukturRoot() or skill.getFunctionphaseRoot() %}
 <script>
-{% if skill.getKstrukturs().count() > 0 %}
-// kstruktur
 $(function() {
+{% if skill.getKstrukturRoot() %}
+	// kstruktur
 	var kstruktur = new Structure({
 		'id': 'kstruktur',
 		'update_url': '{{ kstruktur_update_url }}',
-		'root': '{{ kstruktur_root }}',
+		'root': '{{ skill.getKstrukturId() }}',
 		'nodes': {{ kstruktur_nodes|raw }},
 		'edges': {{ kstruktur_edges|raw }},
 		'groups': {
@@ -498,15 +498,13 @@ $(function() {
 	$('a[href=#k-struktur]').on('shown.bs.tab', function (e) {
 		kstruktur.redraw();
 	});
-});
 {% endif %}
-{% if skill.getFunctionphases().count() > 0 %}
-// function phase
-$(function() {
+{% if skill.getFunctionphaseRoot() %}
+	// function phase
 	var functionphase = new Structure({
 		'id': 'functionphase',
 		'update_url': '{{ functionphase_update_url }}',
-		'root': '{{ functionphase_root }}',
+		'root': '{{ skill.getFunctionPhaseId() }}',
 		'nodes': {{ functionphase_nodes|raw }},
 		'edges': {{ functionphase_edges|raw }},
 		'groups': {
@@ -527,8 +525,8 @@ $(function() {
 	$('a[href=#functionphase]').on('shown.bs.tab', function (e) {
 		functionphase.redraw();
 	});
-});
 {% endif %}
+});
 </script>
 {% endif %}
 

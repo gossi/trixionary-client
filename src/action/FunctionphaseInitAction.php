@@ -24,16 +24,19 @@ class FunctionphaseInitAction extends AbstractSkillAction {
 	 */
 	public function run(Request $request) {
 		$skill = $this->getSkill();
-		
-		if ($skill->getFunctionphases()->count() == 0) {
+
+		if ($skill->getFunctionPhaseRoot() == null) {
 			$main = new FunctionPhase();
 			$main->setSkill($skill);
 			$main->setTitle($skill->getName());
 			$main->setType(FunctionPhase::MAIN);
 			$main->save();
+		
+			$skill->setFunctionPhaseRoot($main);
+			$skill->save();
 		}
 		
-		$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]) . '#k-struktur';
+		$url = $this->generateUrl('skill', ['skill' => $skill->getSlug()]) . '#functionphase';
 		return new RedirectResponse($url);
 	}
 	
