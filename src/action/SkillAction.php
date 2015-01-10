@@ -108,6 +108,7 @@ class SkillAction extends AbstractSkillAction {
 			'videos' => $videos,
 			'tutorials' => $tutorials,
 			'formatter' => $formatter,
+			'graph' => $this->getGraphData(),
 			'references' => $references,
 			'functionphase_default_type' => FunctionPhase::HELPFUL,
 			'functionphase_nodes' => json_encode($functionPhaseNodes),

@@ -156,6 +156,7 @@
 		{% if videos is not empty %}<li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">{{ transchoice('video', 2) }}</a></li>{% endif %}
 		{% if tutorials is not empty %}<li role="presentation"><a href="#tutorials" aria-controls="tutorials" role="tab" data-toggle="tab">{{ transchoice('tutorial', 2) }}</a></li>{% endif %}
 		<li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab">{{ trans('relationships') }}</a></li>
+		<li role="graph"><a href="#graph" aria-controls="graph" role="tab" data-toggle="tab">{{ trans('graph') }}</a></li>
 		{% if skill.getHistory() is not empty %}<li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">{{ trans('history') }}</a></li>{% endif %}
 		{% if skill.getFunctionphaseRoot() %}<li role="presentation"><a href="#functionphase" aria-controls="functionphase" role="tab" data-toggle="tab">{{ transchoice('functionphase', 2) }}</a></li>{% endif %}
 		{% if skill.getKstrukturRoot() %}<li role="presentation"><a href="#k-struktur" aria-controls="k-struktur" role="tab" data-toggle="tab">k-Struktur</a></li>{% endif %}
@@ -403,6 +404,28 @@
 				{% endif %}
 			</div>
 		</div>
+		
+		<!-- Graph -->
+		<div role="tabpanel" class="tab-pane" id="graph">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>{{ trans('graph') }}</h3>
+						
+						<div class="graph-widget skill">
+							<div class="canvas"></div>
+							<div class="info hidden">
+								<img class="preview pull-right">
+								<a></a>
+								<p class="description"></p>
+								<p>{{ trans('importance') }}: <span class="importance"></span></p>
+								<p>{{ trans('generation') }}: <span class="generation"></span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		{% if skill.getHistory() is not empty %}
 		<!-- History -->
@@ -478,10 +501,139 @@
 </div>
 
 <video style="width: 100%;" controls id="video-player" class="hidden"></video>
-{% if skill.getKstrukturRoot() or skill.getFunctionphaseRoot() %}
 <script>
 $(function() {
-{% if skill.getKstrukturRoot() %}
+	// graph
+	function initGraph() {
+		var widget = document.querySelector('.graph-widget');
+		var info = document.querySelector('.graph-widget .info');
+		var picture = info.querySelector('img');
+		var link = info.querySelector('a');
+		var desc = info.querySelector('.description');
+		var importance = info.querySelector('.importance');
+		var generation = info.querySelector('.generation');
+		var container = widget.querySelector('.canvas');
+	
+		var nodes = new vis.DataSet({{ graph.nodes|raw }});
+		var edges = new vis.DataSet({{ graph.edges|raw }});
+	
+		var data = {
+		    nodes: nodes,
+		    edges: edges
+		};
+		var highlight = {
+			background: '#EEE',
+			border: '#777'
+		};
+		var normal = {
+			background: '#DDD',
+			border: '#AAA'
+		};
+		var options = {
+			hierarchicalLayout: {
+				nodeSpacing: 50,
+				levelSeparation: 175,
+				direction: 'LR',
+				layout: 'direction'
+			},
+			nodes: {
+				borderWidthSelected: 1.1,
+				shape: 'box',
+				radius: 5,
+				color: {
+					background: '#DDD',
+					border: '#AAA',
+					highlight: highlight
+				}
+			},
+			groups: {
+				selected: {
+					shape: 'box',
+					radius: 5,
+					color: {
+						background: '#EEE',
+						border: '#777'
+					}
+				}
+			},
+			edges: {
+				arrowScaleFactor: 0.7,
+				style: 'arrow',
+				widthSelectionMultiplier: 1.1,
+				color: {
+					color: '#AAA',
+					highlight: '#777'
+				},
+				inheritColor: false
+			},
+			smoothCurves: false
+		};
+		var graph = new vis.Network(container, data, options);
+		var selecting = false;
+		var lastSelection = null;
+		graph.on('select', function(e) {
+			if (selecting) {
+				return;
+			}
+			if (lastSelection !== null) {
+				lastSelection.color = normal;
+				nodes.update(lastSelection);
+				lastSelection = null;
+			}
+			selecting = true;
+			if (e.nodes && e.nodes.length && e.nodes.length > 0) {
+				var id = e.nodes[0];
+				var node = nodes.get(id);
+	
+				try {
+					if (node.edges) {
+						var edges = node.edges;
+					} else {
+						var edges = [];
+						node.generationIds.reduce(function (a, b) {
+							edges.push(a + '-' + b);
+							return b;
+						});
+						edges.push(node.generationIds[node.generationIds.length - 1] + '-' + id);
+						node.edges = edges;
+					}
+					node.color = highlight;
+					nodes.update(node);
+					lastSelection = node;
+					graph.selectEdges(edges);
+				} catch (e) {}
+				
+				info.classList.remove('hidden');
+				link.href = '{{ graph.url_pattern }}'.replace('_skill_', node.slug);
+				link.innerHTML = node.label;
+				desc.innerHTML = node.description;
+				importance.innerHTML = node.importance;
+				generation.innerHTML = node.generation;
+	
+				if (node.picture) {
+					picture.src = node.picture;
+					picture.classList.remove('hidden');
+				} else {
+					picture.classList.add('hidden');
+				}
+	
+				graph.focusOnNode(id);
+			} else {
+				info.classList.add('hidden');
+			}
+			selecting = false;
+		});
+		graph.selectNodes([{{ skill.getId() }}]);
+		graph.focusOnNode({{ skill.getId() }});
+	}
+
+	initGraph();
+
+	$('a[href=#graph]').on('shown.bs.tab', function (e) {
+		initGraph();
+	});
+	
+	{% if skill.getKstrukturRoot() %}
 	// kstruktur
 	var kstruktur = new Structure({
 		'id': 'kstruktur',
@@ -507,8 +659,9 @@ $(function() {
 	$('a[href=#k-struktur]').on('shown.bs.tab', function (e) {
 		kstruktur.redraw();
 	});
-{% endif %}
-{% if skill.getFunctionphaseRoot() %}
+	{% endif %}
+
+	{% if skill.getFunctionphaseRoot() %}
 	// function phase
 	var functionphase = new Structure({
 		'id': 'functionphase',
@@ -534,9 +687,8 @@ $(function() {
 	$('a[href=#functionphase]').on('shown.bs.tab', function (e) {
 		functionphase.redraw();
 	});
-{% endif %}
+	{% endif %}
 });
 </script>
-{% endif %}
 
 {% endblock %}

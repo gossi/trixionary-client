@@ -1,19 +1,18 @@
 {% extends "frame.twig" %}
 
 {% block main %}
-<h2>Graph</h2>
+<h2>{{ trans('graph') }}</h2>
 
-<div id="widget">
-	<div id="graph"></div>
-	<div id="info" class="hidden">
+<div class="graph-widget">
+	<div class="canvas"></div>
+	<div class="info hidden">
 		<img class="preview pull-right">
 		<a></a>
 		<p class="description"></p>
 		<p>{{ trans('importance') }}: <span class="importance"></span></p>
 		<p>{{ trans('generation') }}: <span class="generation"></span></p>
 	</div>
-	<div class="btn-group btn-group-sm" id="controls" role="group">
-
+	<div class="btn-group btn-group-sm controls" role="group">
 		<!-- <div class="btn-group btn-group-sm" role="group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 	    		Filters <span class="caret"></span>
@@ -29,9 +28,9 @@
 
 <script>
 // actions
-var widget = document.getElementById('widget');
+var widget = document.querySelector('.graph-widget');
 var fullscreen = document.getElementById('fullscreen');
-var dropdowns = document.querySelectorAll('#controls .dropdown-menu');
+var dropdowns = document.querySelectorAll('.controls .dropdown-menu');
 fullscreen.addEventListener('click', function(e) {
 	BigScreen.toggle(widget, onFullscreenEntered, onFullscreenExited, function() {});
 });
@@ -58,13 +57,13 @@ window.addEventListener('resize', function (e) {
 
 
 // vis
-var info = document.getElementById('info');
-var picture = document.querySelector('#info img');
-var link = document.querySelector('#info a');
-var desc = document.querySelector('#info .description');
-var importance = document.querySelector('#info .importance');
-var generation = document.querySelector('#info .generation');
-var container = document.getElementById('graph');
+var info = document.querySelector('.graph-widget .info');
+var picture = info.querySelector('img');
+var link = info.querySelector('a');
+var desc = info.querySelector('.description');
+var importance = info.querySelector('.importance');
+var generation = info.querySelector('.generation');
+var container = widget.querySelector('.canvas');
 
 var nodes = new vis.DataSet({{ nodes|raw }});
 var edges = new vis.DataSet({{ edges|raw }});

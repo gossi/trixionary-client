@@ -3,7 +3,7 @@
 		<h1>{% block h1 %}{{ sport.getTitle() }} Trixionary{% endblock %}</h1>
 		{% if sport %}
 		<a href="{{ locations.transitions }}">{{ sport.getTransitionPluralLabel() }}</a> |
-		<a href="{{ locations.graph }}">Graph</a>
+		<a href="{{ locations.graph }}">{{ trans('graph') }}</a>
 		{% set path %}{% block breadcrumb %}{% endblock %}{% endset %}
 		{% if path is not empty %}
 		| Path: {{ path }}

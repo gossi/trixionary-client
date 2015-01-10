@@ -63,47 +63,194 @@ div[role=tabpanel] {
   padding: 5px;
   margin-right: 5px;
 }
-#graph,
-#widget {
+.graph-widget {
+  position: relative;
+  background-color: #FFF;
+}
+.graph-widget,
+.graph-widget .canvas {
   width: 100%;
   height: 500px;
 }
-#info {
+.graph-widget.skill,
+.graph-widget.skill .canvas {
+  height: 300px;
+}
+.graph-widget.fullscreen {
+  height: 100%;
+}
+.graph-widget.fullscreen .canvas {
+  height: 100%;
+}
+.graph-widget.fullscreen .controls {
+  top: 20px;
+  right: 20px;
+}
+.graph-widget.fullscreen .info {
+  left: 20px;
+}
+.graph-widget .info {
   position: absolute;
   top: 20px;
-  width: 200px;
+  width: 225px;
   padding: 5px;
   border: 1px solid #AAA;
   background-color: #F0F0F0;
   font-size: 80%;
 }
-#info p {
+.graph-widget .info p {
   margin: 0;
 }
-#info .description {
+.graph-widget .info .description {
   margin: 5px 0;
 }
-#controls {
+.graph-widget .controls {
   position: absolute;
   top: 0;
   right: 0;
 }
-#widget {
-  position: relative;
-  background-color: #FFF;
+.graph-widget div.network-navigation {
+  background: none !important;
+  border: 0;
 }
-#widget.fullscreen {
-  height: 100%;
+.graph-widget div.network-navigation .navigation-icon {
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
 }
-#widget.fullscreen #graph {
-  height: 100%;
+.graph-widget div.network-navigation:hover {
+  box-shadow: none;
 }
-#widget.fullscreen #controls {
-  top: 20px;
-  right: 20px;
+.graph-widget div.network-navigation:hover:before {
+  box-shadow: 0px 0px 3px 3px #EEE;
 }
-#widget.fullscreen #info {
-  left: 20px;
+.graph-widget div.network-navigation.down::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+  width: 31px;
+  height: 31px;
+}
+.graph-widget div.network-navigation.up::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+  width: 31px;
+  height: 31px;
+  padding-left: 5px;
+  padding-top: 1px;
+}
+.graph-widget div.network-navigation.left::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+.graph-widget div.network-navigation.right::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+.graph-widget div.network-navigation.zoomIn::before {
+  content: "+";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+.graph-widget div.network-navigation.zoomOut::before {
+  content: "−";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
+}
+.graph-widget div.network-navigation.zoomExtends::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #000;
+  font-family: "Glyphicons Halflings";
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
+  margin-top: 2px;
+  padding-left: 6px;
+  padding-top: 2px;
+  font-size: 17px;
+  color: #777;
+  border-color: #777;
 }
 #progress {
   margin-top: 5px;
@@ -346,147 +493,4 @@ figure.media > .preview:hover {
   width: 27px;
   height: 16px;
   vertical-align: sub;
-}
-.navigation-icon {
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-}
-#graph div.network-navigation {
-  background: none;
-  border: 0;
-}
-#graph div.network-navigation:hover {
-  box-shadow: none;
-}
-#graph div.network-navigation:hover:before {
-  box-shadow: 0px 0px 3px 3px #EEE;
-}
-#graph div.network-navigation.down::before {
-  content: "";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-  width: 31px;
-  height: 31px;
-}
-#graph div.network-navigation.up::before {
-  content: "";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-  width: 31px;
-  height: 31px;
-  padding-left: 5px;
-  padding-top: 1px;
-}
-#graph div.network-navigation.left::before {
-  content: "";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-}
-#graph div.network-navigation.right::before {
-  content: "";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-}
-#graph div.network-navigation.zoomIn::before {
-  content: "+";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-}
-#graph div.network-navigation.zoomOut::before {
-  content: "−";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
-}
-#graph div.network-navigation.zoomExtends::before {
-  content: "";
-  display: inline-block;
-  border: 2px solid #000;
-  font-family: "Glyphicons Halflings";
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  margin-left: 2px;
-  margin-top: 2px;
-  padding-left: 6px;
-  padding-top: 2px;
-  font-size: 17px;
-  color: #777;
-  border-color: #777;
 }

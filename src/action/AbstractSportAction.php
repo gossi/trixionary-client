@@ -17,6 +17,7 @@ use gossi\trixionary\model\Skill;
 use gossi\trixionary\TrixionaryModule;
 use gossi\trixionary\model\Picture;
 use gossi\trixionary\model\Video;
+use gossi\trixionary\model\SkillQuery;
 
 abstract class AbstractSportAction extends AbstractAction {
 	
@@ -129,5 +130,67 @@ abstract class AbstractSportAction extends AbstractAction {
 	
 	protected function getGroups() {
 		return GroupQuery::create()->filterBySport($this->getSport())->orderByTitle(Criteria::ASC)->find();
+	}
+	
+	protected function getGraphData() {
+		$sport = $this->getSport();
+		$skills = SkillQuery::create()->filterBySport($sport)->filterByIsMultiple(null)->find();
+		
+		$transitions = [];
+		$nodes = [];
+		$edges = [];
+		foreach ($skills as $skill) {
+			$generationIds = $skill->getGenerationIds();
+			if ($generationIds !== null) {
+				$generationIds = json_decode($generationIds);
+			} else{
+				$generationIds = [];
+			}
+			$node = [
+				'label' => $skill->getName(),
+				'id' => $skill->getId(),
+				'slug' => $skill->getSlug(),
+				'importance' => $skill->getImportance(),
+				'generation' => $skill->getGeneration(),
+				'generationIds' => $generationIds,
+				'level' => $skill->getGeneration(),
+				'description' => $skill->getDescription()
+			];
+				
+			if ($skill->getFeaturedPicture()) {
+				$node['picture'] = $this->getPictureThumbUrl($skill->getFeaturedPicture());
+			}
+				
+			if ($skill->isTransition()) {
+				$transitions[] = $node;
+			} else {
+				$nodes[] = $node;
+			}
+				
+			foreach ($skill->getParents() as $parent) {
+				$id = $parent->getId() . '-' . $skill->getId();
+				$edges[$id] = [
+					'id' => $id,
+					'from' => $parent->getId(),
+					'to' => $skill->getId()
+				];
+			}
+				
+			if ($skill->getVariationOf() !== null) {
+				$id = $skill->getVariationOfId() . '-' . $skill->getId();
+				$edges[$id] = [
+					'id' => $id,
+					'from' => $skill->getVariationOfId(),
+					'to' => $skill->getId()
+				];
+			}
+		}
+		
+		return [
+			'nodes' => json_encode($nodes),
+			'edges' => json_encode(array_values($edges)),
+			'transitions' => $transitions,
+			'url_pattern' => $this->generateUrl('skill', ['skill' => '_skill_'])
+		];
 	}
 }
