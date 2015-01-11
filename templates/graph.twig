@@ -118,7 +118,8 @@ var options = {
 		inheritColor: false
 	},
 	smoothCurves: false,
-	navigation: true
+	navigation: true,
+	zoomExtentOnStabilize: false
 };
 var graph = new vis.Network(container, data, options);
 var selecting = false;
@@ -172,6 +173,9 @@ graph.on('select', function(e) {
 		info.classList.add('hidden');
 	}
 	selecting = false;
+});
+graph.on("stabilized", function () {
+    graph.setOptions({zoomExtentOnStabilize:false})
 });
 </script>
 {% endblock %}

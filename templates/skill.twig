@@ -617,14 +617,18 @@ $(function() {
 					picture.classList.add('hidden');
 				}
 	
-				graph.focusOnNode(id);
+				graph.focusOnNode(id, {
+					scale: 1
+				});
 			} else {
 				info.classList.add('hidden');
 			}
 			selecting = false;
 		});
 		graph.selectNodes([{{ skill.getId() }}]);
-		graph.focusOnNode({{ skill.getId() }});
+		graph.focusOnNode({{ skill.getId() }}, {
+			scale: 1
+		});
 	}
 
 	initGraph();

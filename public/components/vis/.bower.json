@@ -1,6 +1,6 @@
 {
   "name": "vis",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "main": [
     "dist/vis.min.js",
     "dist/vis.min.css"
@@ -22,14 +22,13 @@
   ],
   "dependencies": {},
   "devDependencies": {},
-  "_release": "3.7.1",
+  "_release": "3.7.2",
   "_resolution": {
     "type": "version",
-    "tag": "v3.7.1",
-    "commit": "9b8f4bb4b6915901b4d99fe0c2e03f0648b5a847"
+    "tag": "v3.7.2",
+    "commit": "bcc51653301cb1b1f00c5ce9c928dc0b43fbbc00"
   },
   "_source": "git://github.com/almende/vis.git",
   "_target": "~3.7.1",
-  "_originalSource": "vis",
-  "_direct": true
+  "_originalSource": "vis"
 }

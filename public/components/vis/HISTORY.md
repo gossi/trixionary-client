@@ -2,6 +2,23 @@
 http://visjs.org
 
 
+## 2014-12-09, version 3.7.2
+
+### Timeline
+
+- Fixed zooming issue on mobile devices.
+
+### Graph2D
+
+- Fixed infinite loop when clearing DataSet
+
+### Network
+
+- Sidestepped double touch event from hammer (ugly.. but functional) causing
+  strange behaviour in manipulation mode
+- Better cleanup after reconnecting edges in manipulation mode
+
+
 ## 2014-11-28, version 3.7.1
 
 ### Timeline
@@ -21,11 +38,11 @@ http://visjs.org
 - Fixed docs
 - Fixed height increase on scrolling if only `graphHeight` is defined.
 
-
 ### Network
 
 - dragEnd event now does not give the selected nodes if only the viewport has been dragged #453
 - merged high DPI fix by @crubier, thanks!
+
 
 ## 2014-11-14, version 3.7.0
 
@@ -45,7 +62,7 @@ http://visjs.org
 
 - Added a finishedRedraw event.
 - Fixed the disappearing item bug.
-
+- Fixed keycharm issue.
 
 ## 2014-11-07, version 3.6.4
 
