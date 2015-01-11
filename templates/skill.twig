@@ -521,14 +521,6 @@ $(function() {
 		    nodes: nodes,
 		    edges: edges
 		};
-		var highlight = {
-			background: '#EEE',
-			border: '#777'
-		};
-		var normal = {
-			background: '#DDD',
-			border: '#AAA'
-		};
 		var options = {
 			hierarchicalLayout: {
 				nodeSpacing: 50,
@@ -539,20 +531,19 @@ $(function() {
 			nodes: {
 				borderWidthSelected: 1.1,
 				shape: 'box',
-				radius: 5,
-				color: {
-					background: '#DDD',
-					border: '#AAA',
-					highlight: highlight
-				}
+				radius: 5
 			},
 			groups: {
 				selected: {
-					shape: 'box',
-					radius: 5,
 					color: {
 						background: '#EEE',
 						border: '#777'
+					}
+				},
+				unselected: {
+					color: {
+						background: '#DDD',
+						border: '#AAA'
 					}
 				}
 			},
@@ -566,7 +557,9 @@ $(function() {
 				},
 				inheritColor: false
 			},
-			smoothCurves: false
+			smoothCurves: false,
+			navigation: true,
+			zoomExtentOnStabilize: false
 		};
 		var graph = new vis.Network(container, data, options);
 		var selecting = false;
@@ -576,7 +569,7 @@ $(function() {
 				return;
 			}
 			if (lastSelection !== null) {
-				lastSelection.color = normal;
+				lastSelection.group = 'unselected';
 				nodes.update(lastSelection);
 				lastSelection = null;
 			}
@@ -584,7 +577,8 @@ $(function() {
 			if (e.nodes && e.nodes.length && e.nodes.length > 0) {
 				var id = e.nodes[0];
 				var node = nodes.get(id);
-	
+
+				// geneaology selection
 				try {
 					if (node.edges) {
 						var edges = node.edges;
@@ -597,38 +591,34 @@ $(function() {
 						edges.push(node.generationIds[node.generationIds.length - 1] + '-' + id);
 						node.edges = edges;
 					}
-					node.color = highlight;
+					node.group = 'selected';
 					nodes.update(node);
 					lastSelection = node;
 					graph.selectEdges(edges);
+					graph.focusOnNode(id, {scale: 1});
 				} catch (e) {}
-				
+
+				// show info box
 				info.classList.remove('hidden');
-				link.href = '{{ graph.url_pattern }}'.replace('_skill_', node.slug);
+				link.href = '{{ url_pattern }}'.replace('_skill_', node.slug);
 				link.innerHTML = node.label;
 				desc.innerHTML = node.description;
 				importance.innerHTML = node.importance;
 				generation.innerHTML = node.generation;
-	
+
 				if (node.picture) {
 					picture.src = node.picture;
 					picture.classList.remove('hidden');
 				} else {
 					picture.classList.add('hidden');
 				}
-	
-				graph.focusOnNode(id, {
-					scale: 1
-				});
 			} else {
 				info.classList.add('hidden');
 			}
 			selecting = false;
 		});
 		graph.selectNodes([{{ skill.getId() }}]);
-		graph.focusOnNode({{ skill.getId() }}, {
-			scale: 1
-		});
+		graph.focusOnNode({{ skill.getId() }}, {scale: 1});
 	}
 
 	initGraph();

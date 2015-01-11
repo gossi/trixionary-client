@@ -154,7 +154,8 @@ abstract class AbstractSportAction extends AbstractAction {
 				'generation' => $skill->getGeneration(),
 				'generationIds' => $generationIds,
 				'level' => $skill->getGeneration(),
-				'description' => $skill->getDescription()
+				'description' => $skill->getDescription(),
+				'group' => 'unselected'
 			];
 				
 			if ($skill->getFeaturedPicture()) {
