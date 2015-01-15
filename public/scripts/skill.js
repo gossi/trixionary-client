@@ -130,23 +130,25 @@ Structure.prototype = {
 
 		var that = this;
 		this.edit = document.getElementById(this.options['id'] + '-edit');
-		this.edit.addEventListener('mouseup', function(e) {
-			that.setEditing(!that.editing);
-		}, false);
-
-		// editing form
-		this.titleNode = document.getElementById(this.options['id'] + '-title');
-		this.typeNode = $('#' + this.options['id'] + '-type').select2();
-		this.saveButton = document.getElementById(this.options['id'] + '-save');
-		this.form = document.getElementById(this.options['id'] + '-form');
-		this.form.addEventListener('submit', function (e) {
-			that.saveForm();
-			e.preventDefault();
-			e.stopPropagation();
-			return false;			
-		}, false);
-		this.error = document.getElementById(this.options['id'] + '-error');
-		this.errorMessage = document.getElementById(this.options['id'] + '-error-message');
+		if (this.edit) {
+			this.edit.addEventListener('mouseup', function(e) {
+				that.setEditing(!that.editing);
+			}, false);
+	
+			// editing form
+			this.titleNode = document.getElementById(this.options['id'] + '-title');
+			this.typeNode = $('#' + this.options['id'] + '-type').select2();
+			this.saveButton = document.getElementById(this.options['id'] + '-save');
+			this.form = document.getElementById(this.options['id'] + '-form');
+			this.form.addEventListener('submit', function (e) {
+				that.saveForm();
+				e.preventDefault();
+				e.stopPropagation();
+				return false;			
+			}, false);
+			this.error = document.getElementById(this.options['id'] + '-error');
+			this.errorMessage = document.getElementById(this.options['id'] + '-error-message');
+		}
 		
 		// legend
 		var list = document.querySelectorAll('#' + this.options['id'] + '-legend li span');
