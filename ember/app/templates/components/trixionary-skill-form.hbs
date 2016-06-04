@@ -1,0 +1,169 @@
+<h2>{{if skill.isNew (t "new") (t "edit")}} {{sport.skillLabel}}</h2>
+
+<form class="form-horizontal" {{action "save" on="submit"}}>
+	<fieldset>
+		<legend>{{t "trick.form.informative-section"}}</legend>
+
+		<div class="form-group">
+			<label for="inputName" class="col-sm-2 control-label">{{t "name"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="inputName" value=skill.name}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputAlternativeName" class="col-sm-2 control-label">{{t "alternative-names"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="inputAlternativeName" value=skill.alternativeName}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputSlug" class="col-sm-2 control-label">{{t "slug"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="inputSlug" placeholder=(t "slug.placeholder") value=skill.slug}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputDescription" class="col-sm-2 control-label">{{t "description"}}</label>
+			<div class="col-sm-6">
+				{{textarea class="form-control" id="inputDescription" rows="3" value=skill.description placeholder=(t "trick.form.description.placeholder" skill=sport.skillLabel)}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputHistory" class="col-sm-2 control-label">{{t "history"}}</label>
+			<div class="col-sm-6">
+				{{textarea class="form-control" id="inputHistory" rows="3" value=skill.history placeholder=(t "history.placeholder" skill=sport.skillLabel)}}
+			</div>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{t "trick.form.structural-section"}}</legend>
+
+		<div class="form-group">
+			<label for="inputGroups" class="col-sm-2 control-label">{{sport.groupPluralLabel}}</label>
+			<div class="col-sm-6">
+				{{#power-select-multiple
+					id="inputGroups"
+					options=sport.groups
+					selected=skill.groups
+					matcher=searchGroups
+					allowClear=true
+					onchange=(action "changeGroup")
+					onkeydown=(action "handleKeydown")
+					as |group|}}
+					{{group.title}}
+				{{/power-select-multiple}}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="inputType" class="col-sm-2 control-label">{{t "trick.form.classification"}}</label>
+			<div class="col-sm-6">
+				{{#power-select
+					options=types
+					selected=type
+					searchEnabled=false
+					onchange=(action (mut type))
+					onkeydown=(action "handleKeydown")
+					as |t|}}
+					{{t.title}} {{#if t.help}}<span class="text-muted">&mdash; {{t.help}}</span>{{/if}}
+				{{/power-select}}
+			</div>
+		</div>
+
+		{{#if isSkill}}is skill{{/if}}
+		{{#if isComposite}}is composite{{/if}}
+		{{#if isMultiple}}is multiple{{/if}}
+	</fieldset>
+
+	<fieldset>
+		<legend>{{t "trick.form.movement-section"}}</legend>
+
+		<div class="form-group">
+			<label for="inputType" class="col-sm-2 control-label">{{t "sequence-picture"}}</label>
+			<div class="col-sm-6">
+				<button class="btn btn-success">{{ui-icon "plus"}} Under construction</button>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="inputMovementDescription" class="col-sm-2 control-label">{{t "movement-description"}}</label>
+			<div class="col-sm-6">
+				{{textarea class="form-control" id="inputMovementDescription" rows="3" value=skill.movementDescription placeholder=(t "movement-description.placeholder")}}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="inputStartPosition" class="col-sm-2 control-label">{{t "start-position"}}</label>
+			<div class="col-sm-2">
+				{{#power-select
+					options=sport.positions
+					selected=skill.startPosition
+					searchEnabled=false
+					onchange=(action (mut skill.startPosition))
+					onkeydown=(action "handleKeydown")
+					as |position|}}
+					{{position.title}}
+				{{/power-select}}
+			</div>
+			<label for="inputEndPosition" class="col-sm-2 control-label">{{t "end-position"}}</label>
+			<div class="col-sm-2">
+				{{#power-select
+					options=sport.positions
+					selected=skill.endPosition
+					searchEnabled=false
+					onchange=(action (mut skill.endPosition))
+					onkeydown=(action "handleKeydown")
+					as |position|}}
+					{{position.title}}
+				{{/power-select}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEndPosition" class="col-sm-2 control-label">{{t "end-position"}}</label>
+			<div class="col-sm-6">
+				{{#power-select
+					options=sport.objects
+					selected=skill.object
+					searchEnabled=false
+					onchange=(action (mut skill.object))
+					onkeydown=(action "handleKeydown")
+					as |object|}}
+					{{object.title}}
+				{{/power-select}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{t "trick.form.cyclic"}}</label>
+			<div class="col-sm-6">
+				<label>
+					{{input type="checkbox" checked=skill.isAcyclic}}
+					{{t "acyclic"}}
+				</label><br>
+				<label>
+					{{input type="checkbox" checked=skill.isCyclic}}
+					{{t "cyclic"}}
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{t "trick.form.type"}}</label>
+			<div class="col-sm-6">
+				<label>
+					{{input type="checkbox" checked=skill.isTranslation}}
+					{{t "translation"}}
+				</label><br>
+				<label>
+					{{input type="checkbox" checked=skill.isRotation}}
+					{{t "rotation"}}
+				</label>
+			</div>
+		</div>
+	</fieldset>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-6">
+			<button type="submit" class="btn btn-primary">{{t "save"}}</button>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,27 @@
+<h2>{{if position.isNew (t "new") (t "edit")}} {{t "position"}}</h2>
+
+<form class="form-horizontal" {{action "save" on="submit"}}>
+	<div class="form-group">
+		<label for="inputTitle" class="col-sm-2 control-label">{{t "title"}}</label>
+		<div class="col-sm-6">
+			{{input class="form-control" id="inputTitle" value=position.title}}
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputSlug" class="col-sm-2 control-label">{{t "slug"}}</label>
+		<div class="col-sm-6">
+			{{input class="form-control" id="inputSlug" placeholder=(t "slug.placeholder") value=position.slug}}
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputDescription" class="col-sm-2 control-label">{{t "description"}}</label>
+		<div class="col-sm-6">
+			{{textarea class="form-control" id="inputDescription" rows="3" value=position.description}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-6">
+			<button type="submit" class="btn btn-primary">{{t "save"}}</button>
+		</div>
+	</div>
+</form>

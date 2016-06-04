@@ -1,0 +1,15 @@
+<h3>{{sport.objectPluralLabel}}</h3>
+
+<ul class="list-unstyled">
+{{#each sport.objects as |object|}}
+<li>{{object.title}}</li>
+{{/each}}
+</ul>
+
+<h3>{{sport.groupPluralLabel}}</h3>
+
+<ul class="list-unstyled">
+{{#each sport.groups as |group|}}
+<li>{{#link-to "group" group.slug}}{{group.title}}{{/link-to}}</li>
+{{/each}}
+</ul>

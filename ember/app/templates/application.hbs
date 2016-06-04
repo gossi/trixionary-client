@@ -1,0 +1,57 @@
+{{#if isDevelopment}}
+<nav class="navbar navbar-default navbar-dev">
+	<div class="container">
+		{{#link-to "index" class="navbar-brand"}}Trixionary{{/link-to}}
+
+		<div class="pull-right">
+			{{#if session.isAuthenticated}}
+			logged in as {{session.user.displayName}}
+			<button class="btn btn-primary btn-sm" {{action 'logout'}}>Logout</button>
+			{{else}}
+			<form class="form-inline" {{action 'login' on='submit'}}>
+				{{input class="form-control form-control-sm" placeholder="Login" value=login}}
+				{{input type="password" class="form-control form-control-sm" placeholder="Password" value=password}}
+			    <button class="btn btn-primary btn-sm" type="submit">Login</button>
+			</form>
+			{{/if}}
+		</div>
+	</div>
+</nav>
+{{/if}}
+<div class="{{if isDevelopment 'container'}}">
+	{{#if model}}
+	<header class="trixionary-header">
+		<div class="row">
+			<div class="col-md-7">
+				<h1>{{model.title}} Trixionary</h1>
+			</div>
+			<div class="col-md-5">
+				<div class="trixionary-toolbar pull-right">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{ui-icon "plus"}} <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>{{#link-to "new.skill" skill=model.skillSlug}}{{t "new"}} {{model.skillLabel}}{{/link-to}}</li>
+							<li>{{#link-to "new.group" group=model.groupSlug}}{{t "new"}} {{model.groupLabel}}{{/link-to}}</li>
+							<li>{{#link-to "new.position"}}{{t "new"}} {{t "position"}}{{/link-to}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<ul class="nav nav-tabs">
+				{{#each-in nav as |route item|}}
+				<li role="presentation" class="{{if item.active 'active'}}">{{#link-to route}}{{item.title}}{{/link-to}}</li>
+				{{/each-in}}
+			</ul>
+		</div>
+	</header>
+	<div class="trixionary-body">
+	{{outlet}}
+	</div>
+	{{else}}
+	Whoops, what's wrong here?
+	{{/if}}
+</div>

@@ -4,7 +4,8 @@
 	"type" : "keeko-module",
 	"license" : "MIT",
 	"authors" : [{
-			"name" : "gossi"
+			"name" : "Thomas Gossmann",
+			"homepage" : "http://gos.si"
 		}
 	],
 	"autoload" : {
@@ -15,24 +16,24 @@
 	"require" : {
 		"php" : ">=5.4",
 		"keeko/composer-installer" : "*",
-		"gossi/trixionary" : "~0",
-		"guzzle/guzzle" : "~3",
-		"cocur/slugify" : "~0",
-		"imagine/imagine" : "~0"
+		"gossi/trixionary" : "dev-master"
 	},
 	"require-dev" : {
-		"composer/composer" : "@dev",
-		"keeko/core" : "dev-master",
-		"propel/propel" : "@dev",
-		"gossi/trixionary" : "dev-master"
+		"gossi/trixionary" : "dev-master",
+		"keeko/framework" : "dev-master",
+		"keeko/core" : "@dev",
+		"propel/propel" : "@alpha",
+		"puli/repository" : "@beta",
+		"puli/composer-plugin" : "@beta",
+		"puli/twig-extension" : "@beta",
+		"puli/url-generator" : "@beta",
+		"puli/discovery" : "@beta"
 	},
 	"extra" : {
 		"keeko" : {
 			"module" : {
 				"title" : "Trixionary Client",
 				"class" : "gossi\\trixionary\\client\\TrixionaryClientModule",
-				"slug" : "gossi.trixionary-client",
-				"default-action" : "none",
 				"actions" : {
 					"router" : {
 						"title" : "Trixionary Router",
@@ -530,7 +531,6 @@
 					}
 				}
 			}
-		},
-		"local" : "../../"
+		}
 	}
 }

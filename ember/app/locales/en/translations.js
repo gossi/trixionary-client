@@ -1,0 +1,45 @@
+export default {
+	"intro": "Welcome to the Trixionary. The Trixionary is an online catalog for {{sport}} {{skills}}. They are archived in {{groups}} (see on the right). Each {{skill}} has a lot of parameters, that are stored with them. Through relations, {{skills}} are connected to other {{skills}}. Explore {{skills}} now, by browsing through the {{groups}} on the right.",
+
+	"exercises": "Exercises",
+	"transitions": "Transitions",
+	"graph": "Graph",
+	"tester": "Tester",
+	"translate": "Translate",
+
+	"position": "Position",
+	"composite": "Composite",
+	"composite.explanation": "Is constructed of multiple {{skills}}.",
+	"multiple": "Multiple",
+	"multiple.explanation": "Serves as abstract Idea. Concrete multiples contain the multiplier degree.",
+	"cyclic": "Cyclic",
+	"acyclic": "A-Cyclic",
+	"sequence-picture": "Sequence Picture",
+	"start-position": "Start Position",
+	"end-position": "End Position",
+	"translation": "Translation",
+	"rotation": "Rotation",
+
+	"new": "New",
+	"edit": "Edit",
+	"save": "Save",
+
+	"title": "Title",
+	"description": "Description",
+	"slug": "Slug",
+	"slug.placeholder": "Leave empty for auto-generation",
+	"name": "Name",
+	"alternative-names": "Alternative Names",
+	"history": "History",
+	"history.placeholder": "Some history about that {{skill}}, e.g. who invented the {{skill}} or what's the story behind?",
+	"movement-description": "Movement Description",
+	"movement-description.placeholder": "Detailed Movement Description",
+
+	"trick.form.informative-section": "Information",
+	"trick.form.structural-section": "Structure",
+	"trick.form.movement-section": "Movement",
+	"trick.form.description.placeholder": "One or two sentences desribing the {{skill}}",
+	"trick.form.classification": "Classification",
+	"trick.form.cyclic": "Cyclic &amp; A-Cyclic",
+	"trick.form.type": "Translation &amp; Rotation"
+};

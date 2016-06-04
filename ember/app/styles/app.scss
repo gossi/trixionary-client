@@ -1,0 +1,43 @@
+@import 'ember-power-select/themes/bootstrap';
+@import "ember-power-select";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+$font-family-base: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.navbar-dev {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.trixionary-header {
+	padding-top: 16px;
+	padding-bottom: 16px;
+
+	.trixionary-toolbar {
+		margin-top: 25px;
+	}
+
+	.nav {
+		padding-left: 16px;
+
+		a:focus {
+			outline: none;
+		}
+	}
+}
+
+.trixionary-intro {
+	margin-top: 20px;
+}
+
+.trixionary-body {
+	margin-top: -20px;
+}
+
+.form-horizontal .control-label {
+    text-align: left;
+}
+
+// fix components stuff
+.ember-power-select-trigger {
+    position: relative;
+}
