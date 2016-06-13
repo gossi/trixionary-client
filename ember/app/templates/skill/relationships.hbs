@@ -1,0 +1,91 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-6">
+				<h3>{{t "parents"}}</h3>
+				<p>{{t "parents.explanation"}}</p>
+
+				{{#skill-list skills=model.parents as |parent|}}
+					{{skill-list-item-compact skill=parent}}
+				{{/skill-list}}
+			</div>
+			<div class="col-md-6">
+				<h3>{{t "children"}}</h3>
+				<p>{{t "children.explanation"}}</p>
+
+				{{#skill-list skills=model.children as |child|}}
+					{{skill-list-item-compact skill=child}}
+				{{/skill-list}}
+			</div>
+		</div>
+		<div class="row">
+			{{#if model.variations}}
+			<div class="col-md-6">
+				<h3>{{t "variations"}}</h3>
+
+				{{#skill-list skills=model.variations as |variation|}}
+					{{skill-list-item-compact skill=variation}}
+				{{/skill-list}}
+			</div>
+			{{/if}}
+			{{#if model.multiples}}
+			<div class="col-md-6">
+				<h3>{{t "multiples"}}</h3>
+
+				{{#skill-list sortBy="multiplier" skills=model.multiples as |multiple|}}
+					{{#skill-list-item-compact skill=multiple}}
+					<p>{{multiple.multiplier}}°</p>
+					{{/skill-list-item-compact}}
+				{{/skill-list}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="col-md-4">
+			<h3>{{t "transitions"}}</h3>
+
+			<table class="details">
+			<tr>
+				<td>{{t "start-position"}}</td>
+				<td>{{model.startPosition.title}}</td>
+			</tr>
+			<tr>
+				<td>{{t "end-position"}}</td>
+				<td>{{model.endPosition.title}}</td>
+			</tr>
+			</table>
+
+			{{#if (or model.variationOf model.multipleOf model.composites)}}
+			<h3>{{t "connections"}}</h3>
+
+			<table class="details">
+			{{#if model.variationOf}}
+			<tr>
+				<td>{{t "variation-of"}}</td>
+				<td>{{#link-to "skill" model.variationOf.slug}}{{model.variationOf.name}}{{/link-to}}</td>
+			</tr>
+			{{/if}}
+			{{#if model.multipleOf}}
+			<tr>
+				<td>{{t "multiple-of"}}</td>
+				<td>{{#link-to "skill" model.multipleOf.slug}}{{model.multipleOf.name}}{{/link-to}}</td>
+			</tr>
+			<tr>
+				<td>{{t "multiplier"}}</td>
+				<td>{{model.multiplier}}°</td>
+			</tr>
+			{{/if}}
+			{{#if model.composites}}
+			<tr>
+				<td>{{t "part-of"}}</td>
+				<td>
+					{{#each model.composites as |composite|}}
+					{{#link-to "skill" composite.slug}}{{composite.name}}{{/link-to}}<br>
+					{{/each}}
+				</td>
+			</tr>
+			{{/if}}
+			</table>
+			{{/if}}
+	</div>
+</div>

@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-md-8">
+		<h3>{{t "movement-description"}}</h3>
+		Movement Picture above
+		<br>
+		{{model.movementDescription}}
+	</div>
+	<div class="col-md-4">
+		<h3>{{t "movement-type"}}</h3>
+		<ul class="list-unstyled">
+		{{#if model.isAcyclic}}<li>{{t "acyclic"}}</li>{{/if}}
+		{{#if model.isCyclic}}<li>{{t "cyclic"}}</li>{{/if}}
+		{{#if model.isTranslation}}<li>{{t "translation"}}</li>{{/if}}
+		{{#if model.isRotation}}
+		<li class="skill-rotation-flags">{{t "rotation"}}
+			<dl>
+				{{#if (gt model.longitudinalFlags 0)}}
+				<dt>{{t "longitudinal"}}</dt>
+				<dd>{{skill-rotation-flags flags=model.longitudinalFlags object=model.object sport=model.sport}}</dd>
+				{{/if}}
+				{{#if (gt model.latitudinalFlags 0)}}
+				<dt>{{t "latitudinal"}}</dt>
+				<dd>{{skill-rotation-flags flags=model.latitudinalFlags object=model.object sport=model.sport}}</dd>
+				{{/if}}
+				{{#if (gt model.transversalFlags 0)}}
+				<dt>{{t "transversal"}}</dt>
+				<dd>{{skill-rotation-flags flags=model.transversalFlags object=model.object sport=model.sport}}</dd>
+				{{/if}}
+			</dl>
+		</li>
+		{{/if}}
+		</ul>
+	</div>
+</div>

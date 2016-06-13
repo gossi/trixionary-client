@@ -1,0 +1,14 @@
+<div class="row">
+	<div class="col-md-10">
+		<h2>{{model.title}}</h2>
+		<p>{{model.description}}</p>
+
+		{{#skill-list skills=(reject-by "multipleOf.name" (reject-by "variationOf.name" model.skills)) as |skill|}}
+			{{skill-list-item skill=skill}}
+		{{/skill-list}}
+	</div>
+
+	<div class="col-md-2">
+		{{trixionary-sport-nav sport=model.sport}}
+	</div>
+</div>

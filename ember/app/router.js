@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 const slug = keeko && keeko.trixionary && keeko.trixionary.slug ? keeko.trixionary.slug : {};
 const skill = slug.skill ? slug.skill : 'skill';
 const group = slug.group ? slug.group : 'group';
+const obj = slug.object ? slug.object: 'object';
 
 Router.map(function() {
   this.route('exercises');
@@ -22,8 +23,23 @@ Router.map(function() {
     this.route('position');
   });
 
-  this.route('group', {path: '/' + group + '/:group'});
-  this.route('skill', {path: '/' + skill + '/:skill'});
+  this.route('group', {path: '/' + group + '/:group'}, function() {
+    this.route('edit');
+  });
+  this.route('skill', {path: '/' + skill + '/:skill'}, function() {
+    this.route('movement');
+    this.route('relationships');
+    this.route('pictures');
+    this.route('videos');
+    this.route('graph');
+    this.route('exercises');
+    this.route('mistakes');
+    this.route('technic-criteria');
+    this.route('edit');
+  });
+  this.route('obj', {path: '/' + obj + '/:object'}, function() {
+    this.route('edit');
+  });
 });
 
 export default Router;

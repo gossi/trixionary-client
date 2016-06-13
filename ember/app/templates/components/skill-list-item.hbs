@@ -1,0 +1,21 @@
+<div class="media-left">
+	IMG
+</div>
+<div class="media-body">
+	<h3 class="media-heading" data-skill-id="{{skill.id}}">{{#link-to "skill" skill.slug}}{{skill.name}}{{/link-to}}</h3>
+	<p>{{skill.description}}</p>
+	{{#if skill.variations}}
+	<p><b>{{t "variations"}}</b>:
+		{{#each skill.variations as |variation index|}}
+		{{#link-to "skill" variation.slug}}{{variation.name}}{{/link-to}}{{#unless (eq index (sub skill.variations.length 1))}}, {{/unless}}
+		{{/each}}
+	</p>
+	{{/if}}
+	{{#if skill.multiples}}
+	<p><b>{{t "multiples"}}</b>:
+		{{#each skill.multiples as |multiple index|}}
+		{{#link-to "skill" multiple.slug}}{{multiple.name}}{{/link-to}}{{#unless (eq index (sub skill.multiples.length 1))}}, {{/unless}}
+		{{/each}}
+	</p>
+	{{/if}}
+</div>

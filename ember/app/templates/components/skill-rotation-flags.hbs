@@ -1,0 +1,23 @@
+{{#if (b-and flags defined.athlete)}}
+{{sport.athleteLabel}}
+{{/if}}
+{{#if (and (b-and flags defined.athlete) (b-and flags defined.object))}}
+ and
+{{/if}}
+{{#if (b-and flags defined.object)}}
+{{object.title}}
+{{/if}}
+{{#if (b-and flags defined.simultaneous)}}
+{{t "simultaneous"}}
+{{/if}}
+{{#if (b-and flags defined.isolated)}}
+{{t "isolated"}}
+{{t "rotation.in-the"}}
+{{#if (b-and flags defined.same)}}
+{{t "same"}}
+{{/if}}
+{{#if (b-and flags defined.opposite)}}
+{{t "opposite"}}
+{{/if}}
+{{t "direction"}}
+{{/if}}

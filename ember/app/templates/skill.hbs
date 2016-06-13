@@ -1,1 +1,40 @@
+{{#if (eq currentPath "skill.edit")}}
 {{outlet}}
+{{else}}
+<article class="skill">
+	<header class="row skill-header">
+		<div class="col-md-10 col-md-offset-2 media">
+			<div class="media-left">
+				IMG
+			</div>
+			<div class="media-body">
+				<h2 data-skill-id="{{model.id}}">{{model.name}}</h2>
+				<p>{{model.description}}</p>
+			</div>
+		</div>
+	</header>
+
+	<div class="row">
+		<ul class="col-md-2 list-unstyled">
+			<li class="nav-item">{{#link-to "skill.index" model.slug}}{{t "summary"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.movement" model.slug}}{{t "movement"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.relationships" model.slug}}{{t "relationships"}}{{/link-to}}</li>
+
+			<li class="nav-header">{{t "media"}}</li>
+			<li class="nav-item">{{#link-to "skill.pictures" model.slug}}{{t "pictures"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.videos" model.slug}}{{t "videos"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.graph" model.slug}}{{t "graph"}}{{/link-to}}</li>
+
+			<li class="nav-header">{{t "training"}}</li>
+			<li class="nav-item">{{#link-to "skill.exercises" model.slug}}{{t "exercises"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.mistakes" model.slug}}{{t "mistakes"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.technic-criteria" model.slug}}{{t "technic-criteria"}}{{/link-to}}</li>
+
+		</ul>
+
+		<div class="col-md-10">
+			{{outlet}}
+		</div>
+	</div>
+</article>
+{{/if}}

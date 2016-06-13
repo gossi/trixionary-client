@@ -95,17 +95,17 @@ export default Ability.extend({
 	canUpdateFunctionPhaseRoot: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-function_phase_root-relationship-update');
 	}),
-	canReadDescendent: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-descendent-relationship-read');
+	canReadChild: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-child-relationship-read');
 	}),
-	canUpdateDescendent: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-descendent-relationship-update');
+	canUpdateChild: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-child-relationship-update');
 	}),
-	canAddDescendent: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-descendent-relationship-add');
+	canAddChild: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-child-relationship-add');
 	}),
-	canRemoveDescendent: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-descendent-relationship-remove');
+	canRemoveChild: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-child-relationship-remove');
 	}),
 	canReadPart: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-part-relationship-read');

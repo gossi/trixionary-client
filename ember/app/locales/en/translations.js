@@ -1,11 +1,27 @@
 export default {
 	"intro": "Welcome to the Trixionary. The Trixionary is an online catalog for {{sport}} {{skills}}. They are archived in {{groups}} (see on the right). Each {{skill}} has a lot of parameters, that are stored with them. Through relations, {{skills}} are connected to other {{skills}}. Explore {{skills}} now, by browsing through the {{groups}} on the right.",
 
+	"new": "New",
+	"edit": "Edit",
+	"save": "Save",
+
 	"exercises": "Exercises",
 	"transitions": "Transitions",
 	"graph": "Graph",
 	"tester": "Tester",
 	"translate": "Translate",
+
+	"summary": "Summary",
+	"movement": "Movement",
+	"classification": "Classification",
+	"structure": "Structure",
+	"relationships": "Relationships",
+	"media": "Media",
+	"pictures": "Pictures",
+	"videos": "Videos",
+	"training": "Training",
+	"mistakes": "Mistakes",
+	"technic-criteria": "Technic Criteria",
 
 	"position": "Position",
 	"composite": "Composite",
@@ -19,10 +35,25 @@ export default {
 	"end-position": "End Position",
 	"translation": "Translation",
 	"rotation": "Rotation",
-
-	"new": "New",
-	"edit": "Edit",
-	"save": "Save",
+	"longitudinal": "longitudinal",
+	"latitudinal": "latitudinal",
+	"transversal": "transversal",
+	"synchronization": "Synchronization",
+	"direction": "Direction",
+	"simultaneous": "simultaneous",
+	"isolated": "isolated",
+	"same": "same",
+	"opposite": "opposite",
+	"rotation.in-the": "in the",
+	"connections": "Connections",
+	"variation-of": "Variation of",
+	"multiple-of": "Multiple of",
+	"multiplier": "Multiplier",
+	"multiplier.explanation": "The actual multiplier value in degree [°] (e.g. 360 for a full revolution)",
+	"multiples": "Multiples",
+	"parts": "Parts",
+	"variations": "Variations",
+	"part-of": "Part of",
 
 	"title": "Title",
 	"description": "Description",
@@ -34,6 +65,14 @@ export default {
 	"history.placeholder": "Some history about that {{skill}}, e.g. who invented the {{skill}} or what's the story behind?",
 	"movement-description": "Movement Description",
 	"movement-description.placeholder": "Detailed Movement Description",
+	"movement-type": "Movement Type",
+	"parents": "Parents",
+	"parents.explanation": "Tricks you should learn before",
+	"children": "Children",
+	"children.explanation": "Tricks you can learn afterwards",
+
+
+
 
 	"trick.form.informative-section": "Information",
 	"trick.form.structural-section": "Structure",

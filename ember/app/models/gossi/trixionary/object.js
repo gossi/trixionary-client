@@ -7,6 +7,7 @@ export default Model.extend({
 	slug: attr('string'),
 	fixed: attr('boolean'),
 	description: attr('string'),
+	skillCount: attr('number'),
 	sport: belongsTo('gossi.trixionary/sport', {inverse: 'objects'}),
 	skills: hasMany('gossi.trixionary/skill')
 });

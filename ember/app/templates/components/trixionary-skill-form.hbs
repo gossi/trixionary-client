@@ -44,15 +44,31 @@
 			<div class="col-sm-6">
 				{{#power-select-multiple
 					id="inputGroups"
-					options=sport.groups
+					options=(sort-by "title" sport.groups)
 					selected=skill.groups
 					matcher=searchGroups
 					allowClear=true
-					onchange=(action "changeGroup")
+					onchange=(action (mut skill.groups))
 					onkeydown=(action "handleKeydown")
 					as |group|}}
 					{{group.title}}
 				{{/power-select-multiple}}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="inputVariationOf" class="col-sm-2 control-label">{{t "variation-of"}}</label>
+			<div class="col-sm-6">
+				{{#power-select
+					options=(sort-by "name" (if skill.isNew sport.skills (reject-by "id" skill.id sport.skills)))
+					selected=skill.variationOf
+					matcher=searchSkills
+					allowClear=true
+					onchange=(action "changeVariationOf")
+					onkeydown=(action "handleKeydown")
+					as |s|}}
+					{{s.name}}
+				{{/power-select}}
 			</div>
 		</div>
 
@@ -71,9 +87,69 @@
 			</div>
 		</div>
 
-		{{#if isSkill}}is skill{{/if}}
-		{{#if isComposite}}is composite{{/if}}
-		{{#if isMultiple}}is multiple{{/if}}
+		{{#if (or (eq type.key "skill") (eq type.key "multiple"))}}
+		<div class="form-group">
+			<label for="inputParents" class="col-sm-2 control-label">{{t "parents"}}</label>
+			<div class="col-sm-6">
+				{{#power-select-multiple
+					options=(sort-by "name" (if skill.isNew sport.skills (reject-by "id" skill.id sport.skills)))
+					selected=skill.parents
+					matcher=searchSkills
+					allowClear=true
+					onchange=(action (mut skill.parents))
+					onkeydown=(action "handleKeydown")
+					as |s|}}
+					{{s.name}}
+				{{/power-select-multiple}}
+			</div>
+		</div>
+		{{/if}}
+
+		{{#if (eq type.key "composite")}}
+		<div class="form-group">
+			<label for="inputParts" class="col-sm-2 control-label">{{t "parts"}}</label>
+			<div class="col-sm-6">
+				{{#power-select-multiple
+					options=(if skill.isNew sport.skills (reject-by "id" skill.id sport.skills))
+					selected=skill.parts
+					matcher=searchSkills
+					allowClear=true
+					onchange=(action "changeParts")
+					onkeydown=(action "handleKeydown")
+					as |s|}}
+					{{s.name}}
+				{{/power-select-multiple}}
+			</div>
+		</div>
+		{{/if}}
+
+		{{#if (eq type.key "skill")}}
+		<div class="form-group">
+			<label for="inputMultipleOf" class="col-sm-2 control-label">{{t "multiple-of"}}</label>
+			<div class="col-sm-6">
+				{{#power-select
+					options=(sort-by "name" (filter-by "isMultiple" true sport.skills))
+					selected=skill.multipleOf
+					matcher=searchSkills
+					allowClear=true
+					onchange=(action (mut skill.multipleOf))
+					onkeydown=(action "handleKeydown")
+					as |s|}}
+					{{s.name}}
+				{{/power-select}}
+			</div>
+		</div>
+
+		{{#if skill.multipleOf}}
+		<div class="form-group">
+			<label for="inputMultiplier" class="col-sm-2 control-label">{{t "multiplier"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="inputMultiplier" value=skill.multiplier}}
+				<span class="help-block">{{t "multiplier.explanation"}}</span>
+			</div>
+		</div>
+		{{/if}}
+		{{/if}}
 	</fieldset>
 
 	<fieldset>
@@ -119,8 +195,9 @@
 				{{/power-select}}
 			</div>
 		</div>
+		{{#if (gt sport.objects.length 1)}}
 		<div class="form-group">
-			<label for="inputEndPosition" class="col-sm-2 control-label">{{t "end-position"}}</label>
+			<label for="inputObject" class="col-sm-2 control-label">{{sport.objectLabel}}</label>
 			<div class="col-sm-6">
 				{{#power-select
 					options=sport.objects
@@ -133,14 +210,15 @@
 				{{/power-select}}
 			</div>
 		</div>
+		{{/if}}
 		<div class="form-group">
 			<label class="col-sm-2 control-label">{{t "trick.form.cyclic"}}</label>
 			<div class="col-sm-6">
-				<label>
+				<label class="control-label-checkbox">
 					{{input type="checkbox" checked=skill.isAcyclic}}
 					{{t "acyclic"}}
 				</label><br>
-				<label>
+				<label class="control-label-checkbox">
 					{{input type="checkbox" checked=skill.isCyclic}}
 					{{t "cyclic"}}
 				</label>
@@ -148,15 +226,163 @@
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">{{t "trick.form.type"}}</label>
-			<div class="col-sm-6">
-				<label>
+			<div class="col-sm-10">
+				<label class="control-label-checkbox">
 					{{input type="checkbox" checked=skill.isTranslation}}
 					{{t "translation"}}
 				</label><br>
-				<label>
+				<label class="control-label-checkbox">
 					{{input type="checkbox" checked=skill.isRotation}}
 					{{t "rotation"}}
 				</label>
+
+				{{#if skill.isRotation}}
+					<div class="row">
+						<div class="col-md-2">
+							<label>{{sport.athleteLabel}}</label>
+						</div>
+						{{#if isNonFixedObject}}
+						<div class="col-md-2">
+							<label>{{skill.object.title}}</label>
+						</div>
+						<div class="col-md-2">
+							<label>{{t "synchronization"}}</label>
+						</div>
+						<div class="col-md-2">
+							<label>{{t "direction"}}</label>
+						</div>
+						{{/if}}
+					</div>
+					<!-- longitudinal -->
+					<div class="row row-rotation">
+						<div class="col-md-2">
+							<label class="control-label-checkbox">
+							{{input type="checkbox" checked=rotation.longitudinal.athlete}}
+							{{t "longitudinal"}}
+							</label>
+						</div>
+						{{#if isNonFixedObject}}
+						<div class="col-md-2">
+							<label class="control-label-checkbox">
+							{{input type="checkbox" checked=rotation.longitudinal.object}}
+							{{t "longitudinal"}}
+							</label>
+						</div>
+						<div class="col-md-2">
+							{{#if (and rotation.longitudinal.athlete rotation.longitudinal.object)}}
+							{{#power-select
+								options=synchronizations
+								selected=rotation.longitudinal.sync
+								searchEnabled=false
+								onchange=(action (mut rotation.longitudinal.sync))
+								onkeydown=(action "handleKeydown")
+								as |sync|}}
+								{{sync.title}}
+							{{/power-select}}
+							{{/if}}
+						</div>
+						<div class="col-md-2">
+							{{#if (eq rotation.longitudinal.sync.key 'isolated')}}
+							{{#power-select
+								options=directions
+								selected=rotation.longitudinal.direction
+								searchEnabled=false
+								onchange=(action (mut rotation.longitudinal.direction))
+								onkeydown=(action "handleKeydown")
+								as |direction|}}
+								{{direction.title}}
+							{{/power-select}}
+							{{/if}}
+						</div>
+						{{/if}}
+					</div>
+					<!-- latitudinal -->
+					<div class="row row-rotation">
+						<div class="col-md-2">
+							<label class="control-label-checkbox">
+							{{input type="checkbox" checked=rotation.latitudinal.athlete}}
+							{{t "latitudinal"}}
+							</label>
+						</div>
+						{{#if isNonFixedObject}}
+						<div class="col-md-2">
+							<label class="control-label-checkbox">
+							{{input type="checkbox" checked=rotation.latitudinal.object}}
+							{{t "latitudinal"}}
+							</label>
+						</div>
+						<div class="col-md-2">
+							{{#if (and rotation.latitudinal.athlete rotation.latitudinal.object)}}
+							{{#power-select
+								options=synchronizations
+								selected=rotation.latitudinal.sync
+								searchEnabled=false
+								onchange=(action (mut rotation.latitudinal.sync))
+								onkeydown=(action "handleKeydown")
+								as |sync|}}
+								{{sync.title}}
+							{{/power-select}}
+							{{/if}}
+						</div>
+						<div class="col-md-2">
+							{{#if (eq rotation.latitudinal.sync.key 'isolated')}}
+							{{#power-select
+								options=directions
+								selected=rotation.latitudinal.direction
+								searchEnabled=false
+								onchange=(action (mut rotation.latitudinal.direction))
+								onkeydown=(action "handleKeydown")
+								as |direction|}}
+								{{direction.title}}
+							{{/power-select}}
+							{{/if}}
+						</div>
+						{{/if}}
+					</div>
+					<!-- transversal -->
+					<div class="row row-rotation">
+						<div class="col-md-2">
+							<label class="control-label-checkbox">
+							{{input type="checkbox" checked=rotation.transversal.athlete}}
+							{{t "transversal"}}
+							</label>
+						</div>
+						{{#if isNonFixedObject}}
+						<div class="col-md-2">
+							<label class="control-label-checkbox">
+							{{input type="checkbox" checked=rotation.transversal.object}}
+							{{t "transversal"}}
+							</label>
+						</div>
+						<div class="col-md-2">
+							{{#if (and rotation.transversal.athlete rotation.transversal.object)}}
+							{{#power-select
+								options=synchronizations
+								selected=rotation.transversal.sync
+								searchEnabled=false
+								onchange=(action (mut rotation.transversal.sync))
+								onkeydown=(action "handleKeydown")
+								as |sync|}}
+								{{sync.title}}
+							{{/power-select}}
+							{{/if}}
+						</div>
+						<div class="col-md-2">
+							{{#if (eq rotation.transversal.sync.key 'isolated')}}
+							{{#power-select
+								options=directions
+								selected=rotation.transversal.direction
+								searchEnabled=false
+								onchange=(action (mut rotation.transversal.direction))
+								onkeydown=(action "handleKeydown")
+								as |direction|}}
+								{{direction.title}}
+							{{/power-select}}
+							{{/if}}
+						</div>
+						{{/if}}
+					</div>
+				{{/if}}
 			</div>
 		</div>
 	</fieldset>

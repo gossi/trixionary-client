@@ -13,11 +13,27 @@ export default Ember.Controller.extend({
 		return this.get('currentPath') === 'index';
 	}),
 
+	isGroupRoute: Ember.computed('currentPath', function() {
+		return this.get('currentPath').startsWith('group');
+	}),
+
+	isPositionRoute: Ember.computed('currentPath', function() {
+		return this.get('currentPath').startsWith('position');
+	}),
+
+	isSkillRoute: Ember.computed('currentPath', function() {
+		return this.get('currentPath').startsWith('skill');
+	}),
+
 	nav: Ember.computed('currentPath', function () {
 		return {
 			"index": {
 				"title": this.get('model').get('skillPluralLabel'),
-				"active": this.get('currentPath') === 'index'
+				"active": !this.get('currentPath').startsWith('transitions')
+					&& !this.get('currentPath').startsWith('graph')
+					&& !this.get('currentPath').startsWith('exercises')
+					&& !this.get('currentPath').startsWith('tester')
+					&& !this.get('currentPath').startsWith('translate')
 			},
 			"transitions": {
 				"title": this.get('i18n').t('transitions'),

@@ -14,6 +14,11 @@ $font-family-base: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	.trixionary-toolbar {
 		margin-top: 25px;
+
+		a:hover, a:active, a:focus {
+			outline: none;
+			text-decoration: none;
+		}
 	}
 
 	.nav {
@@ -37,7 +42,69 @@ $font-family-base: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: left;
 }
 
+.control-label-checkbox {
+    font-weight: normal !important;
+}
+
+.row-rotation {
+	height: 32px;
+}
+
+.nav-header {
+	font-weight: bold;
+	margin-top: 15px
+}
+
+.nav-item {
+
+	position: relative;
+
+	a:hover, a:active, a:focus {
+		outline: none;
+		text-decoration: none;
+	}
+
+	a.active::before {
+		content: ">";
+		position: absolute;
+		left: -10px;
+	}
+}
+
+.skill-header {
+	.media-left {
+		padding-top: 20px;
+	}
+}
+
+.skill-rotation-flags {
+	dl {
+		margin-left: 10px;
+	}
+
+	dt {
+		font-weight: normal;
+	}
+
+	dd {
+		margin-left: 10px;
+	}
+}
+
+.details {
+	width: 100%;
+
+	td:first-child {
+		width: 35%;
+		vertical-align: top;
+	}
+}
+
+
 // fix components stuff
 .ember-power-select-trigger {
+	height: 30px;
     position: relative;
+	overflow-y: hidden;
+	text-overflow: ellipsis;
 }
