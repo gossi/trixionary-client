@@ -4,7 +4,9 @@
     "window",
     "-Promise",
 	"keeko",
-	"vis"
+	"vis",
+	"$",
+	"BigScreen"
   ],
   "browser": true,
   "boss": true,

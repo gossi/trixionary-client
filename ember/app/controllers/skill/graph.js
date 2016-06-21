@@ -5,9 +5,5 @@ export default Ember.Controller.extend({
 
 	skills: Ember.computed('application.model.skills', function() {
 		return this.get('application').get('model').get('skills');
-	}),
-
-	currentPath: Ember.computed('application.currentPath', function() {
-		return this.get('application').get('currentPath');
 	})
 });

@@ -131,6 +131,18 @@ export default Ability.extend({
 	canRemoveGroup: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-group-relationship-remove');
 	}),
+	canReadLineage: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-lineage-relationship-read');
+	}),
+	canUpdateLineage: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-lineage-relationship-update');
+	}),
+	canAddLineage: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-lineage-relationship-add');
+	}),
+	canRemoveLineage: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-lineage-relationship-remove');
+	}),
 	canReadPicture: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-picture-relationship-read');
 	}),

@@ -7,6 +7,8 @@
     "ember-qunit-notifications": "0.1.0",
     "fontawesome": "^4.6.3",
     "bootstrap": "^3.3.6",
-    "vis": "^4.16.1"
+    "vis": "^4.16.1",
+    "BigScreen": "bigscreen#^2.0.5",
+    "blueimp-file-upload": "jquery-file-upload#^9.12.5"
   }
 }

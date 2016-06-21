@@ -4,7 +4,7 @@ export default Ember.Route.extend({
 	model() {
 		if (keeko && keeko.trixionary && keeko.trixionary.sportId) {
 			return this.store.findRecord('gossi.trixionary/sport', keeko.trixionary.sportId, {
-				'include': 'groups,objects,positions,skills'
+				'include': 'groups,objects,positions,skills,skills.parents,skills.lineages,skills.lineages.ancestor,skills.lineages.skill'
 			}).then((response) => {
 				return response;
 			}, () => {
@@ -14,4 +14,10 @@ export default Ember.Route.extend({
 			return null;
 		}
 	},
+
+	actions: {
+		reload() {
+			this.refresh();
+		}
+	}
 });

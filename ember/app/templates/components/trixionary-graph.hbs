@@ -1,1 +1,14 @@
-{{yield}}
+{{trixionary-graph-info skill=selected}}
+<div class="btn-group btn-group-sm trixionary-graph-controls" role="group">
+	<!-- <div class="btn-group btn-group-sm" role="group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    		Filters <span class="caret"></span>
+  		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="#">Variations</a></li>
+			<li><a href="#">Transitions</a></li>
+		</ul>
+	</div>-->
+	<button type="button" class="btn btn-default" {{action "toggleFullscreen"}}>{{ui-icon icon="arrows-alt"}}</button>
+</div>
+<div class="trixionary-graph-canvas"></div>

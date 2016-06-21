@@ -70,9 +70,9 @@ export default {
 	"parents.explanation": "Tricks you should learn before",
 	"children": "Children",
 	"children.explanation": "Tricks you can learn afterwards",
-
-
-
+	"importance": "Importance",
+	"generation": "Generation",
+	"lineage": "Lineage",
 
 	"trick.form.informative-section": "Information",
 	"trick.form.structural-section": "Structure",

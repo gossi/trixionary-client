@@ -87,5 +87,11 @@
 			{{/if}}
 			</table>
 			{{/if}}
+
+			<h3>{{t "lineage"}}</h3>
+
+			{{#each (reverse (sortBy "position" model.lineages)) as |lineage|}}
+			{{lineage.position}}. {{#link-to "skill" lineage.ancestor.slug}}{{lineage.ancestor.name}}{{/link-to}}<br>
+			{{/each}}
 	</div>
 </div>

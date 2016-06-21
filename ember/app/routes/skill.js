@@ -6,7 +6,7 @@ export default Ember.Route.extend({
 			filter: {
 				slug: params.skill
 			},
-			include: "start-position,end-position,groups,object,sport,parents,children,parts,composites,multiples,multiple-of,variations,variation-of"
+			include: "start-position,end-position,groups,object,sport,parents,children,parts,composites,multiples,multiple-of,variations,variation-of,lineages"
 		}).then((skills) => {
 			return skills.get('firstObject');
 		});

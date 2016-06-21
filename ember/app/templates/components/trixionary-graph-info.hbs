@@ -1,0 +1,8 @@
+{{#if skill}}
+<div class="trixionary-graph-info">
+	{{#link-to "skill" skill.slug}}{{skill.name}}{{/link-to}}
+	<p>{{skill.description}}</p>
+	{{t "importance"}}: {{skill.importance}}<br>
+	{{t "generation"}}: {{skill.generation}}
+</div>
+{{/if}}
