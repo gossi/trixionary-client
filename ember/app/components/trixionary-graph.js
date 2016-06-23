@@ -29,6 +29,28 @@ export default Ember.Component.extend({
 					levelSeparation: 175
 				}
 			},
+			groups: {
+				skill: {
+					color: {
+						background: '#DDD',
+						border: '#AAA',
+						highlight: {
+							background: '#EEE',
+							border: '#666'
+						}
+					}
+				},
+				variation: {
+					color: {
+						background: '#FCF8E3',
+						border: '#AAA',
+						highlight: {
+							background: '#EEE',
+							border: '#666'
+						}
+					}
+				}
+			},
 			nodes: {
 				borderWidthSelected: 1.1,
 				shape: 'box',
@@ -101,10 +123,15 @@ export default Ember.Component.extend({
 		edges.clear();
 
 		skills.forEach(function(skill) {
+			if (skill.get('isMultiple') && skill.get('parents').get('length') === 0) {
+				return;
+			}
+
 			nodes.add({
 				id: skill.get('id'),
 				label: skill.get('name'),
 				level: skill.get('generation'),
+				// group: skill.get('variationOf').get('id') ? 'variation' : 'skill',
 				skill: skill
 			});
 
@@ -161,7 +188,6 @@ export default Ember.Component.extend({
 
 	actions: {
 		toggleFullscreen() {
-			console.log("toggle fullscreen");
 			if (BigScreen.enabled) {
 				BigScreen.toggle(this.$()[0], () => {
 					this.set('fullscreen', true);
