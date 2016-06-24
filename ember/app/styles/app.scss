@@ -58,6 +58,31 @@ html, body {
 	height: 32px;
 }
 
+.trixionary-upload-preview {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.trixionary-upload-progress {
+	margin-top: 5px;
+	height: 5px;
+}
+
+.skill-list-item {
+	.skill-list-image {
+		max-width: 125px;
+		max-height: 125px;
+		border: 1px solid #000;
+	}
+
+	&.skill-list-item-compact {
+		.skill-list-image {
+			max-width: 50px;
+			max-height: 50px;
+		}
+	}
+}
+
 .nav-header {
 	font-weight: bold;
 	margin-top: 15px
@@ -96,6 +121,11 @@ html, body {
 	dd {
 		margin-left: 10px;
 	}
+}
+
+.skill-sequence-picture {
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .details {

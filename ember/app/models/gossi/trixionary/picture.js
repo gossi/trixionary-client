@@ -5,6 +5,7 @@ import { belongsTo } from 'ember-data/relationships';
 export default Model.extend({
 	title: attr('string'),
 	description: attr('string'),
+	url: attr('string'),
 	photographer: attr('string'),
 	photographerId: attr('number'),
 	movender: attr('string'),

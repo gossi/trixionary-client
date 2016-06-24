@@ -144,6 +144,14 @@ export default Ember.Component.extend({
 		this.get('rotation').transversal = this.loadRotations(skill.get('transversalFlags'));
 	},
 
+	searchGroups(group, term) {
+		return group.get('title').toLowerCase().indexOf(term.toLowerCase());
+	},
+
+	searchSkills(skill, term) {
+		return skill.get('name').toLowerCase().indexOf(term.toLowerCase());
+	},
+
 	actions: {
 		save() {
 			let skill = this.get('skill');
@@ -179,14 +187,16 @@ export default Ember.Component.extend({
 			if (e.keyCode === 13) {
 				e.preventDefault();
 			}
-	  	}
-	},
+	  	},
 
-	searchGroups(group, term) {
-		return group.get('title').toLowerCase().indexOf(term.toLowerCase());
-	},
+		sequenceAdded(data) {
+			let skill = this.get('skill');
+			skill.set('filename', data.filename);
+		},
 
-	searchSkills(skill, term) {
-		return skill.get('name').toLowerCase().indexOf(term.toLowerCase());
+		sequenceRemoved() {
+			let skill = this.get('skill');
+			skill.set('sequence_delete', true);
+		}
 	}
 });

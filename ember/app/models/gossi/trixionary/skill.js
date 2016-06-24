@@ -16,6 +16,7 @@ export default Model.extend({
 	latitudinalFlags: attr('number'),
 	transversalFlags: attr('number'),
 	movementDescription: attr('string'),
+	sequencePictureUrl: attr('string'),
 	isComposite: attr('boolean', {defaultValue: false}),
 	isMultiple: attr('boolean', {defaultValue: false}),
 	multiplier: attr('number'),

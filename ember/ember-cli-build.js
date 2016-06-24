@@ -27,5 +27,10 @@ module.exports = function(defaults) {
 	app.import('bower_components/vis/dist/vis.min.css');
 	app.import('bower_components/BigScreen/bigscreen.min.js');
 
+	app.import('bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
+	app.import('bower_components/blueimp-file-upload/js/jquery.fileupload.js');
+	app.import('bower_components/blueimp-file-upload/css/jquery.fileupload.css');
+
+
 	return app.toTree();
 };

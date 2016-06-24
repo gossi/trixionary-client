@@ -12,6 +12,7 @@ export default Model.extend({
 	skillSlug: attr('string'),
 	skillLabel: attr('string'),
 	skillPluralLabel: attr('string'),
+	skillPictureUrl: attr('string'),
 	groupSlug: attr('string'),
 	groupLabel: attr('string'),
 	groupPluralLabel: attr('string'),

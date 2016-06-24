@@ -74,11 +74,12 @@ export default {
 	"generation": "Generation",
 	"lineage": "Lineage",
 
-	"trick.form.informative-section": "Information",
-	"trick.form.structural-section": "Structure",
-	"trick.form.movement-section": "Movement",
-	"trick.form.description.placeholder": "One or two sentences desribing the {{skill}}",
-	"trick.form.classification": "Classification",
-	"trick.form.cyclic": "Cyclic &amp; A-Cyclic",
-	"trick.form.type": "Translation &amp; Rotation"
+	"skill.form.informative-section": "Information",
+	"skill.form.structural-section": "Structure",
+	"skill.form.movement-section": "Movement",
+	"skill.form.description.placeholder": "One or two sentences desribing the {{skill}}",
+	"skill.form.classification": "Classification",
+	"skill.form.cyclic": "Cyclic &amp; A-Cyclic",
+	"skill.form.type": "Translation &amp; Rotation",
+	"select-file": "Select File"
 };

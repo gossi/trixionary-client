@@ -5,7 +5,14 @@ export default Ember.Controller.extend({
 
 	actions: {
 		save(skill) {
-			skill.save().then(() => {
+			skill.save({
+				adapterOptions: {
+					meta: {
+						filename: skill.get('filename'),
+						sequence_delete: skill.get('sequence_delete')
+					}
+				}
+			}).then(() => {
 				this.get('application').send('reload');
 				this.transitionToRoute('skill', skill.get('slug'));
 			}, (failure) => {

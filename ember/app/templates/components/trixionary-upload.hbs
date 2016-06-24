@@ -1,0 +1,12 @@
+<span class="btn btn-success fileinput-button">
+	{{ui-icon "plus"}} {{t "select-file"}}...
+	<input type="file" name="file" id="fileupload">
+</span>
+<img class="trixionary-upload-preview pull-right hidden">
+<button class="trixionary-upload-delete close pull-right hidden" style="margin-right: 5px;" {{action "delete"}}>
+	<span aria-hidden="true">&times;</span>
+</button>
+<span class="trixionary-upload-filename"></span>
+<div class="trixionary-upload-progress progress hidden">
+	<div class="progress-bar progress-bar-success" style="width: 100%"></div>
+</div>

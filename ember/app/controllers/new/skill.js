@@ -10,7 +10,13 @@ export default Ember.Controller.extend({
 	actions: {
 		save(skill) {
 			skill.set('sport', this.get('sport'));
-			skill.save().then((skill) => {
+			skill.save({
+				adapterOptions: {
+					meta: {
+						filename: skill.get('filename')
+					}
+				}
+			}).then((skill) => {
 				this.transitionToRoute('skill', skill.get('slug'));
 			});
 		}
