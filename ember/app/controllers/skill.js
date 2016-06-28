@@ -9,5 +9,9 @@ export default Ember.Controller.extend({
 
 	currentPath: Ember.computed('application.currentPath', function() {
 		return this.get('application').get('currentPath');
+	}),
+
+	managePath: Ember.computed('application.currentPath', function() {
+		return this.get('application').get('currentPath').startsWith('skill.manage');
 	})
 });

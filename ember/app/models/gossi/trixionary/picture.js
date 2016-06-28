@@ -6,11 +6,12 @@ export default Model.extend({
 	title: attr('string'),
 	description: attr('string'),
 	url: attr('string'),
+	thumbUrl: attr('string'),
 	photographer: attr('string'),
 	photographerId: attr('number'),
-	movender: attr('string'),
-	movenderId: attr('number'),
+	athlete: attr('string'),
+	athleteId: attr('number'),
 	uploaderId: attr('number'),
-	featuredSkill: belongsTo('gossi.trixionary/skill'),
+	featuredSkill: belongsTo('gossi.trixionary/skill', {inverse: null}),
 	skill: belongsTo('gossi.trixionary/skill', {inverse: 'pictures'})
 });

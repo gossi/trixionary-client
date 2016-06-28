@@ -44,7 +44,7 @@
 	<div class="col-md-4">
 			<h3>{{t "transitions"}}</h3>
 
-			<table class="details">
+			<table class="skill-details">
 			<tr>
 				<td>{{t "start-position"}}</td>
 				<td>{{model.startPosition.title}}</td>
@@ -58,7 +58,7 @@
 			{{#if (or model.variationOf model.multipleOf model.composites)}}
 			<h3>{{t "connections"}}</h3>
 
-			<table class="details">
+			<table class="skill-details">
 			{{#if model.variationOf}}
 			<tr>
 				<td>{{t "variation-of"}}</td>

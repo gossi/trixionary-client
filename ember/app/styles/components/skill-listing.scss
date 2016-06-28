@@ -1,0 +1,28 @@
+.skill-list {
+	.skill-list-item .media-left,
+	.skill-list-item .media-left > .ember-view {
+		width: 125px;
+	}
+
+	.skill-list-item-compact .media-left,
+	.skill-list-item-compact .media-left > .ember-view {
+		width: 50px;
+	}
+
+	.skill-list-image {
+		float: right;
+	}
+}
+
+.skill-list-item {
+	.skill-list-image {
+		@extend .picture;
+		@extend .picture-lg;
+	}
+
+	&.skill-list-item-compact {
+		.skill-list-image {
+			@extend .picture-xs;
+		}
+	}
+}

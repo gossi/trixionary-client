@@ -1,0 +1,22 @@
+<div class="btn-group pull-right" role="group">
+	<button class="btn btn-default {{if isTiles 'active'}}" {{action "changeView" "tiles"}}>{{ui-icon icon="th-large"}}</button>
+	<button class="btn btn-default {{if isDetails 'active'}}" {{action "changeView" "details"}}>{{ui-icon icon="th-list"}}</button>
+</div>
+
+{{#each pictures as |picture|}}
+<figure class="media">
+	<div class="media-left">
+		<a href="{{picture.url}}" title="{{picture.title}}" class="pictures">
+			<img src="{{picture.thumbUrl}}" class="picture picture-lg">
+		</a>
+		<span class="title">{{picture.title}}</span>
+	</div>
+
+	<div class="media-body">
+		<h4 class="media-heading title">{{picture.title}}</h4>
+		<span class="athlete">{{sport.athleteLabel}}: {{picture.athlete}}</span>
+		<span class="photographer">{{t "photographer"}}: {{picture.photographer}}</span>
+		<p class="description">{{picture.description}}</p>
+	</div>
+</figure>
+{{/each}}

@@ -1,0 +1,84 @@
+.skill-gallery {
+	.btn-group {
+		margin-top: -34px;
+	}
+
+	figure {
+		margin-top: 10px !important;
+		max-height: 175px;
+		float: left;
+	}
+
+	&-videos .picture,
+	&-videos .media-left .title {
+		max-width: 225px;
+	}
+
+	&-pictures .picture,
+	&-pictures .media-left .title {
+		max-width: 150px;
+	}
+
+	&-videos .picture,
+	&-pictures .picture {
+		max-height: 150px;
+	}
+
+	.media-left .title {
+		font-size: small;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	.athlete, .photographer {
+		font-size: smaller;
+		color: #777;
+		display: block;
+	}
+
+	.description {
+		font-size: small;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: block;
+	}
+
+	&-details {
+		.media-left .title {
+			display: none;
+		}
+
+		.media-body {
+			display: table-cell;
+		}
+
+		figure {
+			margin-right: 15px;
+		}
+
+		&.skill-gallery-videos figure {
+			width: 45%;
+			margin-right: 5%;
+		}
+
+		&.skill-gallery-pictures figure {
+			width: 30%;
+			margin-right: 3%;
+		}
+	}
+
+	&-tiles {
+		.media-left a {
+			display: table-row;
+		}
+
+		.media-left .title {
+			display: table-row;
+		}
+
+		.media-body {
+			display: none;
+		}
+	}
+}

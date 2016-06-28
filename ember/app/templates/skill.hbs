@@ -1,12 +1,20 @@
-{{#if (eq currentPath "skill.edit")}}
+{{#if (or (eq currentPath "skill.edit") managePath)}}
 {{outlet}}
 {{else}}
 <article class="skill">
 	<header class="row skill-header">
+		{{#if model.sequencePictureUrl}}
+		<div class="skill-sequence-header" style="background-image: url('{{model.sequencePictureUrl}}')">
+			<!--<div class="skill-sequence-wrapper"></div>
+			<img src="{{model.sequencePictureUrl}}">-->
+		</div>
+		{{/if}}
 		<div class="col-md-10 col-md-offset-2 media">
+			{{#if model.featuredPicture}}
 			<div class="media-left">
-				IMG
+				<img src="{{model.featuredPicture.thumbUrl}}" class="picture picture-sm">
 			</div>
+			{{/if}}
 			<div class="media-body">
 				<h2 data-skill-id="{{model.id}}">{{model.name}}</h2>
 				<p>{{model.description}}</p>

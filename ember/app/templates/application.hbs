@@ -30,17 +30,57 @@
 					<div class="btn-group">
 
 					{{#if isSkillRoute}}
-					{{#if (can "update gossi.trixionary.skill")}}{{#link-to "skill.edit" class="btn btn-default"}}{{ui-icon "pencil"}}{{/link-to}}{{/if}}
+					<div class="btn-group">
+						{{#if (can "update gossi.trixionary.skill")}}
+						{{#link-to "skill.edit" class="btn btn-default"}}{{ui-icon "pencil"}}{{/link-to}}
+						{{/if}}
+						{{#if (or (can "create gossi.trixionary.picture") (can "update gossi.trixionary.picture") (can "create gossi.trixionary.video") (can "update gossi.trixionary.video") (can "create gossi.trixionary.reference") (can "update gossi.trixionary.reference"))}}
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<!-- <li class="dropdown-header">Skill</li>
+							<li role="separator" class="divider"></li> -->
+							{{#if (can "create gossi.trixionary.picture")}}
+							<li>{{#link-to "skill.manage.pictures.add"}}{{t "add"}} {{t "picture"}}{{/link-to}}</li>
+							{{/if}}
+							{{#if (can "create gossi.trixionary.video")}}
+							<li>{{#link-to "skill.manage.videos.add"}}{{t "add"}} {{t "video"}}{{/link-to}}</li>
+							{{/if}}
+							{{#if (can "create gossi.trixionary.reference")}}
+							<li>{{#link-to "skill.manage.references.add"}}{{t "add"}} {{t "reference"}}{{/link-to}}</li>
+							{{/if}}
+							<li role="separator" class="divider"></li>
+							{{#if (can "update gossi.trixionary.picture")}}
+							<li>{{#link-to "skill.manage.pictures"}}{{t "manage"}} {{t "pictures"}}{{/link-to}}</li>
+							{{/if}}
+							{{#if (can "update gossi.trixionary.video")}}
+							<li>{{#link-to "skill.manage.videos"}}{{t "manage"}} {{t "videos"}}{{/link-to}}</li>
+							{{/if}}
+							{{#if (can "update gossi.trixionary.reference")}}
+							<li>{{#link-to "skill.manage.references"}}{{t "manage"}} {{t "references"}}{{/link-to}}</li>
+							{{/if}}
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Make K-Struktur</a></li>
+							<li><a href="#">Make Function Phases</a></li>
+					  	</ul>
+						{{/if}}
+					</div>
 					{{/if}}
+
 					{{#if isGroupRoute}}
-					{{#if (can "update gossi.trixionary.group")}}{{#link-to "group.edit" class="btn btn-default"}}{{ui-icon "pencil"}}{{/link-to}}{{/if}}
+					{{#if (can "update gossi.trixionary.group")}}
+					{{#link-to "group.edit" class="btn btn-default"}}{{ui-icon "pencil"}}{{/link-to}}
 					{{/if}}
+					{{/if}}
+
 					{{#if (or (can "create gossi.trixionary.skill") (can "create gossi.trixionary.group") (can "create gossi.trixionary.position"))}}
 					<div class="btn-group">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							{{ui-icon "plus"}} <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu dropdown-menu-right">
 							{{#if (can "create gossi.trixionary.skill")}}<li>{{#link-to "new.skill" skill=model.skillSlug}}{{t "new"}} {{model.skillLabel}}{{/link-to}}</li>{{/if}}
 							{{#if (can "create gossi.trixionary.group")}}<li>{{#link-to "new.group" group=model.groupSlug}}{{t "new"}} {{model.groupLabel}}{{/link-to}}</li>{{/if}}
 							{{#if (can "create gossi.trixionary.position")}}<li>{{#link-to "new.position"}}{{t "new"}} {{t "position"}}{{/link-to}}</li>{{/if}}

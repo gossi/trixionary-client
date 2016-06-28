@@ -2,8 +2,21 @@ export default {
 	"intro": "Welcome to the Trixionary. The Trixionary is an online catalog for {{sport}} {{skills}}. They are archived in {{groups}} (see on the right). Each {{skill}} has a lot of parameters, that are stored with them. Through relations, {{skills}} are connected to other {{skills}}. Explore {{skills}} now, by browsing through the {{groups}} on the right.",
 
 	"new": "New",
+	"add": "Add",
 	"edit": "Edit",
+	"delete": "Delete",
 	"save": "Save",
+	"ok": "Ok",
+	"cancel": "Cancel",
+	"manage": "Manage",
+	"actions": "Actions",
+
+	"picture": "Picture",
+	"pictures": "Pictures",
+	"video": "Video",
+	"videos": "Videos",
+	"reference": "Reference",
+	"references": "References",
 
 	"exercises": "Exercises",
 	"transitions": "Transitions",
@@ -17,8 +30,6 @@ export default {
 	"structure": "Structure",
 	"relationships": "Relationships",
 	"media": "Media",
-	"pictures": "Pictures",
-	"videos": "Videos",
 	"training": "Training",
 	"mistakes": "Mistakes",
 	"technic-criteria": "Technic Criteria",
@@ -81,5 +92,7 @@ export default {
 	"skill.form.classification": "Classification",
 	"skill.form.cyclic": "Cyclic &amp; A-Cyclic",
 	"skill.form.type": "Translation &amp; Rotation",
-	"select-file": "Select File"
+	"select-file": "Select File",
+	"file": "File",
+	"photographer": "Photographer"
 };

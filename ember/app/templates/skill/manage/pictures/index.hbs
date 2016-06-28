@@ -1,0 +1,43 @@
+<h2>{{#link-to "skill.pictures" model.slug}}{{model.name}}{{/link-to}}: {{t "manage"}} {{t "pictures"}}</h2>
+
+<table class="table">
+<thead>
+	<tr>
+		<th>{{t "picture"}}</th>
+		<th>{{t "title"}}</th>
+		<th>{{t "actions"}}</th>
+	</tr>
+</thead>
+<tbody>
+{{#each model.pictures as |picture|}}
+<tr class="{{if (eq model.featuredPicture.id picture.id) 'warning'}}">
+	<td><img src="{{picture.thumbUrl}}" class="picture picture-sm"></td>
+	<td>{{picture.title}}</td>
+	<td>
+		<div class="btn-group" role="group">
+			{{#link-to "skill.manage.pictures.edit" picture.id class="btn btn-default"}}{{ui-icon icon="pencil"}}{{/link-to}}
+			<button class="btn btn-default" disabled={{eq model.featuredPicture.id picture.id}} {{action "setFeatured" picture}}>{{ui-icon icon="star"}}</button>
+			<button class="btn btn-danger" {{action 'delete' picture}}>{{ui-icon icon="trash"}}</button>
+		</div>
+	</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{#if markedDelete}}
+{{#modal-dialog
+		translucentOverlay=true
+		clickOutsideToClose=true
+		container-class="panel panel-danger trixionary-dialog"
+		close="close"}}
+	<div class="panel-heading">{{t "delete"}} {{t "picture"}}</div>
+	<div class="panel-body">
+	    {{t "delete"}} {{markedDelete.title}}
+	</div>
+	<div class="panel-footer">
+		<button class="btn btn-primary pull-right" {{action "ok"}}>Ok</button>
+		<button class="btn btn-default pull-right" {{action "cancel"}}>Cancel</button>
+	</div>
+{{/modal-dialog}}
+{{/if}}

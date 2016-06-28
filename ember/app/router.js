@@ -36,6 +36,21 @@ Router.map(function() {
     this.route('mistakes');
     this.route('technic-criteria');
     this.route('edit');
+
+    this.route('manage', function() {
+      this.route('pictures', function() {
+        this.route('edit', {path: '/:id'});
+        this.route('add');
+      });
+      this.route('videos', function() {
+        this.route('edit');
+        this.route('add');
+      });
+      this.route('references', function() {
+        this.route('add');
+        this.route('edit');
+      });
+    });
   });
   this.route('obj', {path: '/' + obj + '/:object'}, function() {
     this.route('edit');

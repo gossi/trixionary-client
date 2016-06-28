@@ -73,7 +73,7 @@ export default Ember.Component.extend({
 	actions: {
 		delete() {
 			this.delete();
-			self.sendAction('deleted');
+			this.sendAction('deleted');
 		}
 	}
 });

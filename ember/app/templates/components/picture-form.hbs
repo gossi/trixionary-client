@@ -1,0 +1,51 @@
+<h2>
+	{{#link-to "skill" picture.skill.slug}}{{picture.skill.name}}{{/link-to}}:
+	{{#link-to "skill.manage.pictures" picture.skill.slug}}{{t "manage"}} {{t "pictures"}}{{/link-to}}:
+	{{if picture.isNew (t "add") (t "edit")}} {{t "picture"}}
+</h2>
+
+
+<div class="row">
+<form class="form-horizontal col-sm-8" {{action "save" on="submit"}}>
+	{{#if picture.isNew}}
+	<div class="form-group">
+		<label for="inputFile" class="col-sm-3 control-label">{{t "file"}}</label>
+		<div class="col-sm-9">
+			{{trixionary-upload uploaded=(action "uploaded") deleted=(action "deleted")}}
+		</div>
+	</div>
+	{{/if}}
+	<div class="form-group">
+		<label for="inputTitle" class="col-sm-3 control-label">{{t "title"}}</label>
+		<div class="col-sm-9">
+			{{input class="form-control" id="inputTitle" value=picture.title}}
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputDescription" class="col-sm-3 control-label">{{t "description"}}</label>
+		<div class="col-sm-9">
+			{{textarea class="form-control" id="inputDescription" rows="3" value=picture.description}}
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputPhotographer" class="col-sm-3 control-label">{{t "photographer"}}</label>
+		<div class="col-sm-9">
+			{{input class="form-control" id="inputPhotographer" value=picture.photographer}}
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputAthlete" class="col-sm-3 control-label">{{picture.skill.sport.athleteLabel}}</label>
+		<div class="col-sm-9">
+			{{input class="form-control" id="inputAthlete" value=picture.athlete}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+			<button type="submit" class="btn btn-primary">{{t "save"}}</button>
+		</div>
+	</div>
+</form>
+{{#if (not picture.isNew)}}
+<div class="col-sm-4"><img src="{{picture.thumbUrl}}" class="picture picture-xl"></div>
+{{/if}}
+</div>

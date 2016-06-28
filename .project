@@ -31,5 +31,6 @@
 		<nature>net.vtst.ow.eclipse.less.nature</nature>
 		<nature>com.dubture.composer.core.composerNature</nature>
 		<nature>org.eclipse.php.core.PHPNature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
 </projectDescription>

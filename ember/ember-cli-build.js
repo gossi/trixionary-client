@@ -20,17 +20,32 @@ module.exports = function(defaults) {
 	// please specify an object with the list of modules as keys
 	// along with the exports of each module as its value.
 
+	// bootstrap
 	app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 	app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
 	app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+
+	// vis.js
 	app.import('bower_components/vis/dist/vis.min.js');
 	app.import('bower_components/vis/dist/vis.min.css');
+
+	// BigScreen
 	app.import('bower_components/BigScreen/bigscreen.min.js');
 
+	// jquery.upload
 	app.import('bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js');
 	app.import('bower_components/blueimp-file-upload/js/jquery.fileupload.js');
 	app.import('bower_components/blueimp-file-upload/css/jquery.fileupload.css');
 
+	// jquery-colorbox
+	app.import('bower_components/jquery-colorbox/jquery.colorbox.js');
+	app.import('bower_components/jquery-colorbox/example3/colorbox.css');
+	app.import('bower_components/jquery-colorbox/example3/images/controls.png', {
+		destDir: 'assets/images'
+	});
+	app.import('bower_components/jquery-colorbox/example3/images/loading.gif', {
+		destDir: 'assets/images'
+	});
 
 	return app.toTree();
 };
