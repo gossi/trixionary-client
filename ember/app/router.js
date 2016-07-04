@@ -44,7 +44,7 @@ Router.map(function() {
       });
       this.route('videos', function() {
 		this.route('add');
-		this.route('edit');
+		this.route('edit', {path: '/:id'});
       });
       this.route('references', function() {
         this.route('add');

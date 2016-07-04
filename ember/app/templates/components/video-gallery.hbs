@@ -1,0 +1,25 @@
+<div class="btn-group pull-right" role="group">
+	<button class="btn btn-default {{if isTiles 'active'}}" {{action "changeView" "tiles"}}>{{ui-icon icon="th-large"}}</button>
+	<button class="btn btn-default {{if isDetails 'active'}}" {{action "changeView" "details"}}>{{ui-icon icon="th-list"}}</button>
+</div>
+
+{{#each videos as |video|}}
+<figure class="media">
+	<div class="media-left">
+		{{#if video.provider}}
+		<img src="{{video.posterUrl}}" class="embedded-video picture picture-lg" href="{{video.playerUrl}}" data-width="{{video.width}}" data-height="{{video.height}}">
+		{{else}}
+		<video src="{{video.url}}" class="video" href="#video-player" type="video/mp4"></video>
+		{{/if}}
+		<span class="title" title="{{video.title}}">{{video.title}}</span>
+	</div>
+
+	<div class="media-body">
+		<h4 class="media-heading title">{{video.title}}</h4>
+		<span class="athlete">{{sport.athleteLabel}}: {{video.athlete}}</span>
+		<p class="description">{{video.description}}</p>
+	</div>
+</figure>
+{{/each}}
+
+<video style="width: 100%;" controls id="video-player" class="hidden"></video>

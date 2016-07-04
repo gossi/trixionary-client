@@ -10,8 +10,14 @@
 	}
 
 	&-videos .picture,
+	&-videos .video,
 	&-videos .media-left .title {
 		max-width: 225px;
+	}
+
+	&-videos .video {
+		border: 1px solid #000;
+		cursor: pointer;
 	}
 
 	&-pictures .picture,
@@ -79,6 +85,12 @@
 
 		.media-body {
 			display: none;
+		}
+	}
+
+	&-videos.skill-gallery-tiles {
+		.media-left .video {
+			max-height: 150px;
 		}
 	}
 }

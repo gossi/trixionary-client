@@ -23,14 +23,15 @@ export default Ember.Component.extend({
 			dataType: 'json',
 			acceptFileTypes: /(\.|\/)(jpe?g|png)$/i,
 			done: function (e, data) {
-				// console.log(data);
 				self.lastFile = data.result;
 				if (self.lastFile.error) {
 					self.$('.trixionary-upload-filename').text(self.lastFile.error).addClass('text-danger');
 				} else {
 					self.$('.trixionary-upload-filename').text(self.lastFile.filename).removeClass('text-danger');
 					self.$('.trixionary-upload-delete').removeClass('hidden');
-					self.$('.trixionary-upload-preview').attr('src', self.lastFile.url).removeClass('hidden');
+					if (data.files[0].type.startsWith('image')) {
+						self.$('.trixionary-upload-preview').attr('src', self.lastFile.url).removeClass('hidden');
+					}
 					self.sendAction('uploaded', self.lastFile);
 				}
 				self.$('.trixionary-upload-progress').addClass('hidden');

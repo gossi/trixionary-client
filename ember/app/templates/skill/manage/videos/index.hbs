@@ -1,0 +1,45 @@
+<ol class="breadcrumb">
+  <li>{{#link-to "skill" model.slug}}{{model.name}}{{/link-to}}</li>
+  <li class="active">{{t "manage"}} {{t "videos"}}</li>
+</ol>
+
+<h2>{{t "manage"}} {{t "videos"}}</h2>
+
+<table class="table">
+<thead>
+	<tr>
+		<th>{{t "title"}}</th>
+		<th>{{t "actions"}}</th>
+	</tr>
+</thead>
+<tbody>
+{{#each model.videos as |video|}}
+<tr>
+	<td>{{video.title}}</td>
+	<td>
+		<div class="btn-group" role="group">
+			{{#link-to "skill.manage.videos.edit" video.id class="btn btn-default"}}{{ui-icon icon="pencil"}}{{/link-to}}
+			<button class="btn btn-danger" {{action 'delete' video}}>{{ui-icon icon="trash"}}</button>
+		</div>
+	</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{#if markedDelete}}
+{{#modal-dialog
+		translucentOverlay=true
+		clickOutsideToClose=true
+		container-class="panel panel-danger trixionary-dialog"
+		close="close"}}
+	<div class="panel-heading">{{t "delete"}} {{t "picture"}}</div>
+	<div class="panel-body">
+	    {{t "delete"}} {{markedDelete.title}}
+	</div>
+	<div class="panel-footer">
+		<button class="btn btn-primary pull-right" {{action "ok"}}>Ok</button>
+		<button class="btn btn-default pull-right" {{action "cancel"}}>Cancel</button>
+	</div>
+{{/modal-dialog}}
+{{/if}}

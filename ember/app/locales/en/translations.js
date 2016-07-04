@@ -17,6 +17,8 @@ export default {
 	"videos": "Videos",
 	"reference": "Reference",
 	"references": "References",
+	"tutorial": "Tutorial",
+	"tutorials": "Tutorials",
 
 	"exercises": "Exercises",
 	"transitions": "Transitions",
@@ -97,6 +99,7 @@ export default {
 	"change-comment": "Change Comment",
 	"change-comment.explanation": "Document your changes",
 	"file": "File",
+	"upload": "Upload",
 	"photographer": "Photographer",
 
 	"book": "Book",

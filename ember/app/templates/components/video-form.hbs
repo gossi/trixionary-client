@@ -1,1 +1,105 @@
-{{yield}}
+<h2>{{if video.isNew (t "add") (t "edit")}} {{t "video"}}</h2>
+
+<form class="form-horizontal" {{action "save" on="submit"}}>
+	{{#if video.isNew}}
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-3 radio">
+			<label><input type="radio" name="type" value="video" checked={{isVideo}} onchange={{action "goVideo"}}> {{t "video"}}</label>
+		</div>
+		<div class="col-sm-3 radio">
+			<label><input type="radio" name="type" value="reference" checked={{isReference}} onchange={{action "goReference"}}> {{t "reference"}}</label>
+		</div>
+	</div>
+	{{/if}}
+	{{#if (and isVideo video.isNew)}}
+	<fieldset>
+		<legend>{{t "upload"}}</legend>
+		<div class="form-group">
+			<label for="inputFile" class="col-sm-2 control-label">{{t "file"}}</label>
+			<div class="col-sm-6">
+				{{media-upload uploaded=(action "uploaded") deleted=(action "deleted")}}
+			</div>
+		</div>
+	</fieldset>
+	{{/if}}
+	{{#if isReference}}
+	<fieldset>
+		<legend>{{t "reference"}}</legend>
+		<div class="form-group has-feedback" id="url-group">
+			<label class="col-sm-2 control-label" for="url">{{t "url"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="url" name="url" focus-out="fetch" value=video.reference.url required=true}}
+				{{#if isFetching}}
+				{{ui-icon icon="refresh fa-spin form-control-feedback"}}
+				{{/if}}
+			</div>
+		</div>
+
+		{{#if isFetched}}
+		<div class="form-group" id="lastchecked-group">
+			<label class="col-sm-2 control-label" for="lastchecked">{{t "lastchecked"}}</label>
+			<div class="col-sm-6">
+				{{input type="date" class="form-control" id="lastchecked" name="lastchecked" value=video.reference.lastchecked}}
+			</div>
+		</div>
+
+		<div class="form-group" id="year-group">
+			<label class="col-sm-2 control-label" for="year">{{t "year"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="year" name="year" value=video.reference.year required=true}}
+			</div>
+		</div>
+
+		<div class="form-group" id="author-group">
+			<label class="col-sm-2 control-label" for="author">{{t "authors"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="author" name="author" value=video.reference.author required=true}}
+				<small class="help-block">{{t "authors.explanation"}}</small>
+			</div>
+		</div>
+
+		<div class="form-group" id="publisher-group">
+			<label class="col-sm-2 control-label" for="publisher">{{t "publisher"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="publisher" name="publisher" value=video.reference.publisher required=true}}
+			</div>
+		</div>
+		{{/if}}
+	</fieldset>
+	{{/if}}
+	{{#if (or isVideo (and isReference isFetched))}}
+	<fieldset>
+		<legend>{{t "video"}}</legend>
+		<div class="form-group">
+			<label for="inputTitle" class="col-sm-2 control-label">{{t "title"}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="inputTitle" value=video.title}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputDescription" class="col-sm-2 control-label">{{t "description"}}</label>
+			<div class="col-sm-6">
+				{{textarea class="form-control" id="inputDescription" rows="3" value=video.description}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputAthlete" class="col-sm-2 control-label">{{video.skill.sport.athleteLabel}}</label>
+			<div class="col-sm-6">
+				{{input class="form-control" id="inputAthlete" value=video.athlete required=true}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{t "tutorial"}}?</label>
+			<div class="col-sm-6 radio">
+				<label><input type="radio" name="tutorial" value="1" checked={{video.isTutorial}} onchange={{action "changeTutorial"}}> Yes</label>
+				<label><input type="radio" name="tutorial" value="0" checked={{not video.isTutorial}} onchange={{action "changeTutorial"}}> No</label>
+			</div>
+		</div>
+	</fieldset>
+	{{/if}}
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-6">
+			<button type="submit" class="btn btn-primary">{{t "save"}}</button>
+		</div>
+	</div>
+</form>

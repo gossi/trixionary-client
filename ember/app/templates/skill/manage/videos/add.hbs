@@ -1,1 +1,7 @@
-{{outlet}}
+<ol class="breadcrumb">
+  <li>{{#link-to "skill" model.skill.slug}}{{model.skill.name}}{{/link-to}}</li>
+  <li>{{#link-to "skill.manage.videos" model.skill.slug}}{{t "manage"}} {{t "videos"}}{{/link-to}}</li>
+  <li class="active">{{if model.isNew (t "add") (t "edit")}} {{t "video"}}</li>
+</ol>
+
+{{video-form video=model save="save"}}
