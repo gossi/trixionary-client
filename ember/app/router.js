@@ -39,16 +39,16 @@ Router.map(function() {
 
     this.route('manage', function() {
       this.route('pictures', function() {
-        this.route('edit', {path: '/:id'});
-        this.route('add');
+		this.route('add');
+		this.route('edit', {path: '/:id'});
       });
       this.route('videos', function() {
-        this.route('edit');
-        this.route('add');
+		this.route('add');
+		this.route('edit');
       });
       this.route('references', function() {
         this.route('add');
-        this.route('edit');
+        this.route('edit', {path: '/:id'});
       });
     });
   });

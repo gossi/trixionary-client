@@ -18,6 +18,11 @@ export default Ember.Route.extend({
 					}
 				}
 			}).then((picture) => {
+				let skill = picture.get('skill');
+				if (skill.get('pictures').get('length') === 0) {
+					skill.set('featuredPicture', picture);
+					skill.save();
+				}
 				this.transitionTo('skill.pictures', picture.get('skill').get('slug'));
 			});
 		}

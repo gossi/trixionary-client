@@ -34,5 +34,11 @@ export default Ability.extend({
 	}),
 	canUpdateSkill: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'reference-to-skill-relationship-update');
+	}),
+	canAddSkill: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'reference-to-skill-relationship-add');
+	}),
+	canRemoveSkill: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'reference-to-skill-relationship-remove');
 	})
 });

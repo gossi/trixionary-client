@@ -131,6 +131,18 @@ export default Ability.extend({
 	canRemoveGroup: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-group-relationship-remove');
 	}),
+	canReadReference: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-read');
+	}),
+	canUpdateReference: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-update');
+	}),
+	canAddReference: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-add');
+	}),
+	canRemoveReference: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-remove');
+	}),
 	canReadLineage: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-lineage-relationship-read');
 	}),
@@ -166,18 +178,6 @@ export default Ability.extend({
 	}),
 	canRemoveVideo: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-video-relationship-remove');
-	}),
-	canReadReference: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-read');
-	}),
-	canUpdateReference: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-update');
-	}),
-	canAddReference: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-add');
-	}),
-	canRemoveReference: Ember.computed(function() {
-		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-reference-relationship-remove');
 	}),
 	canReadKstruktur: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-kstruktur-relationship-read');

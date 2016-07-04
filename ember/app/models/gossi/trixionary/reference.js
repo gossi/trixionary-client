@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import { hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
 	type: attr('string'),
@@ -23,5 +23,5 @@ export default Model.extend({
 	lastchecked: attr('string'),
 	managed: attr('boolean', {defaultValue: false}),
 	videos: hasMany('gossi.trixionary/video'),
-	skill: belongsTo('gossi.trixionary/skill', {inverse: 'references'})
+	skills: hasMany('gossi.trixionary/skill')
 });

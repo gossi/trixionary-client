@@ -14,12 +14,12 @@ export default Ember.Component.extend({
 		return [
 			{
 				key: 'skill',
-				title: this.get('sport').get('skillLabel')
+				title: this.get('skill').get('sport').get('skillLabel')
 			},
 			{
 				key: 'composite',
 				title: this.get('i18n').t('composite'),
-				help: this.get('i18n').t('composite.explanation', {skills: this.get('sport').get('skillPluralLabel')}),
+				help: this.get('i18n').t('composite.explanation', {skills: this.get('skill').get('sport').get('skillPluralLabel')}),
 			},
 			{
 				key: 'multiple',
@@ -149,7 +149,10 @@ export default Ember.Component.extend({
 	},
 
 	searchSkills(skill, term) {
-		return skill.get('name').toLowerCase().indexOf(term.toLowerCase());
+		if (skill !== null && skill.get) {
+			return skill.get('name').toLowerCase().indexOf(term.toLowerCase());
+		}
+		return false;
 	},
 
 	actions: {

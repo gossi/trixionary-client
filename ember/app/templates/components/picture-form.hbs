@@ -1,9 +1,4 @@
-<h2>
-	{{#link-to "skill" picture.skill.slug}}{{picture.skill.name}}{{/link-to}}:
-	{{#link-to "skill.manage.pictures" picture.skill.slug}}{{t "manage"}} {{t "pictures"}}{{/link-to}}:
-	{{if picture.isNew (t "add") (t "edit")}} {{t "picture"}}
-</h2>
-
+<h2>{{if picture.isNew (t "add") (t "edit")}} {{t "picture"}}</h2>
 
 <div class="row">
 <form class="form-horizontal col-sm-8" {{action "save" on="submit"}}>
@@ -11,7 +6,7 @@
 	<div class="form-group">
 		<label for="inputFile" class="col-sm-3 control-label">{{t "file"}}</label>
 		<div class="col-sm-9">
-			{{trixionary-upload uploaded=(action "uploaded") deleted=(action "deleted")}}
+			{{media-upload uploaded=(action "uploaded") deleted=(action "deleted")}}
 		</div>
 	</div>
 	{{/if}}

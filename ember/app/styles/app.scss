@@ -45,7 +45,12 @@ html, body {
 }
 
 .trixionary-body {
-	margin-top: -20px;
+	margin-top: -16px;
+
+	.breadcrumb {
+		background-color: transparent;
+		padding-left: 0;
+	}
 }
 
 .form-horizontal .control-label {
@@ -114,6 +119,10 @@ html, body {
 	text-overflow: ellipsis;
 }
 
+.ember-power-select-dropdown {
+	width: 100%;
+}
+
 .trixionary-dialog {
 	padding: 0;
 	border-radius: 4px;
@@ -125,5 +134,11 @@ html, body {
 
 	.btn {
 		margin-left: 5px;
+	}
+}
+
+.trixionary-body {
+	.breadcrumb {
+		background-color: transparent;
 	}
 }

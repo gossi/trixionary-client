@@ -41,10 +41,10 @@ export default Model.extend({
 	parts: hasMany('gossi.trixionary/skill', {inverse: 'composites'}),
 	composites: hasMany('gossi.trixionary/skill', {inverse: 'parts'}),
 	groups: hasMany('gossi.trixionary/group'),
+	references: hasMany('gossi.trixionary/reference'),
 	lineages: hasMany('gossi.trixionary/lineage'),
 	pictures: hasMany('gossi.trixionary/picture'),
 	videos: hasMany('gossi.trixionary/video'),
-	references: hasMany('gossi.trixionary/reference'),
 	kstrukturs: hasMany('gossi.trixionary/kstruktur'),
 	functionPhases: hasMany('gossi.trixionary/function-phase')
 });

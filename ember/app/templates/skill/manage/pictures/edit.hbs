@@ -1,1 +1,7 @@
+<ol class="breadcrumb">
+  <li>{{#link-to "skill" skill.slug}}{{skill.name}}{{/link-to}}</li>
+  <li>{{#link-to "skill.manage.pictures" skill.slug}}{{t "manage"}} {{t "pictures"}}{{/link-to}}</li>
+  <li class="active">{{if model.isNew (t "add") (t "edit")}} {{t "picture"}}</li>
+</ol>
+
 {{picture-form picture=model save="save"}}
