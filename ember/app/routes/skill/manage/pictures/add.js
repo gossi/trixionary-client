@@ -18,8 +18,8 @@ export default Ember.Route.extend({
 					}
 				}
 			}).then((picture) => {
-				let skill = picture.get('skill');
-				if (skill.get('pictures').get('length') === 0) {
+				let skill = this.modelFor('skill');
+				if (skill.get('pictures').get('length') === 1) {
 					skill.set('featuredPicture', picture);
 					skill.save();
 				}
