@@ -1,1 +1,6 @@
-{{skill-form skill=model save="save"}}
+<ol class="breadcrumb">
+  <li>{{#link-to "skill" model.slug}}{{model.name}}{{/link-to}}</li>
+  <li class="active">{{t "edit"}} {{model.sport.skillLabel}}</li>
+</ol>
+
+{{skill-form skill=model save="save" isSaving=isSaving}}

@@ -1,11 +1,13 @@
 export default {
-	"intro": "Welcome to the Trixionary. The Trixionary is an online catalog for {{sport}} {{skills}}. They are archived in {{groups}} (see on the right). Each {{skill}} has a lot of parameters, that are stored with them. Through relations, {{skills}} are connected to other {{skills}}. Explore {{skills}} now, by browsing through the {{groups}} on the right.",
+	"intro": "Welcome to the Trixionary. The Trixionary is an online catalog for {{sport}} {{skills}}. They are archived in {{groups}} (see on the right).",
+	"explore": "Explore {{skills}} now, by browsing through the {{groups}} on the right. Click on them for a multitude of information.",
 
 	"new": "New",
 	"add": "Add",
 	"edit": "Edit",
 	"delete": "Delete",
 	"save": "Save",
+	"saving": "Saving",
 	"ok": "Ok",
 	"cancel": "Cancel",
 	"manage": "Manage",
@@ -35,6 +37,9 @@ export default {
 	"training": "Training",
 	"mistakes": "Mistakes",
 	"technic-criteria": "Technic Criteria",
+	"featured": "Featured",
+	"random": "Random",
+	"statistics": "Statistics",
 
 	"position": "Position",
 	"composite": "Composite",

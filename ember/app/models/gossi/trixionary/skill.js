@@ -34,6 +34,8 @@ export default Model.extend({
 	startPosition: belongsTo('gossi.trixionary/position', {inverse: null}),
 	endPosition: belongsTo('gossi.trixionary/position', {inverse: null}),
 	featuredPicture: belongsTo('gossi.trixionary/picture', {inverse: null}),
+	featuredVideo: belongsTo('gossi.trixionary/video', {inverse: 'featuredSkills'}),
+	featuredTutorial: belongsTo('gossi.trixionary/video', {inverse: 'featuredTutorialSkills'}),
 	kstrukturRoot: belongsTo('gossi.trixionary/kstruktur', {inverse: 'rootSkills'}),
 	functionPhaseRoot: belongsTo('gossi.trixionary/function-phase', {inverse: 'rootSkills'}),
 	children: hasMany('gossi.trixionary/skill', {inverse: 'parents'}),

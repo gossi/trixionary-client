@@ -53,6 +53,17 @@ html, body {
 	}
 }
 
+.trixionary-statistics {
+	width: 100%;
+	
+	td {
+		width: 50%;
+	}
+	td:nth-child(2) {
+		text-align: right;
+	}
+}
+
 .form-horizontal .control-label {
     text-align: left;
 }
@@ -75,10 +86,13 @@ html, body {
 	height: 5px;
 }
 
-.picture {
-	display: block;
-	cursor: pointer;
+.trixionary-media {
 	border: 1px solid #000;
+}
+
+.picture {
+	@extend .trixionary-media;
+	display: block;
 
 	&-xl {
 		max-width: 150px;
@@ -106,12 +120,31 @@ html, body {
 	}
 }
 
+.trixionary-video {
+	video {
+		@extend .trixionary-media;
+		width: 100%;
+		max-width: 300px;
+		cursor: pointer;
+	}
+
+	.picture {
+		width: 100%;
+		max-width: 300px;
+		cursor: pointer;
+	}
+}
+
 @import "components/skill-listing";
 @import "components/skill";
 @import "components/skill-gallery";
 @import "components/graph";
 
 // fix components stuff
+.lead {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .ember-power-select-trigger {
 	height: 30px;
     position: relative;

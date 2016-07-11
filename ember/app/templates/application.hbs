@@ -30,6 +30,9 @@
 					<div class="btn-group">
 
 					{{#if isSkillRoute}}
+					{{#if (and (can "delete gossi.trixionary.skill") (or (eq currentPath "skill.edit") (eq currentPath "skill.delete")))}}
+					{{#link-to "skill.delete" class="btn btn-danger"}}{{ui-icon "trash"}}{{/link-to}}
+					{{/if}}
 					<div class="btn-group">
 						{{#if (can "update gossi.trixionary.skill")}}
 						{{#link-to "skill.edit" class="btn btn-default"}}{{ui-icon "pencil"}}{{/link-to}}

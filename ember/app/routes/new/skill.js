@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import RollbackRoute from 'trixionary/mixins/rollback-route';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(RollbackRoute, {
 	model() {
 		let sport = this.modelFor('application');
 		let skill = this.store.createRecord('gossi.trixionary/skill');
@@ -10,19 +11,5 @@ export default Ember.Route.extend({
 			skill.set('object', sport.get('objects').objectAt(0));
 		}
 		return skill;
-	},
-
-	actions: {
-		save(skill) {
-			skill.save({
-				adapterOptions: {
-					meta: {
-						filename: skill.get('filename')
-					}
-				}
-			}).then((skill) => {
-				this.transitionTo('skill', skill.get('slug'));
-			});
-		}
 	}
 });

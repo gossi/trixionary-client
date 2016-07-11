@@ -42,19 +42,20 @@ export default Ember.Controller.extend({
 			"graph": {
 				"title": this.get('i18n').t('graph'),
 				"active": this.get('currentPath') === 'graph'
-			},
-			"exercises": {
-				"title": this.get('i18n').t('exercises'),
-				"active": this.get('currentPath') === 'exercises'
-			},
-			"tester": {
-				"title": this.get('i18n').t('tester'),
-				"active": this.get('currentPath') === 'tester'
-			},
-			"translate": {
-				"title": this.get('i18n').t('translate'),
-				"active": this.get('currentPath') === 'translate'
 			}
+			// ,
+			// "exercises": {
+			// 	"title": this.get('i18n').t('exercises'),
+			// 	"active": this.get('currentPath') === 'exercises'
+			// },
+			// "tester": {
+			// 	"title": this.get('i18n').t('tester'),
+			// 	"active": this.get('currentPath') === 'tester'
+			// },
+			// "translate": {
+			// 	"title": this.get('i18n').t('translate'),
+			// 	"active": this.get('currentPath') === 'translate'
+			// }
 		};
 
 	}),

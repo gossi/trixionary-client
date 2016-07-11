@@ -175,6 +175,7 @@
 			</div>
 		</div>
 
+		{{#if skill.sport.featureComposition}}
 		<div class="form-group">
 			<label for="inputStartPosition" class="col-sm-2 control-label">{{t "start-position"}}</label>
 			<div class="col-sm-2">
@@ -203,6 +204,7 @@
 				{{/power-select}}
 			</div>
 		</div>
+		{{/if}}
 		{{#if (gt skill.sport.objects.length 1)}}
 		<div class="form-group">
 			<label for="inputObject" class="col-sm-2 control-label">{{skill.sport.objectLabel}}</label>
@@ -408,7 +410,7 @@
 		<div class="form-group">
 			<label for="inputAudit" class="col-sm-2 control-label">{{t "change-comment"}}</label>
 			<div class="col-sm-6">
-				{{textarea class="form-control" id="inputAudit" rows="3" value=skill.versionComment placeholder=(t "change-comment.explanation")}}
+				{{textarea class="form-control" id="inputAudit" rows="3" required=true value=skill.versionComment placeholder=(t "change-comment.explanation")}}
 			</div>
 		</div>
 	</fieldset>
@@ -416,7 +418,7 @@
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
-			<button type="submit" class="btn btn-primary">{{t "save"}}</button>
+			{{save-button isSaving=isSaving}}
 		</div>
 	</div>
 </form>

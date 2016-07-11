@@ -1,1 +1,25 @@
-Summary page
+<div class="row">
+	<div class="col-md-12">
+		<p class="lead">{{model.description}}</p>
+	</div>
+</div>
+<div class="row">
+	{{#if model.featuredPicture}}
+	<div class="col-md-4">
+		<h3>{{t "featured"}} {{t "picture"}}</h3>
+		{{trixionary-picture picture=model.featuredPicture}}
+	</div>
+	{{/if}}
+	{{#if model.featuredVideo}}
+	<div class="col-md-4">
+		<h3>{{t "featured"}} {{t "video"}}</h3>
+		{{trixionary-video video=model.featuredVideo}}
+	</div>
+	{{/if}}
+	{{#if model.featuredTutorial}}
+	<div class="col-md-4">
+		<h3>{{t "featured"}} {{t "tutorial"}}</h3>
+		{{trixionary-video video=model.featuredTutorial}}
+	</div>
+	{{/if}}
+</div>

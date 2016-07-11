@@ -12,9 +12,11 @@
 	}
 
 	a.active::before {
-		content: ">";
+		content: "\f054";
 		position: absolute;
 		left: -10px;
+		top: 5px;
+		font: normal normal normal 11px/1 FontAwesome;
 	}
 }
 

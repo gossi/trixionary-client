@@ -4,4 +4,4 @@
   <li class="active">{{if model.isNew (t "add") (t "edit")}} {{t "video"}}</li>
 </ol>
 
-{{video-form video=model save="save"}}
+{{video-form video=model save="save" isSaving=isSaving}}

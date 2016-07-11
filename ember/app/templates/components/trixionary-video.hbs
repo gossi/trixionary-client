@@ -1,0 +1,9 @@
+{{#if video.provider}}
+<img src="{{video.posterUrl}}" class="embedded-video picture" href="{{video.playerUrl}}" data-width="{{video.width}}" data-height="{{video.height}}">
+{{else}}
+<video src="{{video.url}}" class="video" href="#video-player" type="video/mp4"></video>
+{{/if}}
+
+{{#if needsPlayer}}
+<video style="width: 100%;" controls id="video-player" class="hidden"></video>
+{{/if}}

@@ -1,13 +1,15 @@
+{{#if (gt sport.objects.length 1)}}
 <h3>{{sport.objectPluralLabel}}</h3>
 
 <ul class="list-unstyled">
 {{#each sport.objects as |object|}}
 <li>
 	{{#link-to "obj" object.slug}}{{object.title}}{{/link-to}}
-	<span class="badge pull-right">{{object.skillCount}}</span>
+	<span class="badge pull-right">{{if object.skillCount object.skillCount 0}}</span>
 </li>
 {{/each}}
 </ul>
+{{/if}}
 
 <h3>{{sport.groupPluralLabel}}</h3>
 
@@ -15,7 +17,7 @@
 {{#each (sort-by "title" sport.groups) as |group|}}
 <li>
 	{{#link-to "group" group.slug}}{{group.title}}{{/link-to}}
-	<span class="badge pull-right">{{group.skillCount}}</span>
+	<span class="badge pull-right">{{if group.skillCount group.skillCount 0}}</span>
 </li>
 {{/each}}
 </ul>

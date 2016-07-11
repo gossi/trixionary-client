@@ -7,11 +7,17 @@ export default Ember.Controller.extend({
 		return this.get('skillController').get('model');
 	}),
 
+	isSaving: false,
+
 	actions: {
 		save(reference) {
+			this.set('isSaving', true);
 			let skill = this.get('skill');
 			reference.save().then(() => {
+				this.set('isSaving', false);
 				this.transitionToRoute('skill.manage.references', skill.get('slug'));
+			}).catch(() => {
+				this.set('isSaving', false);
 			});
 		}
 	}

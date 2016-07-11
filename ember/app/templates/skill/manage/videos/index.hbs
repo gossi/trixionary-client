@@ -13,12 +13,38 @@
 	</tr>
 </thead>
 <tbody>
-{{#each model.videos as |video|}}
-<tr>
+{{#each (filter-by "isTutorial" false model.videos) as |video|}}
+<tr class="{{if (eq model.featuredVideo.id video.id) 'warning'}}">
 	<td>{{video.title}}</td>
 	<td>
 		<div class="btn-group" role="group">
 			{{#link-to "skill.manage.videos.edit" video.id class="btn btn-default"}}{{ui-icon icon="pencil"}}{{/link-to}}
+			<button class="btn btn-default" disabled={{eq model.featuredVideo.id video.id}} {{action "setFeaturedVideo" video}}>{{ui-icon icon="star"}}</button>
+			<button class="btn btn-danger" {{action 'delete' video}}>{{ui-icon icon="trash"}}</button>
+		</div>
+	</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h2>{{t "manage"}} {{t "tutorials"}}</h2>
+
+<table class="table">
+<thead>
+	<tr>
+		<th>{{t "title"}}</th>
+		<th>{{t "actions"}}</th>
+	</tr>
+</thead>
+<tbody>
+{{#each (filter-by "isTutorial" true model.videos) as |video|}}
+<tr class="{{if (eq model.featuredTutorial.id video.id) 'warning'}}">
+	<td>{{video.title}}</td>
+	<td>
+		<div class="btn-group" role="group">
+			{{#link-to "skill.manage.videos.edit" video.id class="btn btn-default"}}{{ui-icon icon="pencil"}}{{/link-to}}
+			<button class="btn btn-default" disabled={{eq model.featuredTutorial.id video.id}} {{action "setFeaturedTutorial" video}}>{{ui-icon icon="star"}}</button>
 			<button class="btn btn-danger" {{action 'delete' video}}>{{ui-icon icon="trash"}}</button>
 		</div>
 	</td>

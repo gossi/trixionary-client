@@ -1,4 +1,4 @@
-{{#if (or (eq currentPath "skill.edit") managePath)}}
+{{#if (or (eq currentPath "skill.edit") (eq currentPath "skill.delete") managePath)}}
 {{outlet}}
 {{else}}
 <article class="skill">
@@ -9,7 +9,7 @@
 			<img src="{{model.sequencePictureUrl}}">-->
 		</div>
 		{{/if}}
-		<div class="col-md-offset-2 col-md-10 media">
+		<div class="col-md-12 media">
 			{{#if model.featuredPicture}}
 			<div class="media-left">
 				<img src="{{model.featuredPicture.thumbUrl}}" class="picture picture-sm">
@@ -17,7 +17,14 @@
 			{{/if}}
 			<div class="media-body">
 				<h2 data-skill-id="{{model.id}}" class="media-heading">{{model.name}}</h2>
-				<p>{{model.description}}</p>
+			</div>
+			<div class="media-right text-right">
+				{{model.sport.groupPluralLabel}}
+				<ul class="list-unstyled">
+					{{#each model.groups as |group|}}
+					<li>{{#link-to "group" group.slug}}{{group.title}}{{/link-to}}</li>
+					{{/each}}
+				</ul>
 			</div>
 		</div>
 	</header>
@@ -34,9 +41,10 @@
 			<li class="nav-item">{{#link-to "skill.graph" model.slug}}{{t "graph"}}{{/link-to}}</li>
 
 			<li class="nav-header">{{t "training"}}</li>
-			<li class="nav-item">{{#link-to "skill.exercises" model.slug}}{{t "exercises"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.tutorials" model.slug}}{{t "tutorials"}}{{/link-to}}</li>
+			<!--<li class="nav-item">{{#link-to "skill.exercises" model.slug}}{{t "exercises"}}{{/link-to}}</li>
 			<li class="nav-item">{{#link-to "skill.mistakes" model.slug}}{{t "mistakes"}}{{/link-to}}</li>
-			<li class="nav-item">{{#link-to "skill.technic-criteria" model.slug}}{{t "technic-criteria"}}{{/link-to}}</li>
+			<li class="nav-item">{{#link-to "skill.technic-criteria" model.slug}}{{t "technic-criteria"}}{{/link-to}}</li>-->
 
 		</ul>
 

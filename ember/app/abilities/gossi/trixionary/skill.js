@@ -83,6 +83,18 @@ export default Ability.extend({
 	canUpdateFeaturedPicture: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-featured_picture-relationship-update');
 	}),
+	canReadFeaturedVideo: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-featured_video-relationship-read');
+	}),
+	canUpdateFeaturedVideo: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-featured_video-relationship-update');
+	}),
+	canReadFeaturedTutorial: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-featured_tutorial-relationship-read');
+	}),
+	canUpdateFeaturedTutorial: Ember.computed(function() {
+		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-featured_tutorial-relationship-update');
+	}),
 	canReadKstrukturRoot: Ember.computed(function() {
 		return this.get('session').hasPermission('gossi/trixionary', 'skill-to-kstruktur_root-relationship-read');
 	}),

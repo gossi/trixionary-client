@@ -8,6 +8,7 @@
 				options=types
 				selected=type
 				searchEnabled=false
+				renderInPlace=true
 				onchange=(action (mut type))
 				onkeydown=(action "handleKeydown")
 				as |type|}}
@@ -173,7 +174,7 @@
 
 	<div class="form-group">
 		<div class="col-sm-6 col-sm-offset-2">
-			<button type="submit" class="btn btn-primary">{{t "save"}}</button>
+			{{save-button isSaving=isSaving}}
 		</div>
 	</div>
 </form>

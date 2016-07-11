@@ -39,22 +39,25 @@ Router.map(function() {
 
     this.route('manage', function() {
       this.route('pictures', function() {
-		this.route('add');
-		this.route('edit', {path: '/:id'});
+        this.route('add');
+        this.route('edit', {path: '/:id'});
       });
       this.route('videos', function() {
-		this.route('add');
-		this.route('edit', {path: '/:id'});
+        this.route('add');
+        this.route('edit', {path: '/:id'});
       });
       this.route('references', function() {
         this.route('add');
         this.route('edit', {path: '/:id'});
       });
     });
+    this.route('tutorials');
+    this.route('delete');
   });
   this.route('obj', {path: '/' + obj + '/:object'}, function() {
     this.route('edit');
   });
+  this.route('group.loading');
 });
 
 export default Router;

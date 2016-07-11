@@ -1,5 +1,5 @@
 {{#if skill.featuredPicture}}
-<img src="{{skill.featuredPicture.thumbUrl}}" class="skill-list-image">
+{{#link-to "skill" skill.slug}}<img src="{{skill.featuredPicture.thumbUrl}}" class="skill-list-image">{{/link-to}}
 {{else if skill.sport.skillPictureUrl}}
-<img src="{{skill.sport.skillPictureUrl}}" class="skill-list-image">
+{{#link-to "skill" skill.slug}}<img src="{{skill.sport.skillPictureUrl}}" class="skill-list-image">{{/link-to}}
 {{/if}}

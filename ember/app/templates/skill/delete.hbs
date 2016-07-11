@@ -1,0 +1,20 @@
+<ol class="breadcrumb">
+  <li>{{#link-to "skill" model.slug}}{{model.name}}{{/link-to}}</li>
+  <li class="active">{{t "delete"}} {{model.sport.skillLabel}}</li>
+</ol>
+
+<div class="row">
+	<div class="col-md-4 col-md-offset-4 panel panel-danger" style="padding: 0;">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{t "delete"}} {{model.sport.skillLabel}}</h3>
+		</div>
+		<div class="panel-body">
+			Are you sure, you want to delete {{model.name}}?
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-danger pull-right" style="margin-left: 10px;" {{action "delete"}}>{{t "delete"}} {{model.name}}</button>
+			{{#link-to "skill" model.slug class="btn btn-default pull-right" activeClass=""}}{{t "cancel"}}{{/link-to}}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

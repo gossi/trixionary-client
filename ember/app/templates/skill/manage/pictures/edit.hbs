@@ -4,4 +4,4 @@
   <li class="active">{{if model.isNew (t "add") (t "edit")}} {{t "picture"}}</li>
 </ol>
 
-{{picture-form picture=model save="save"}}
+{{picture-form picture=model save="save" isSaving=isSaving}}

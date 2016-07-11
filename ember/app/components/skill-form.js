@@ -61,7 +61,7 @@ export default Ember.Component.extend({
 
 	isNonFixedObject: Ember.computed('skill.object', function() {
 		let object = this.get('skill').get('object');
-		if (object === null) {
+		if (!object.get('id')) {
 			return false;
 		}
 		return !object.get('fixed');
@@ -139,6 +139,9 @@ export default Ember.Component.extend({
     	this._super(...arguments);
 
 		let skill = this.get('skill');
+		if (!skill.get('isNew')) {
+			skill.set('versionComment', '');
+		}
 		this.get('rotation').longitudinal = this.loadRotations(skill.get('longitudinalFlags'));
 		this.get('rotation').latitudinal = this.loadRotations(skill.get('latitudinalFlags'));
 		this.get('rotation').transversal = this.loadRotations(skill.get('transversalFlags'));
