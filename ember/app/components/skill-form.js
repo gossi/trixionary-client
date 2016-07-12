@@ -142,9 +142,9 @@ export default Ember.Component.extend({
 		if (!skill.get('isNew')) {
 			skill.set('versionComment', '');
 		}
-		this.get('rotation').longitudinal = this.loadRotations(skill.get('longitudinalFlags'));
-		this.get('rotation').latitudinal = this.loadRotations(skill.get('latitudinalFlags'));
-		this.get('rotation').transversal = this.loadRotations(skill.get('transversalFlags'));
+		Ember.set(this.get('rotation'), 'longitudinal', this.loadRotations(skill.get('longitudinalFlags')));
+		Ember.set(this.get('rotation'), 'latitudinal', this.loadRotations(skill.get('latitudinalFlags')));
+		Ember.set(this.get('rotation'), 'transversal', this.loadRotations(skill.get('transversalFlags')));
 	},
 
 	searchGroups(group, term) {
