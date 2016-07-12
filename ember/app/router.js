@@ -57,7 +57,6 @@ Router.map(function() {
   this.route('obj', {path: '/' + obj + '/:object'}, function() {
     this.route('edit');
   });
-  this.route('group.loading');
 });
 
 export default Router;
