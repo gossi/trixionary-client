@@ -12,6 +12,8 @@ export default {
 	"cancel": "Cancel",
 	"manage": "Manage",
 	"actions": "Actions",
+	"from": "From",
+	"to": "To",
 
 	"picture": "Picture",
 	"pictures": "Pictures",

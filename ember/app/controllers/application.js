@@ -27,21 +27,24 @@ export default Ember.Controller.extend({
 
 	nav: Ember.computed('currentPath', function () {
 		return {
-			"index": {
-				"title": this.get('model').get('skillPluralLabel'),
-				"active": !this.get('currentPath').startsWith('transitions')
+			index: {
+				title: this.get('model').get('skillPluralLabel'),
+				active: !this.get('currentPath').startsWith('transitions')
 					&& !this.get('currentPath').startsWith('graph')
 					&& !this.get('currentPath').startsWith('exercises')
 					&& !this.get('currentPath').startsWith('tester')
-					&& !this.get('currentPath').startsWith('translate')
+					&& !this.get('currentPath').startsWith('translate'),
+				visible: true
 			},
-			"transitions": {
-				"title": this.get('i18n').t('transitions'),
-				"active": this.get('currentPath') === 'transitions'
+			transitions: {
+				title: this.get('i18n').t('transitions'),
+				active: this.get('currentPath') === 'transitions',
+				visible: this.get('model').get('featureComposition')
 			},
-			"graph": {
-				"title": this.get('i18n').t('graph'),
-				"active": this.get('currentPath') === 'graph'
+			graph: {
+				title: this.get('i18n').t('graph'),
+				active: this.get('currentPath') === 'graph',
+				visible: true
 			}
 			// ,
 			// "exercises": {
@@ -57,7 +60,6 @@ export default Ember.Controller.extend({
 			// 	"active": this.get('currentPath') === 'translate'
 			// }
 		};
-
 	}),
 
 	actions: {

@@ -1,2 +1,54 @@
-<h2>{{t "transitions"}}</h2>
-{{outlet}}
+<div class="row">
+	<div class="col-md-10">
+		<h2>{{t "transitions"}}</h2>
+
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-md-1 control-label">{{t "from"}}</label>
+				<div class="col-md-4">
+					{{#power-select
+						options=model.positions
+						selected=fromPosition
+						renderInPlace=true
+						allowClear=true
+						matcher=searchPosition
+						searchEnabled=false
+						onchange=(action "changeFrom")
+						as |position|}}
+						{{position.title}}
+					{{/power-select}}
+				</div>
+
+				<label class="col-md-1 control-label">{{t "to"}}</label>
+				<div class="col-md-4">
+					{{#power-select
+						options=model.positions
+						selected=toPosition
+						renderInPlace=true
+						allowClear=true
+						matcher=searchPosition
+						searchEnabled=false
+						onchange=(action "changeTo")
+						as |position|}}
+						{{position.title}}
+					{{/power-select}}
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-10">
+			{{#if skills}}
+			<h3>{{model.skillPluralLabel}}</h3>
+			{{#skill-list skills=skills as |skill|}}
+				{{skill-list-item skill=skill}}
+			{{/skill-list}}
+			{{/if}}
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-2">
+		{{sport-nav sport=model}}
+	</div>
+</div>

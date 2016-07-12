@@ -7,14 +7,20 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<h2>{{t "random"}} {{model.skillLabel}}</h2>
+
+				{{#if skills.isFulfilled}}
+				{{#skill-list skills=skills as |skill|}}
+					{{skill-list-item skill=skill extra=false}}
+				{{/skill-list}}
+				{{/if}}
 			</div>
 			<div class="col-md-4">
 				<h2>{{t "graph"}}</h2>
 				[image of a graph here would be cool]
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<h2>{{t "statistics"}}</h2>
 
 				<table class="trixionary-statistics">
@@ -43,7 +49,11 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h2>{{t "pictures"}}</h2>
+				<h2>{{t "random"}} {{t "pictures"}}</h2>
+
+				{{#if pictures.isFulfilled}}
+				{{picture-gallery pictures=pictures toolbar=false}}
+				{{/if}}
 			</div>
 		</div>
 	</div>

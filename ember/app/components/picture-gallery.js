@@ -4,6 +4,7 @@ export default Ember.Component.extend({
 	classNames: ['skill-gallery', 'skill-gallery-pictures', 'clearfix'],
 	classNameBindings: ['isTiles:skill-gallery-tiles', 'isDetails:skill-gallery-details'],
 
+	toolbar: true,
 	view: 'tiles',
 
 	isTiles: Ember.computed('view', function() {

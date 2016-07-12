@@ -75,7 +75,7 @@ export default Ember.Component.extend({
 					}
 				},
 				selectionWidth: function (width) {
-					return width * 1.1;
+					return width * 1.5;
 				},
 				color: {
 					color: '#AAA',
@@ -104,8 +104,8 @@ export default Ember.Component.extend({
 		});
 
 		if (this.get('skill')) {
-			window.setTimeout(() => {
-				this.graph.selectNodes([this.get('skill').get('id')]);
+			Ember.run.later(this, () => {
+				this.selectNode({nodes: [this.get('skill').get('id')]});
 				this.graph.focus(this.get('skill').get('id'), {
 					scale: 1
 				});

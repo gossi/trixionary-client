@@ -1,7 +1,9 @@
+{{#if toolbar}}
 <div class="btn-group pull-right" role="group">
 	<button class="btn btn-default {{if isTiles 'active'}}" {{action "changeView" "tiles"}}>{{ui-icon icon="th-large"}}</button>
 	<button class="btn btn-default {{if isDetails 'active'}}" {{action "changeView" "details"}}>{{ui-icon icon="th-list"}}</button>
 </div>
+{{/if}}
 
 {{#each pictures as |picture|}}
 <figure class="media">

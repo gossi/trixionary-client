@@ -97,7 +97,9 @@
 		<div class="row">
 			<ul class="nav nav-tabs">
 				{{#each-in nav as |route item|}}
+				{{#if item.visible}}
 				<li role="presentation" class="{{if item.active 'active'}}">{{#link-to route}}{{item.title}}{{/link-to}}</li>
+				{{/if}}
 				{{/each-in}}
 			</ul>
 		</div>
