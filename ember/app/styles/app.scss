@@ -55,7 +55,7 @@ html, body {
 
 .trixionary-statistics {
 	width: 100%;
-	
+
 	td {
 		width: 50%;
 	}
@@ -132,6 +132,12 @@ html, body {
 		width: 100%;
 		max-width: 300px;
 		cursor: pointer;
+	}
+}
+
+.transition-switcher {
+	.ember-basic-dropdown {
+		margin-right: 43px;
 	}
 }
 

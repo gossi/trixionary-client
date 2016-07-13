@@ -3,9 +3,13 @@
 		<h2>{{t "transitions"}}</h2>
 
 		<div class="form-horizontal">
-			<div class="form-group">
+			<div class="form-group transition-switcher">
 				<label class="col-md-1 control-label">{{t "from"}}</label>
 				<div class="col-md-4">
+					{{#if (and (can "delete gossi.trixionary.position") fromPosition)}}
+					{{#link-to "position.edit" fromPosition.slug class="btn btn-default btn-sm pull-right"}}{{ui-icon "pencil"}}{{/link-to}}
+					{{/if}}
+
 					{{#power-select
 						options=model.positions
 						selected=fromPosition
@@ -21,6 +25,10 @@
 
 				<label class="col-md-1 control-label">{{t "to"}}</label>
 				<div class="col-md-4">
+					{{#if (and (can "delete gossi.trixionary.position") toPosition)}}
+					{{#link-to "position.edit" toPosition.slug class="btn btn-default btn-sm pull-right"}}{{ui-icon "pencil"}}{{/link-to}}
+					{{/if}}
+
 					{{#power-select
 						options=model.positions
 						selected=toPosition

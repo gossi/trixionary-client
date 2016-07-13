@@ -78,7 +78,7 @@
 					{{/if}}
 					{{/if}}
 
-					{{#if (or (can "create gossi.trixionary.skill") (can "create gossi.trixionary.group") (can "create gossi.trixionary.position"))}}
+					{{#if (or (can "create gossi.trixionary.skill") (can "create gossi.trixionary.group") (and (can "create gossi.trixionary.position") model.featureComposition))}}
 					<div class="btn-group">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							{{ui-icon "plus"}} <span class="caret"></span>
@@ -86,7 +86,7 @@
 						<ul class="dropdown-menu dropdown-menu-right">
 							{{#if (can "create gossi.trixionary.skill")}}<li>{{#link-to "new.skill" skill=model.skillSlug}}{{t "new"}} {{model.skillLabel}}{{/link-to}}</li>{{/if}}
 							{{#if (can "create gossi.trixionary.group")}}<li>{{#link-to "new.group" group=model.groupSlug}}{{t "new"}} {{model.groupLabel}}{{/link-to}}</li>{{/if}}
-							{{#if (can "create gossi.trixionary.position")}}<li>{{#link-to "new.position"}}{{t "new"}} {{t "position"}}{{/link-to}}</li>{{/if}}
+							{{#if (and (can "create gossi.trixionary.position") model.featureComposition)}}<li>{{#link-to "new.position"}}{{t "new"}} {{t "position"}}{{/link-to}}</li>{{/if}}
 						</ul>
 					</div>
 					{{/if}}

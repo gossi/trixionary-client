@@ -20,7 +20,9 @@ Router.map(function() {
   this.route('new', function() {
     this.route('skill', {path: '/' + skill});
     this.route('group', {path: '/' + group});
-    this.route('position');
+    this.route('position', function() {
+      this.route('edit');
+    });
   });
 
   this.route('group', {path: '/' + group + '/:group'}, function() {
@@ -55,6 +57,9 @@ Router.map(function() {
     this.route('delete');
   });
   this.route('obj', {path: '/' + obj + '/:object'}, function() {
+    this.route('edit');
+  });
+  this.route('position', {path: '/position/:position'}, function() {
     this.route('edit');
   });
 });

@@ -1,5 +1,8 @@
 {{#if skill}}
 <div class="trixionary-graph-info">
+	{{#if skill.featuredPicture}}
+	<img src="{{skill.featuredPicture.thumbUrl}}" class="picture picture-lg pull-right">
+	{{/if}}
 	{{#link-to "skill" skill.slug}}{{skill.name}}{{/link-to}}
 	<p>{{skill.description}}</p>
 	{{t "importance"}}: {{skill.importance}}<br>

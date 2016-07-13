@@ -155,6 +155,7 @@ export default Ember.Component.extend({
 			return;
 		}
 		this.selecting = true;
+		let self = this;
 		let nodes = this.get('dataSet').nodes;
 		let id = e.nodes[0];
 		let node = nodes.get(id);
@@ -169,7 +170,10 @@ export default Ember.Component.extend({
 
 		let edgeIds = [];
 		edges.reduce(function (a, b) {
-			edgeIds.push(a + '-' + b);
+			let id = a + '-' + b;
+			if (self.get('dataSet').edges.get(id)) {
+				edgeIds.push(a + '-' + b);
+			}
 			return b;
 		});
 		this.graph.setSelection({
@@ -178,7 +182,6 @@ export default Ember.Component.extend({
 		}, {
 			highlightEdges: false
 		});
-
 		this.selecting = false;
 	},
 

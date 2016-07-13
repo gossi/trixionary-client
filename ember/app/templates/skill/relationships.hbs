@@ -42,18 +42,20 @@
 		</div>
 	</div>
 	<div class="col-md-4">
+			{{#if model.sport.featureComposition}}
 			<h3>{{t "transitions"}}</h3>
 
 			<table class="skill-details">
 			<tr>
 				<td>{{t "start-position"}}</td>
-				<td>{{model.startPosition.title}}</td>
+				<td>{{#link-to "transitions" (query-params to=model.startPosition.slug)}}{{model.startPosition.title}}{{/link-to}}</td>
 			</tr>
 			<tr>
 				<td>{{t "end-position"}}</td>
-				<td>{{model.endPosition.title}}</td>
+				<td>{{#link-to "transitions" (query-params from=model.endPosition.slug)}}{{model.endPosition.title}}{{/link-to}}</td>
 			</tr>
 			</table>
+			{{/if}}
 
 			{{#if (or model.variationOf model.multipleOf model.composites)}}
 			<h3>{{t "connections"}}</h3>
