@@ -1,195 +1,194 @@
 {
-	"name": "gossi/trixionary-client",
-	"description": "Trixionary Client",
-	"type": "keeko-module",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Thomas Gossmann",
-			"homepage": "http://gos.si"
+	"name" : "gossi/trixionary-client",
+	"description" : "Trixionary Client",
+	"type" : "keeko-module",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Thomas Gossmann",
+			"homepage" : "http://gos.si"
 		}
 	],
-	"autoload": {
-		"psr-4": {
-			"gossi\\trixionary\\client\\": "src"
+	"autoload" : {
+		"psr-4" : {
+			"gossi\\trixionary\\client\\" : "src"
 		}
 	},
-	"require": {
-		"php": ">=5.4",
-		"keeko/composer-installer": "*",
-		"gossi/trixionary": "dev-master",
-		"bower-asset/blueimp-file-upload": "~9"
+	"require" : {
+		"php" : ">=5.4",
+		"keeko/composer-installer" : "*",
+		"gossi/trixionary" : "^0.2-beta@beta",
+		"bower-asset/blueimp-file-upload" : "~9"
 	},
-	"require-dev": {
-		"gossi/trixionary": "dev-master",
-		"keeko/framework": "dev-master",
-		"keeko/core": "@dev",
-		"propel/propel": "@alpha",
-		"puli/repository": "@beta",
-		"puli/composer-plugin": "@beta",
-		"puli/twig-extension": "@beta",
-		"puli/url-generator": "@beta",
-		"puli/discovery": "@beta"
+	"require-dev" : {
+		"gossi/trixionary" : "dev-master",
+		"keeko/framework" : "dev-master",
+		"keeko/core" : "@dev",
+		"propel/propel" : "@alpha",
+		"puli/repository" : "@beta",
+		"puli/composer-plugin" : "@beta",
+		"puli/twig-extension" : "@beta",
+		"puli/url-generator" : "@beta",
+		"puli/discovery" : "@beta"
 	},
-	"extra": {
-		"keeko": {
-			"module": {
-				"title": "Trixionary Client",
-				"class": "gossi\\trixionary\\client\\TrixionaryClientModule",
-				"actions": {
-					"trixionary": {
-						"title": "Trixionary Router",
-						"class": "gossi\\trixionary\\client\\action\\TrixionaryAction",
-						"acl": [
+	"extra" : {
+		"keeko" : {
+			"module" : {
+				"title" : "Trixionary Client",
+				"class" : "gossi\\trixionary\\client\\TrixionaryClientModule",
+				"actions" : {
+					"trixionary" : {
+						"title" : "Trixionary Router",
+						"class" : "gossi\\trixionary\\client\\action\\TrixionaryAction",
+						"acl" : [
 							"guest"
 						]
 					},
-					"index": {
-						"title": "Trixionary Index",
-						"class": "gossi\\trixionary\\client\\action\\IndexAction",
-						"acl": [
+					"index" : {
+						"title" : "Trixionary Index",
+						"class" : "gossi\\trixionary\\client\\action\\IndexAction",
+						"acl" : [
 							"guest"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\IndexHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\IndexHtmlResponder"
 						}
 					},
-					"help": {
-						"title": "Displays help",
-						"class": "gossi\\trixionary\\client\\action\\HelpAction",
-						"acl": [
+					"help" : {
+						"title" : "Displays help",
+						"class" : "gossi\\trixionary\\client\\action\\HelpAction",
+						"acl" : [
 							"guest"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\HelpHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\HelpHtmlResponder"
 						}
 					},
-					"info": {
-						"title": "Displays info",
-						"class": "gossi\\trixionary\\client\\action\\InfoAction",
-						"acl": [
+					"info" : {
+						"title" : "Displays info",
+						"class" : "gossi\\trixionary\\client\\action\\InfoAction",
+						"acl" : [
 							"guest"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\InfoHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\InfoHtmlResponder"
 						}
 					},
-					"sport": {
-						"title": "Shows the trixionary for a sport",
-						"class": "gossi\\trixionary\\client\\action\\SportAction",
-						"acl": [
+					"sport" : {
+						"title" : "Shows the trixionary for a sport",
+						"class" : "gossi\\trixionary\\client\\action\\SportAction",
+						"acl" : [
 							"guest"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\SportHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\SportHtmlResponder"
 						}
 					},
-					"manage": {
-						"title": "Manages Sports",
-						"class": "gossi\\trixionary\\client\\action\\ManageAction",
-						"acl": [
+					"manage" : {
+						"title" : "Manages Sports",
+						"class" : "gossi\\trixionary\\client\\action\\ManageAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ManageHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ManageHtmlResponder"
 						}
 					},
-					"manage-add": {
-						"title": "Adds a Sport",
-						"class": "gossi\\trixionary\\client\\action\\ManageAddAction",
-						"acl": [
+					"manage-add" : {
+						"title" : "Adds a Sport",
+						"class" : "gossi\\trixionary\\client\\action\\ManageAddAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ManageAddHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ManageAddHtmlResponder"
 						},
-						"scripts": [
+						"scripts" : [
 							"/assets/blueimp-file-upload/js/vendor/jquery.ui.widget.js",
 							"/assets/blueimp-file-upload/js/jquery.fileupload.js",
 							"/gossi/trixionary-client/public/scripts/sport-form.js"
 						],
-						"styles": [
+						"styles" : [
 							"/gossi/trixionary-client/public/css/trixionary-client.css",
 							"/assets/blueimp-file-upload/css/jquery.fileupload.css"
 						]
 					},
-					"manage-edit": {
-						"title": "Edits a Sport",
-						"class": "gossi\\trixionary\\client\\action\\ManageEditAction",
-						"acl": [
+					"manage-edit" : {
+						"title" : "Edits a Sport",
+						"class" : "gossi\\trixionary\\client\\action\\ManageEditAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ManageEditHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ManageEditHtmlResponder"
 						},
-						"scripts": [
+						"scripts" : [
 							"/assets/blueimp-file-upload/js/vendor/jquery.ui.widget.js",
 							"/assets/blueimp-file-upload/js/jquery.fileupload.js",
 							"/gossi/trixionary-client/public/scripts/sport-form.js"
 						],
-						"styles": [
+						"styles" : [
 							"/gossi/trixionary-client/public/css/trixionary-client.css",
 							"/assets/blueimp-file-upload/css/jquery.fileupload.css"
 						]
 					},
-					"manage-delete": {
-						"title": "Deletes a Sport",
-						"class": "gossi\\trixionary\\client\\action\\ManageDeleteAction",
-						"acl": [
+					"manage-delete" : {
+						"title" : "Deletes a Sport",
+						"class" : "gossi\\trixionary\\client\\action\\ManageDeleteAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ManageDeleteHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ManageDeleteHtmlResponder"
 						}
 					},
-					"manage-default": {
-						"title": "Make a sport the default one",
-						"class": "gossi\\trixionary\\client\\action\\ManageDefaultAction",
-						"acl": [
+					"manage-default" : {
+						"title" : "Make a sport the default one",
+						"class" : "gossi\\trixionary\\client\\action\\ManageDefaultAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ManageDefaultHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ManageDefaultHtmlResponder"
 						}
 					},
-					"objects": {
-						"title": "Manage Objects",
-						"class": "gossi\\trixionary\\client\\action\\ObjectsAction",
-						"acl": [
+					"objects" : {
+						"title" : "Manage Objects",
+						"class" : "gossi\\trixionary\\client\\action\\ObjectsAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ObjectsHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ObjectsHtmlResponder"
 						}
 					},
-					"objects-add": {
-						"title": "Add an Object",
-						"class": "gossi\\trixionary\\client\\action\\ObjectsAddAction",
-						"acl": [
+					"objects-add" : {
+						"title" : "Add an Object",
+						"class" : "gossi\\trixionary\\client\\action\\ObjectsAddAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ObjectsAddHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ObjectsAddHtmlResponder"
 						}
 					},
-					"objects-edit": {
-						"title": "Edit an Object",
-						"class": "gossi\\trixionary\\client\\action\\ObjectsEditAction",
-						"acl": [
+					"objects-edit" : {
+						"title" : "Edit an Object",
+						"class" : "gossi\\trixionary\\client\\action\\ObjectsEditAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ObjectsEditHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ObjectsEditHtmlResponder"
 						}
 					},
-					"objects-delete": {
-						"title": "Delete an Object",
-						"class": "gossi\\trixionary\\client\\action\\ObjectsDeleteAction",
-						"acl": [
+					"objects-delete" : {
+						"title" : "Delete an Object",
+						"class" : "gossi\\trixionary\\client\\action\\ObjectsDeleteAction",
+						"acl" : [
 							"user"
 						],
-						"responder": {
-							"html": "gossi\\trixionary\\client\\responder\\html\\ObjectsDeleteHtmlResponder"
+						"responder" : {
+							"html" : "gossi\\trixionary\\client\\responder\\html\\ObjectsDeleteHtmlResponder"
 						}
 					}
 				}
