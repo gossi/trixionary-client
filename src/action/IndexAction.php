@@ -21,7 +21,7 @@ class IndexAction extends AbstractAction {
 	 * @return Response
 	 */
 	public function run(Request $request) {
-		$sports = SportQuery::create()->find();
+		$sports = SportQuery::create()->orderByTitle()->find();
 		return $this->responder->run($request, new Blank(['sports' => $sports]));
 	}
 }
