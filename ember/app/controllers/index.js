@@ -6,12 +6,11 @@ export default Ember.Controller.extend({
 	store: Ember.inject.service(),
 
 	statistics: Ember.computed(function () {
-		let host = this.get('store').adapterFor('application').get('host');
-		let namespace = this.get('store').adapterFor('application').get('namespace');
+		let adapter = this.get('store').adapterFor('application');
 		let id = this.get('application').get('model').get('id');
 
 		let promise = new Ember.RSVP.Promise(function (resolve, reject) {
-			Ember.$.ajax(host + '/' + namespace + '/gossi.trixionary/sports/' + id + '/statistics', {
+			Ember.$.ajax(adapter.urlPrefix() + '/gossi.trixionary/sports/' + id + '/statistics', {
 				'method': 'GET',
 				'dataType': 'json'
 			}).done((response) => {
@@ -33,8 +32,6 @@ export default Ember.Controller.extend({
 	}),
 
 	skills: Ember.computed(function() {
-		let host = this.get('store').adapterFor('application').get('host');
-		let namespace = this.get('store').adapterFor('application').get('namespace');
 		let id = this.get('application').get('model').get('id');
 
 		return this.get('store').query('gossi.trixionary/skill', {
@@ -51,8 +48,6 @@ export default Ember.Controller.extend({
 	}),
 
 	pictures: Ember.computed(function() {
-		let host = this.get('store').adapterFor('application').get('host');
-		let namespace = this.get('store').adapterFor('application').get('namespace');
 		let id = this.get('application').get('model').get('id');
 
 		return this.get('store').query('gossi.trixionary/picture', {

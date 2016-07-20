@@ -1,0 +1,25 @@
+<form action="{{ locations.app_url }}/manage/{{ sport.getId() }}/delete" method="post">
+<div class="row">
+	<div class="col-md-4 col-md-offset-4 panel panel-danger" style="padding: 0; margin-top: 30px;">
+		<div class="panel-heading">
+			<h3 class="panel-title">Delete Sport</h3>
+		</div>
+		<div class="panel-body">
+			<p>Are you sure, you want to delete {{ sport.getTitle()}}?</p>
+			
+			<div class="form-group{% if error %} has-error{% endif %}">
+				<label for="name">Type in the name of the Sport you want to delete:</label>
+				<input type="text" class="form-control" id="name" name="name">
+				{% if error %}
+				<span class="help-block">{{ error }}</span>
+				{% endif %}
+			</div>
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-danger pull-right" style="margin-left: 10px;" type="submit">Delete</button>
+			<a href="{{ locations.app_url }}/manage" class="btn btn-default pull-right">Cancel</a>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+</form>

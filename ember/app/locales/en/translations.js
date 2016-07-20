@@ -27,6 +27,7 @@ export default {
 	"exercises": "Exercises",
 	"transitions": "Transitions",
 	"graph": "Graph",
+	"graph.explanation": "The graph visually shows the relationships between {{skills}}.",
 	"tester": "Tester",
 	"translate": "Translate",
 

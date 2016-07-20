@@ -1,6 +1,9 @@
 {
     "version": "1.0",
     "name": "gossi/trixionary-client",
+    "path-mappings": {
+        "/gossi/trixionary-client": "res/"
+    },
     "config": {
         "bootstrap-file": "vendor/autoload.php"
     },

@@ -111,7 +111,6 @@ export default Ember.Component.extend({
 				});
 			}, 100);
 		}
-		keeko.graph = this.graph;
 	},
 
 	didReceiveAttrs() {

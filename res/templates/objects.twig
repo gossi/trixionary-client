@@ -1,0 +1,21 @@
+<h1>Manage {{ sport.getObjectPluralLabel() }} for {{ sport.getTitle() }} <a href="{{ locations.app_url }}/manage/{{ sport.getId() }}/objects/add" class="btn btn-primary">Add</a></h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for object in sport.getObjects() %}
+		<tr>
+			<td>{{ object.getTitle() }}</td>
+			<td>
+				<a class="btn btn-default btn-xs" href="{{ locations.app_url }}/manage/{{ sport.getId() }}/objects/{{ object.getId() }}"><i class="fa fa-pencil" title="Edit"></i></a>
+				<a class="btn btn-danger btn-xs" href="{{ locations.app_url }}/manage/{{ sport.getId() }}/objects/{{ object.getId() }}/delete"><i class="fa fa-trash" title="Delete"></i></a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

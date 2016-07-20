@@ -1,4 +1,0 @@
-{
-	"heading": "Delete {skill}",
-	"error-msg": "Cannot delete {skill}, the following {skills} still depend on it:"
-}

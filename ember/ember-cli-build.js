@@ -21,16 +21,18 @@ module.exports = function(defaults) {
 	// along with the exports of each module as its value.
 
 	// bootstrap
-	app.import('bower_components/bootstrap/dist/js/bootstrap.js');
-	app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
-	app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+	if (app.env === 'development') {
+		app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+		app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+		app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+	}
 
 	// vis.js
-	app.import('bower_components/vis/dist/vis.min.js');
-	app.import('bower_components/vis/dist/vis.min.css');
+	app.import('bower_components/vis/dist/vis.js');
+	app.import('bower_components/vis/dist/vis.css');
 
 	// BigScreen
-	app.import('bower_components/BigScreen/bigscreen.min.js');
+	app.import('bower_components/BigScreen/bigscreen.js');
 
 	// jquery.upload
 	app.import('bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js');

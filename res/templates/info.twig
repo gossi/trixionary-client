@@ -1,26 +1,21 @@
-{% extends "frame.twig" %}
+<h2>{{ t('info.about')|capitalize }}</h2>
 
-{% block main %}
-<h2>{{ trans('about')|capitalize }}</h2>
+<p>{{ t('info.intro', {'gossi': '<a href="http://gos.si">Thomas Gossmann</a>'})|raw }}</p>
 
-<p>{{ trans('intro')|replace({'{gossi}': '<a href="http://gos.si">Thomas Gossmann</a>'})|raw }}</p>
-
-<p>{{ trans('hosted') }}</p>
+<p>{{ t('info.hosted') }}</p>
 
 <ul>
-	<li><a href="https://github.com/gossi/trixionary">gossi/trixionary</a> - {{ trans('repo-trixionary') }}</li>
-	<li><a href="https://github.com/gossi/trixionary-client">gossi/trixionary-client</a> - {{ trans('repo-client') }}</li>
+	<li><a href="https://github.com/gossi/trixionary">gossi/trixionary</a> - {{ t('info.repo-trixionary') }}</li>
+	<li><a href="https://github.com/gossi/trixionary-client">gossi/trixionary-client</a> - {{ t('info.repo-client') }}</li>
 </ul>
 
-<h3>{{ trans('contributions-heading') }}</h3>
+<h3>{{ t('info.contributions-heading') }}</h3>
 
-<p>{{ trans('contributions') }}</p>
+<p>{{ t('info.contributions') }}</p>
 
-<h3>{{ trans('support-heading') }}</h3>
+<h3>{{ t('info.support-heading') }}</h3>
 
-<p>{{ trans('support') }}</p>
+<p>{{ t('info.support') }}</p>
 
-<img src="{{ global.locations.root_url }}/_keeko/modules/gossi/trixionary-client/images/dosb.jpg" style="max-height: 78px;">
-<img src="{{ global.locations.root_url }}/_keeko/modules/gossi/trixionary-client/images/rkb.png" style="max-height: 78px;">
-
-{% endblock %}
+<img src="{{ resource_url('/gossi/trixionary-client/public/images/dosb.jpg') }}" style="max-height: 78px;">
+<img src="{{ resource_url('/gossi/trixionary-client/public/images/rkb.png') }}" style="max-height: 78px;">

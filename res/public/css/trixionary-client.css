@@ -1,0 +1,14 @@
+.form-horizontal .control-label {
+    text-align: left;
+}
+
+#progress {
+  margin-top: 5px;
+  height: 5px;
+}
+
+.preview {
+  max-width: 125px;
+  max-height: 125px;
+  border: 1px solid #000;
+}

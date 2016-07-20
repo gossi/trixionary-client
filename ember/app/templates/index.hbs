@@ -18,7 +18,8 @@
 			</div>
 			<div class="col-md-4">
 				<h2>{{t "graph"}}</h2>
-				[image of a graph here would be cool]
+				<p>{{t "graph.explanation" skills=model.skillPluralLabel}}</p>
+				{{#link-to "graph"}}{{t "graph"}}{{/link-to}}
 			</div>
 			<div class="col-md-3">
 				<h2>{{t "statistics"}}</h2>

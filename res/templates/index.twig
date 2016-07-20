@@ -1,7 +1,81 @@
-{% extends "frame.twig" %}
+<h1>Trixionary</h1>
 
-{% block h1 %}Trixionary{% endblock %}
+<p class="lead">The Trixionary is an online catalog to structure and
+	organize movement skills.</p>
 
-{% block main %}
-<p>{{ trans('welcome') }}</p>
-{% endblock %}
+
+<div class="row">
+	<div class="col-md-7">
+		<h2>Features</h2>
+
+		<ul>
+			<li>Catalog skills with the following properties:
+				<ul>
+					<li>Informative:
+						<ul>
+							<li>Name and alternative Names</li>
+							<li>Short Description</li>
+							<li>History and background information</li>
+						</ul>
+					</li>
+					<li>Movement traits:
+						<ul>
+							<li>Detailied description with sequence picture</li>
+							<li>Start- and end positions</li>
+							<li>Cyclic or Acyclic movements</li>
+							<li>Translation and rotation parameters</li>
+						</ul>
+					</li>
+					<li>Relationships:
+						<ul>
+							<li>Variations</li>
+							<li>Parents and childs</li>
+							<li>Multiples</li>
+							<li>Composites</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>Multimedia support
+				<ul>
+					<li>Pictures</li>
+					<li>Videos (Youtube and Vimeo integration)</li>
+					<li>Tutorials (as videos)</li>
+				</ul>
+			</li>
+			<li>Graph</li>
+			<li>Transitions</li>
+			<li>Group skills</li>
+		</ul>
+		
+		<h3>Planned features</h3>
+		<ul>
+			<li>Movement models:
+				<ul>
+					<li>Phasestructur by Meinel &amp; Schnabel</li>
+					<li>Functionphases by Göhner</li>
+					<li>k-Struktur by Kassat</li>
+				</ul>
+			</li>
+			<li>Training support:
+				<ul>
+					<li>Methodical exercise sequences</li>
+					<li>Exercises</li>
+					<li>Mistakes</li>
+					<li>Technical criterion</li>
+					<li>Tester app (for usage in gyms)</li>
+				</ul>
+			</li>
+			<li>Multilanguage support</li>
+		</ul>
+	</div>
+	<div class="col-md-5">
+		<h2>Sports</h2>
+
+		<ul>
+			{% for sport in sports %}
+			<li><a href="{{ locations.app_url }}/{% if not sport.getIsDefault() %}{{ sport.getSlug() }}{% endif %}">{{ sport.getTitle() }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

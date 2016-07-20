@@ -1,0 +1,25 @@
+<h1>Manage <a href="{{ locations.app_url }}/manage/add" class="btn btn-primary">Add</a></h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Slug</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for sport in sports %}
+		<tr{% if sport.getIsDefault() %} class="warning"{% endif %}>
+			<td><a href="{{ locations.app_url }}/{% if not sport.getIsDefault() %}{{ sport.getSlug() }}{% endif %}">{{ sport.getTitle() }}</a></td>
+			<td>/{{ sport.getSlug() }}</td>
+			<td>
+				<a class="btn btn-default btn-xs" href="{{ locations.app_url }}/manage/{{ sport.getId() }}"><i class="fa fa-pencil" title="Edit"></i></a>
+				<a class="btn btn-default btn-xs" href="{{ locations.app_url }}/manage/{{ sport.getId() }}/objects"><i class="fa fa-space-shuttle" title="Manage objects"></i></a>
+				<a class="btn btn-default btn-xs{% if sport.getIsDefault() %} active{% endif %}" href="{{ locations.app_url }}/manage/{{ sport.getId() }}/default"><i class="fa fa-star" title="Make/Toggle default"></i></a>
+				<a class="btn btn-danger btn-xs" href="{{ locations.app_url }}/manage/{{ sport.getId() }}/delete"><i class="fa fa-trash" title="Delete"></i></a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 				this.transitionToRoute('skill.manage.pictures', picture.get('skill').get('slug'));
 			}).catch(() => {
 				this.set('isSaving', false);
-			})
+			});
 		}
 	}
 });

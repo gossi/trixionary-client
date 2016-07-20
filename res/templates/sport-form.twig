@@ -1,0 +1,204 @@
+<h1>{% if sport.isNew() %}New{% else %}Edit{% endif %} Sport</h1>
+
+<form class="form-horizontal" action="{{ target }}" method="post">
+<input type="hidden" name="meta[filename]" id="filename">
+<input type="hidden" name="meta[skill_picture_delete]" id="skill_picture_delete">
+
+	{% if errors %}
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    <i class="fa fa-exclamation-circle"></i>
+	    Errors:
+	    <ul>
+	    {% for error in errors %}
+	    	<li>{{ error }}</li>
+	    {% endfor %}
+	    </ul>
+	</div>
+	{% endif %}
+
+	<fieldset>
+		<legend>Naming</legend>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="name">Name</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="name" name="title" required value="{{ sport.getTitle() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="slug">Slug</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="slug" name="slug" value="{{ sport.getSlug() }}" placeholder="Leave empty for auto generation">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="athleteLabel">Athlete Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="athleteLabel" name="athlete-label" required value="{{ sport.getAthleteLabel() }}" placeholder="Athlete">
+			</div>
+		</div>
+	</fieldset>
+		
+	<fieldset>
+		<legend>Skill</legend>
+		<p>Some sports have their own name for their skills (e.g. 'tricks' for unicycling or 'elements' for gymnastics). Set the one for your sport here or give it a general one, like 'skill' or 'technic'.</p>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="skillLabel">Skill Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="skillLabel" name="skill-label" required value="{{ sport.getSkillLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="skillPluralLabel">Skill Plural Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="skillPluralLabel" name="skill-plural-label" required value="{{ sport.getSkillPluralLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="skillSlug">Skill Slug</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="skillSlug" name="skill-slug" value="{{ sport.getSkillSlug() }}" placeholder="Leave empty for auto generation">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label control-label-top col-md-2">Default Picture</label>
+			<div class="col-md-6 clearfix">
+				<span class="btn btn-success fileinput-button">
+					<i class="fa fa-plus"></i>
+					<span>Select file...</span>
+					<input id="fileupload" type="file" name="file">
+				</span>
+				<img id="preview" {% if sport.getSkillPictureUrl() is not empty %}src="{{ sport.getSkillPictureUrl() }}" class="pull-right"{% else %} class="hidden pull-right"{% endif %} style="max-width: 100px; max-height: 100px;">
+				<button type="button" id="upload-delete" style="margin-right: 5px;" class="close pull-right{% if sport.getSkillPictureUrl() is empty %} hidden{% endif %}"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<span id="uploaded"></span>
+				<div id="progress" class="progress hidden"><div class="progress-bar progress-bar-success"></div></div>
+			</div>
+			<script type="text/javascript">
+			var apiUrl = '{{locations.api_url}}';
+			</script>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Group</legend>
+		<p>Some sports have their own name for their groups (e.g. 'structs' for unicycling or 'structural groups' for gymnastics). Set the one for your sport here or give it a general one, like 'group'.</p>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="groupLabel">Group Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="groupLabel" name="group-label" required value="{{ sport.getGroupLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="groupPluralLabel">Group Plural Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="groupPluralLabel" name="group-plural-label" required value="{{ sport.getGroupPluralLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="groupSlug">Group Slug</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="groupSlug" name="group-slug" value="{{ sport.getGroupSlug() }}" placeholder="Leave empty for auto generation">
+			</div>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Object</legend>
+		<p>If this sport uses objects (like in gymnastics or rythmic gymnastics) please fill out this section, anyway skip this.</p>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="objectLabel">Object Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="objectLabel" name="object-label" value="{{ sport.getObjectLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="objectPluralLabel">Object Plural Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="objectPluralLabel" name="object-plural-label" value="{{ sport.getObjectPluralLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="objectSlug">Object Slug</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="objectSlug" name="object-slug" value="{{ sport.getObjectSlug() }}" placeholder="Leave empty for auto generation">
+			</div>
+		</div>
+	</fieldset>
+	
+	<!-- 
+	<fieldset>
+		<legend>Transitions</legend>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="transitionLabel">Transition Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="transitionLabel" name="transition-label" required value="{{ sport.getTransitionLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="transitionPluralLabel">Transition Plural Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="transitionPluralLabel" name="transition-plural-label" required value="{{ sport.getTransitionPluralLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="transitionsSlug">Transition Slug</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="transitionsSlug" name="transitions-slug" value="{{ sport.getTransitionsSlug() }}" placeholder="Leave empty for auto generation">
+			</div>
+		</div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Position</legend>
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="positionLabel">Position Label</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="positionLabel" name="position-label" required value="{{ sport.getPositionLabel() }}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="positionSlug">Position Slug</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control" id="positionSlug" name="position-slug" value="{{ sport.getPositionSlug() }}" placeholder="Leave empty for auto generation">
+			</div>
+		</div>
+	</fieldset>
+	-->
+	
+	<fieldset>
+		<legend>Features</legend>
+		<div class="form-group">
+			<label class="col-md-2 control-label">Features</label>
+			<div class="col-md-6">
+				<div class="checkbox">
+    				<label>
+    					<input type="checkbox" name="feature-composition" value="1"{% if sport.getIsFeatureComposition() %} checked{% endif %}> Composition
+    				</label>
+				</div>
+				<div class="checkbox">
+    				<label>
+    					<input type="checkbox" name="feature-tester" value="1"{% if sport.getIsFeatureTester() %} checked{% endif %}> Tester
+    				</label>
+    			</div>
+			</div>
+		</div>
+	</fieldset>
+	
+	<div class="form-group">
+		<div class="col-md-6 col-md-offset-2">
+			<input type="submit" class="btn btn-primary form-control" value="Save">
+		</div>
+	</div>
+</form>

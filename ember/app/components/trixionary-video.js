@@ -37,8 +37,8 @@ export default Ember.Component.extend({
 			onOpen: function(e) {
 				$('#video-player').removeClass('hidden').attr('src', e.el.src);
 			},
-			onClosed: function(e) {
-				$('#video-player').addClass('hidden')
+			onClosed: function() {
+				$('#video-player').addClass('hidden');
 			}
 		});
 	}

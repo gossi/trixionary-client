@@ -1,0 +1,56 @@
+<h1>{% if object.isNew() %}New{% else %}Edit{% endif %} {{ sport.getObjectLabel() }}</h1>
+
+<form class="form-horizontal" action="{{ target }}" method="post">
+
+	{% if errors %}
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    <i class="fa fa-exclamation-circle"></i>
+	    Errors:
+	    <ul>
+	    {% for error in errors %}
+	    	<li>{{ error }}</li>
+	    {% endfor %}
+	    </ul>
+	</div>
+	{% endif %}
+
+	<div class="form-group">
+		<label class="col-md-2 control-label" for="name">Name</label>
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="name" name="title" required value="{{ object.getTitle() }}">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-md-2 control-label" for="slug">Slug</label>
+		<div class="col-md-6">
+			<input type="text" class="form-control" id="slug" name="slug" value="{{ object.getSlug() }}" placeholder="Leave empty for auto generation">
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-md-2 control-label" for="description">Description</label>
+		<div class="col-md-6">
+			<textarea class="form-control" id="description" name="description">{{ object.getDescription() }}</textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">Fixed?</label>
+		<div class="col-md-6">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="fixed" value="1"{% if object.getFixed() %} checked{% endif %}> Is this {{ sport.getObjectLabel() }} fixed (= immovable, like the horizontal bar in gymnastics)?<br>
+					Only uncheck this, if the {{ sport.getAthleteLabel() }} interacts with the {{ sport.getObjectLabel() }}.
+				</label>
+			</div>
+		</div>
+	</div>		
+
+	<div class="form-group">
+		<div class="col-md-6 col-md-offset-2">
+			<input type="submit" class="btn btn-primary form-control" value="Save">
+		</div>
+	</div>
+</form>

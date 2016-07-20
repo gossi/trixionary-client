@@ -10,13 +10,11 @@ export default Ember.Component.extend({
 	didInsertElement() {
 		this._super(...arguments);
 		const self = this;
-
-		const host = this.get('store').adapterFor('application').get('host');
-		const namespace = this.get('store').adapterFor('application').get('namespace');
+		const adapter = this.get('store').adapterFor('application');
 		const bearer = this.get('session').get('data.authenticated.data.id');
 
 		this.$('.fileinput-button input').fileupload({
-			url: host + '/' + namespace + '/gossi.trixionary/upload',
+			url: adapter.urlPrefix() + '/gossi.trixionary/upload',
 			headers: {
 				Authorization: 'Bearer ' + bearer
 			},
@@ -54,11 +52,10 @@ export default Ember.Component.extend({
 
 	delete() {
 		const self = this;
-		const host = this.get('store').adapterFor('application').get('host');
-		const namespace = this.get('store').adapterFor('application').get('namespace');
+		const adapter = this.get('store').adapterFor('application');
 		const bearer = this.get('session').get('data.authenticated.data.id');
 
-		Ember.$.ajax(host + '/' + namespace + '/gossi.trixionary/upload/' + this.lastFile.filename, {
+		Ember.$.ajax(adapter.urlPrefix() + '/gossi.trixionary/upload/' + this.lastFile.filename, {
 			'method': 'DELETE',
 			'headers': {
 				'Authorization': 'Bearer ' + bearer

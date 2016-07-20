@@ -1,11 +1,12 @@
 import Ember from 'ember';
-import config from './config/environment';
+import config from 'trixionary/config/environment';
 
 const Router = Ember.Router.extend({
-  location: config.locationType
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
-const slug = keeko && keeko.trixionary && keeko.trixionary.slug ? keeko.trixionary.slug : {};
+const slug = config.keeko && config.keeko.trixionary && config.keeko.trixionary.slug ? config.keeko.trixionary.slug : {};
 const skill = slug.skill ? slug.skill : 'skill';
 const group = slug.group ? slug.group : 'group';
 const obj = slug.object ? slug.object: 'object';
