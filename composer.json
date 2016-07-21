@@ -20,7 +20,6 @@
 		"gossi/trixionary": "^0.2"
 	},
 	"require-dev" : {
-		"gossi/trixionary" : "dev-master",
 		"keeko/framework" : "dev-master",
 		"keeko/core" : "@dev",
 		"propel/propel" : "@alpha",
