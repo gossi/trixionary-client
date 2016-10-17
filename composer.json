@@ -17,10 +17,9 @@
 		"php" : ">=5.4",
 		"keeko/composer-installer" : "*",
 		"bower-asset/blueimp-file-upload" : "~9",
-		"gossi/trixionary": "^0.2"
+		"gossi/trixionary": "dev-master"
 	},
 	"require-dev" : {
-		"gossi/trixionary": "dev-master",
 		"keeko/framework" : "dev-master",
 		"keeko/core" : "@dev",
 		"propel/propel" : "@alpha",
